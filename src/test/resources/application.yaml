@@ -1,18 +1,18 @@
 ktor:
   deployment:
-    port: 8080
+    port: 0
   application:
     modules:
       - zeroday.skinrejuve.ApplicationKt.module
 
 app:
   url: "http://localhost:8080"
-  environment: "development"
+  environment: "test"
 
 jwt:
   issuer: "skinrejuve-api"
   audience: "skinrejuve-clients"
-  secret: ""
+  secret: "test-secret"
   expiresMinutes: "120"
 
 tokens:
@@ -22,11 +22,11 @@ cors:
   allowedOrigins: "http://localhost:5173"
 
 database:
-  jdbcUrl: "jdbc:postgresql://localhost:5432/skinrejuve"
-  username: "postgres"
-  password: "postgres"
-  driver: "org.postgresql.Driver"
-  maxPoolSize: "10"
+  jdbcUrl: "jdbc:h2:mem:skinrejuve-test;MODE=PostgreSQL;DB_CLOSE_DELAY=-1"
+  username: "sa"
+  password: ""
+  driver: "org.h2.Driver"
+  maxPoolSize: "4"
 
 smtp:
   host: "localhost"
