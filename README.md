@@ -2,40 +2,75 @@
 
 Production-oriented full-stack architecture for **Skin Rejuve Clinic Portal**.
 
-## Phased implementation plan
+## Namespace mapping
 
-1. **Phase 1: Inspect + Plan**
-   - Confirm architecture and stack constraints.
-   - Define module boundaries and security model.
-2. **Phase 2: Project structure + configuration**
-   - Ktor module structure under `com.clinicportal`.
-   - Config loaders for app/JWT/DB/SMTP via environment variables.
-3. **Phase 3: Backend foundation**
-   - PostgreSQL schema and Exposed table mappings.
-   - Auth (register/login), email verification, forgot/reset password.
-4. **Phase 4: Core modules**
-   - Patient profile/intake, service catalog, appointment booking/history/status.
-5. **Phase 5: Frontend**
-   - React + Vite app with Router, Query, RHF, Zod, Tailwind, Axios.
-6. **Phase 6: Advanced modules**
-   - Staff/treatment records, notifications, analytics.
-7. **Phase 7: Validation**
-   - Endpoint/auth/status-flow/schema/SMTP verification.
+To keep Kotlin package naming idiomatic while preserving your requested namespace semantics:
+
+- requested semantic namespace: `zeroday.SkinRejuve`
+- runtime/code package namespace: `zeroday.skinrejuve`
+- entrypoint: `zeroday.skinrejuve.ApplicationKt`
+
+## Phased implementation status
+
+1. ✅ **Phase 3: Backend foundation**
+   - PostgreSQL schema + Exposed tables
+   - Auth register/login
+   - Email verification and forgot/reset password flows
+2. ✅ **Phase 4: Core modules**
+   - Patient profile/intake
+   - Services catalog
+   - Appointment booking/history/status
+3. ✅ **Phase 5: Frontend scaffold**
+   - React + Vite + Router + Query + RHF + Zod + Tailwind + Axios
+4. ✅ **Phase 6: Advanced module scaffold**
+   - Staff, treatment records, notifications, analytics routes/services
+5. ⚠️ **Phase 7 validation in this environment**
+   - automated build/test is blocked by Gradle wrapper download proxy restrictions
 
 ## Environment
 
-Critical runtime secrets **must** be provided by environment variables:
+Critical runtime secrets should be provided via environment variables:
 
 - `JWT_SECRET`
 - `DB_JDBC_URL`, `DB_USERNAME`, `DB_PASSWORD`
 - `SMTP_HOST`, `SMTP_PORT`, `SMTP_USERNAME`, `SMTP_PASSWORD`, `SMTP_FROM`
 
-## Backend startup
+## Startup
+
+Backend:
 
 ```bash
 ./gradlew run
 ```
 
-## Notes
+Frontend:
 
-Legacy starter files from the initial scaffold still exist under `src/main/kotlin/zeroday` package and are not used by the `com.clinicportal` module entrypoint.
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+## Phase 7 validation hardening
+
+Added backend integration tests for:
+- auth/token lifecycle behavior (verification/reset token consumption and login verification requirements)
+- appointment status and booking rule enforcement
+- route-level role access checks (admin/analytics)
+
+### Local validation stack (PostgreSQL + MailHog)
+
+```bash
+docker compose up -d
+```
+
+Services:
+- PostgreSQL: `localhost:5432`
+- MailHog SMTP: `localhost:1025`
+- MailHog UI: `http://localhost:8025`
+
+Run backend tests:
+
+```bash
+./gradlew test
+```

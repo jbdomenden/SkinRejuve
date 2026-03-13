@@ -13,11 +13,11 @@ plugins {
     id("org.jetbrains.kotlin.plugin.serialization") version "2.3.0"
 }
 
-group = "com.clinicportal"
+group = "zeroday.skinrejuve"
 version = "0.1.0"
 
 application {
-    mainClass = "com.clinicportal.ApplicationKt"
+    mainClass = "zeroday.skinrejuve.ApplicationKt"
 }
 
 kotlin {
