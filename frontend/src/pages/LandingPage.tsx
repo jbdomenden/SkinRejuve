@@ -1,14 +1,18 @@
 import { Link } from 'react-router-dom'
+import { AuthShell } from '@/components/layout'
 
 export function LandingPage() {
   return (
-    <main className='mx-auto max-w-4xl p-8'>
-      <h1 className='text-3xl font-bold'>Skin Rejuve Clinic Portal</h1>
-      <p className='mt-2 text-gray-600'>Patient and staff management platform.</p>
-      <div className='mt-6 flex gap-4'>
-        <Link to='/login' className='rounded bg-black px-4 py-2 text-white'>Login</Link>
-        <Link to='/register' className='rounded border px-4 py-2'>Register</Link>
+    <AuthShell>
+      <div className='mx-auto max-w-xl text-center text-ivory'>
+        <p className='text-2xl uppercase tracking-[0.25em]'>Welcome to</p>
+        <h2 className='mt-2 font-serif text-7xl'>Skin Rejuve Clinic Portal</h2>
+        <div className='mt-10 grid gap-3'>
+          <Link to='/login' className='portal-btn'>SIGN IN</Link>
+          <Link to='/register' className='portal-btn'>NEW CLIENT</Link>
+          <Link to='/dashboard' className='portal-btn'>VIEW DASHBOARD MOCK</Link>
+        </div>
       </div>
-    </main>
+    </AuthShell>
   )
 }
