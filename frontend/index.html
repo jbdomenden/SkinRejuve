@@ -1,12 +1,78 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SkinRejuve Portal</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SkinRejuve Portal</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="auth-bg">
+  <main class="auth-shell">
+    <section class="auth-card">
+      <div class="brand">
+        <h1>SKIN REJU<span class="leaf-v-wrap" aria-label="leaf-styled V">V<span class="leaf-overlay" aria-hidden="true"></span></span>E</h1>
+        <p>SINCE 2011</p>
+      </div>
+
+      <div class="auth-tabs">
+        <button class="tab tab-active" id="loginTab" type="button">SIGN IN</button>
+        <button class="tab" id="registerTab" type="button">NEW CLIENT</button>
+      </div>
+
+      <section id="loginPanel" class="panel">
+        <label>USERNAME</label>
+        <input id="email" placeholder="email@example.com" />
+        <label>PASSWORD</label>
+        <input id="password" type="password" placeholder="••••••••" />
+        <div class="forgot-wrap"><small class="link">FORGOT PASSWORD?</small></div>
+        <label class="remember-row"><input type="checkbox" />Remember me on this device</label>
+        <button class="cta" id="loginBtn">ENTER PORTAL</button>
+        <pre id="authMsg"></pre>
+      </section>
+
+      <section id="registerPanel" class="panel hidden">
+        <label>EMAIL</label>
+        <input id="registerEmail" placeholder="new@client.com" />
+        <label>PASSWORD</label>
+        <input id="registerPassword" type="password" placeholder="at least 8 chars" />
+        <button class="cta" id="registerBtn">CREATE ACCOUNT</button>
+        <pre id="registerMsg"></pre>
+      </section>
+    </section>
+
+    <section class="dashboard-card" hidden>
+      <h2>Patient Quick Actions</h2>
+      <div class="grid-2">
+        <div>
+          <label>First name</label>
+          <input id="firstName" placeholder="First name" />
+        </div>
+        <div>
+          <label>Last name</label>
+          <input id="lastName" placeholder="Last name" />
+        </div>
+      </div>
+      <button id="saveProfileBtn">SAVE PROFILE</button>
+      <pre id="profileMsg"></pre>
+
+      <hr />
+
+      <h3>Book appointment</h3>
+      <div class="grid-2">
+        <select id="serviceId">
+          <option value="svc-1">Acne Laser</option>
+          <option value="svc-2">Hydra Facial</option>
+        </select>
+        <input id="startAt" type="datetime-local" />
+      </div>
+      <div class="grid-2">
+        <button id="bookBtn">BOOK APPOINTMENT</button>
+        <button id="historyBtn">LOAD HISTORY</button>
+      </div>
+      <pre id="history"></pre>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
 </html>

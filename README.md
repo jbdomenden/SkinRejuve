@@ -1,76 +1,62 @@
-# SkinRejuve Clinic Portal
+# SkinRejuve (HTML/CSS/JS + Node.js rewrite)
 
-Production-oriented full-stack architecture for **Skin Rejuve Clinic Portal**.
+This repository has been rewritten into a plain **HTML/CSS/JavaScript frontend** and a plain **Node.js backend** (no React, no Ktor runtime required for the new stack).
 
-## Namespace mapping
+## New system layout
 
-To keep Kotlin package naming idiomatic while preserving your requested namespace semantics:
+- `backend/`
+  - `server.js`: HTTP API server
+  - `services/`: auth, patient, appointment logic
+  - `lib/`: JSON storage + token utils
+  - `data/db.json`: local dev datastore
+  - `schema.sql`: PostgreSQL schema reference
+- `frontend/`
+  - `index.html`: patient portal UI
+  - `admin.html`: admin status update UI
+  - `styles.css`, `app.js`, `admin.js`: vanilla frontend assets
 
-- requested semantic namespace: `zeroday.SkinRejuve`
-- runtime/code package namespace: `zeroday.skinrejuve`
-- entrypoint: `zeroday.skinrejuve.ApplicationKt`
-
-## Phased implementation status
-
-1. ✅ **Phase 3: Backend foundation**
-   - PostgreSQL schema + Exposed tables
-   - Auth register/login
-   - Email verification and forgot/reset password flows
-2. ✅ **Phase 4: Core modules**
-   - Patient profile/intake
-   - Services catalog
-   - Appointment booking/history/status
-3. ✅ **Phase 5: Frontend scaffold**
-   - React + Vite + Router + Query + RHF + Zod + Tailwind + Axios
-4. ✅ **Phase 6: Advanced module scaffold**
-   - Staff, treatment records, notifications, analytics routes/services
-5. ⚠️ **Phase 7 validation in this environment**
-   - automated build/test is blocked by Gradle wrapper download proxy restrictions
-
-## Environment
-
-Critical runtime secrets should be provided via environment variables:
-
-- `JWT_SECRET`
-- `DB_JDBC_URL`, `DB_USERNAME`, `DB_PASSWORD`
-- `SMTP_HOST`, `SMTP_PORT`, `SMTP_USERNAME`, `SMTP_PASSWORD`, `SMTP_FROM`
-
-## Startup
-
-Backend:
+## Run backend
 
 ```bash
-./gradlew run
+node backend/server.js
 ```
 
-Frontend:
+Backend starts at `http://localhost:8080`.
+
+## Run frontend
 
 ```bash
 cd frontend
-npm install
-npm run dev
+python3 -m http.server 5173
 ```
 
-## Phase 7 validation hardening
+Frontend pages:
+- `http://localhost:5173/index.html`
+- `http://localhost:5173/admin.html`
 
-Added backend integration tests for:
-- auth/token lifecycle behavior (verification/reset token consumption and login verification requirements)
-- appointment status and booking rule enforcement
-- route-level role access checks (admin/analytics)
+## API overview
 
-### Local validation stack (PostgreSQL + MailHog)
+- `GET /health`
+- `POST /api/auth/register`
+- `POST /api/auth/login`
+- `GET /api/auth/verify-email?token=...`
+- `POST /api/auth/forgot-password`
+- `POST /api/auth/reset-password`
+- `GET /api/services`
+- `GET /api/patient/profile` (auth)
+- `POST /api/patient/profile` (auth)
+- `POST /api/patient/intake` (auth)
+- `POST /api/appointments` (auth)
+- `GET /api/appointments/history` (auth)
+- `PATCH /api/appointments/:id` (auth, STAFF/ADMIN)
 
-```bash
-docker compose up -d
-```
+## Notes
 
-Services:
-- PostgreSQL: `localhost:5432`
-- MailHog SMTP: `localhost:1025`
-- MailHog UI: `http://localhost:8025`
-
-Run backend tests:
-
-```bash
-./gradlew test
-```
+- Appointment rules implemented:
+  - no past booking
+  - no double-booking active slots
+  - booking defaults to `PENDING`
+  - `DENIED` requires `denialReason`
+  - completed appointment cannot be cancelled
+- Auth tokens are HMAC-signed JWT-like tokens for this rewrite.
+- Existing Kotlin/Ktor code remains in the repo history, but the new runtime system is Node + vanilla frontend.
