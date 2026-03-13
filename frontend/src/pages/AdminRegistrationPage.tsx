@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { AdminShell } from '@/components/layout/AdminShell'
 import { AdminModal } from '@/components/ui/AdminModal'
+import { exportCsv } from '@/lib/reports'
 
 const rows = [
   { name: 'Paolo Reyes', email: 'paolo@mail.com', submitted: '2026-03-14', status: 'PENDING' },
@@ -14,7 +15,22 @@ export function AdminRegistrationPage() {
     <AdminShell>
       <div className='flex items-center justify-between'>
         <h1 className='font-serif text-6xl text-[#4a2a00]'>Registration Queue</h1>
-        <button className='portal-btn-small' onClick={() => setOpen(true)}>+ Add User</button>
+        <div className='flex gap-2'>
+          <button
+            className='portal-btn-small'
+            onClick={() =>
+              exportCsv('registrations-report.csv', [
+                ['name', 'email', 'submitted', 'status'],
+                ...rows.map((row) => [row.name, row.email, row.submitted, row.status]),
+              ])
+            }
+          >
+            EXPORT CSV
+          </button>
+          <button className='portal-btn-small' onClick={() => setOpen(true)}>
+            + Add User
+          </button>
+        </div>
       </div>
 
       <div className='mt-6 rounded-md border border-[#8a5a2f]/30 bg-[#f8f2e9] p-5'>
@@ -22,7 +38,9 @@ export function AdminRegistrationPage() {
           <article key={row.email} className='mb-3 flex items-center justify-between rounded bg-white/80 p-4 text-[#4a2a00]'>
             <div>
               <p className='text-xl font-semibold'>{row.name}</p>
-              <p className='text-sm'>{row.email} • Submitted {row.submitted}</p>
+              <p className='text-sm'>
+                {row.email} • Submitted {row.submitted}
+              </p>
             </div>
             <div className='flex gap-2'>
               <button className='border border-[#8a5a2f]/45 px-4 py-2'>Reject</button>
@@ -36,7 +54,11 @@ export function AdminRegistrationPage() {
         <AdminModal
           title='Create Patient Account'
           onClose={() => setOpen(false)}
-          actions={<button className='portal-btn-small' onClick={() => setOpen(false)}>Create User</button>}
+          actions={
+            <button className='portal-btn-small' onClick={() => setOpen(false)}>
+              Create User
+            </button>
+          }
         >
           <div className='grid gap-3 md:grid-cols-2'>
             <input className='portal-input' placeholder='First Name' />

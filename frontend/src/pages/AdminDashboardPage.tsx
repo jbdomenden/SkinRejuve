@@ -1,4 +1,7 @@
+import { useState } from 'react'
 import { AdminShell } from '@/components/layout/AdminShell'
+import { AdminModal } from '@/components/ui/AdminModal'
+import { ReportRequest, exportModuleReportCsv } from '@/lib/reports'
 
 const cards = [
   { label: 'Pending Appointments', value: '14' },
@@ -7,10 +10,24 @@ const cards = [
   { label: 'Completed This Week', value: '32' },
 ]
 
+const initialReport: ReportRequest = {
+  module: 'All Modules',
+  fromDate: '2026-03-01',
+  toDate: '2026-03-31',
+  status: 'ALL',
+  staff: 'ALL',
+}
+
 export function AdminDashboardPage() {
+  const [open, setOpen] = useState(false)
+  const [request, setRequest] = useState<ReportRequest>(initialReport)
+
   return (
     <AdminShell>
-      <h1 className='font-serif text-6xl text-[#4a2a00]'>Admin Dashboard</h1>
+      <div className='flex items-center justify-between'>
+        <h1 className='font-serif text-6xl text-[#4a2a00]'>Admin Dashboard</h1>
+        <button className='portal-btn-small' onClick={() => setOpen(true)}>Generate Report</button>
+      </div>
 
       <div className='mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4'>
         {cards.map((card) => (
@@ -36,6 +53,32 @@ export function AdminDashboardPage() {
           </div>
         </div>
       </section>
+
+      {open ? (
+        <AdminModal
+          title='Generate Admin Report'
+          onClose={() => setOpen(false)}
+          actions={
+            <button
+              className='portal-btn-small'
+              onClick={() => {
+                exportModuleReportCsv(request)
+                setOpen(false)
+              }}
+            >
+              Download CSV
+            </button>
+          }
+        >
+          <div className='grid gap-3 md:grid-cols-2'>
+            <input className='portal-input' value={request.module} onChange={(e) => setRequest((v) => ({ ...v, module: e.target.value }))} placeholder='Module' />
+            <input className='portal-input' value={request.status} onChange={(e) => setRequest((v) => ({ ...v, status: e.target.value }))} placeholder='Status' />
+            <input className='portal-input' type='date' value={request.fromDate} onChange={(e) => setRequest((v) => ({ ...v, fromDate: e.target.value }))} />
+            <input className='portal-input' type='date' value={request.toDate} onChange={(e) => setRequest((v) => ({ ...v, toDate: e.target.value }))} />
+            <input className='portal-input md:col-span-2' value={request.staff} onChange={(e) => setRequest((v) => ({ ...v, staff: e.target.value }))} placeholder='Staff' />
+          </div>
+        </AdminModal>
+      ) : null}
     </AdminShell>
   )
 }

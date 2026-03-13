@@ -4,6 +4,7 @@ const items = [
   { to: '/admin/dashboard', label: 'Dashboard', icon: '▦' },
   { to: '/admin/appointments', label: 'Appointments', icon: '🗓' },
   { to: '/admin/registration', label: 'Registration', icon: '🧾' },
+  { to: '/admin/review', label: 'Review', icon: '✅' },
   { to: '/admin/audit-log', label: 'Audit Log', icon: '🕒' },
   { to: '/admin/settings', label: 'Settings', icon: '⚙' },
 ]

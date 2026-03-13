@@ -1,9 +1,26 @@
 import { AdminShell } from '@/components/layout/AdminShell'
+import { exportCsv } from '@/lib/reports'
 
 export function AdminSettingsPage() {
   return (
     <AdminShell>
-      <h1 className='font-serif text-6xl text-[#4a2a00]'>Admin Settings</h1>
+      <div className='flex items-center justify-between'>
+        <h1 className='font-serif text-6xl text-[#4a2a00]'>Admin Settings</h1>
+        <button
+          className='portal-btn-small'
+          onClick={() =>
+            exportCsv('settings-report.csv', [
+              ['section', 'key', 'value'],
+              ['SMTP', 'host', 'localhost'],
+              ['SMTP', 'port', '1025'],
+              ['Appointment Rules', 'minimum lead time', '24'],
+              ['Appointment Rules', 'cancellation cut-off', '12'],
+            ])
+          }
+        >
+          EXPORT CSV
+        </button>
+      </div>
       <div className='mt-6 grid gap-5 lg:grid-cols-2'>
         <section className='rounded-md border border-[#8a5a2f]/30 bg-[#f8f2e9] p-6'>
           <h2 className='font-serif text-3xl text-[#4a2a00]'>SMTP & Notification</h2>

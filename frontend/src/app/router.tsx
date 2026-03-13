@@ -4,6 +4,7 @@ import { AdminAppointmentsPage } from '@/pages/AdminAppointmentsPage'
 import { AdminAuditLogPage } from '@/pages/AdminAuditLogPage'
 import { AdminDashboardPage } from '@/pages/AdminDashboardPage'
 import { AdminRegistrationPage } from '@/pages/AdminRegistrationPage'
+import { AdminReviewPage } from '@/pages/AdminReviewPage'
 import { AdminSettingsPage } from '@/pages/AdminSettingsPage'
 import { DashboardPage } from '@/pages/DashboardPage'
 import { ForgotPasswordPage } from '@/pages/ForgotPasswordPage'
@@ -25,6 +26,7 @@ const router = createBrowserRouter([
   { path: '/admin/dashboard', element: <AdminDashboardPage /> },
   { path: '/admin/appointments', element: <AdminAppointmentsPage /> },
   { path: '/admin/registration', element: <AdminRegistrationPage /> },
+  { path: '/admin/review', element: <AdminReviewPage /> },
   { path: '/admin/audit-log', element: <AdminAuditLogPage /> },
   { path: '/admin/settings', element: <AdminSettingsPage /> },
   { path: '*', element: <Navigate to='/' replace /> },
