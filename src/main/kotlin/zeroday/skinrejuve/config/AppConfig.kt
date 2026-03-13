@@ -1,6 +1,6 @@
 package zeroday.skinrejuve.config
 
-import com.typesafe.config.Config
+import io.ktor.server.config.ApplicationConfig
 
 data class AppConfig(
     val environment: String,
@@ -13,7 +13,7 @@ data class AppConfig(
     val allowedOrigins: List<String>
 ) {
     companion object {
-        fun from(config: Config): AppConfig {
+        fun from(config: ApplicationConfig): AppConfig {
             val environment = propertyOrEnv(config, "app.environment", "APP_ENV", "development")
             val jwtSecret = propertyOrEnv(config, "jwt.secret", "JWT_SECRET", "")
             require(jwtSecret.isNotBlank()) { "JWT secret must be configured using JWT_SECRET or jwt.secret" }
@@ -33,11 +33,11 @@ data class AppConfig(
             )
         }
 
-        private fun propertyOrEnv(config: Config, path: String, envName: String, default: String): String {
+        private fun propertyOrEnv(config: ApplicationConfig, path: String, envName: String, default: String): String {
             val envValue = System.getenv(envName)
             return when {
                 !envValue.isNullOrBlank() -> envValue
-                config.hasPath(path) -> config.getString(path)
+                config.propertyOrNull(path) != null -> config.property(path).getString()
                 else -> default
             }
         }

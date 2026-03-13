@@ -1,7 +1,10 @@
+@file:UseContextualSerialization(java.time.LocalDateTime::class, java.util.UUID::class)
+
 package zeroday.skinrejuve.models
 
-import zeroday.skinrejuve.db.AppointmentStatus
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.UseContextualSerialization
+import zeroday.skinrejuve.db.AppointmentStatus
 import java.time.LocalDateTime
 import java.util.UUID
 

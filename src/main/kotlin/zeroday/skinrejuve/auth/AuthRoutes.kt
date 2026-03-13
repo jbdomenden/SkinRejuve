@@ -32,13 +32,13 @@ fun Route.authRoutes(authService: AuthService) {
                 call.respond(HttpStatusCode.BadRequest, ApiResponse<Unit>(false, message = "Invalid or expired token"))
                 return@get
             }
-            call.respond(ApiResponse(success = true, message = "Email verified"))
+            call.respond(ApiResponse<Unit>(success = true, message = "Email verified"))
         }
 
         post("/forgot-password") {
             val request = call.receive<ForgotPasswordRequest>()
             authService.forgotPassword(request.email)
-            call.respond(ApiResponse(success = true, message = "If account exists, reset email was sent"))
+            call.respond(ApiResponse<Unit>(success = true, message = "If account exists, reset email was sent"))
         }
 
         post("/reset-password") {
@@ -48,7 +48,7 @@ fun Route.authRoutes(authService: AuthService) {
                 call.respond(HttpStatusCode.BadRequest, ApiResponse<Unit>(false, message = "Invalid or expired token"))
                 return@post
             }
-            call.respond(ApiResponse(success = true, message = "Password reset successful"))
+            call.respond(ApiResponse<Unit>(success = true, message = "Password reset successful"))
         }
     }
 }

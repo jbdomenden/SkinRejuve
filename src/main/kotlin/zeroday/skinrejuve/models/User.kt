@@ -1,7 +1,10 @@
+@file:UseContextualSerialization(java.util.UUID::class)
+
 package zeroday.skinrejuve.models
 
-import zeroday.skinrejuve.db.UserRole
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.UseContextualSerialization
+import zeroday.skinrejuve.db.UserRole
 import java.util.UUID
 
 @Serializable

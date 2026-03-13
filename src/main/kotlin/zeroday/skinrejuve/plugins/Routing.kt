@@ -50,7 +50,7 @@ fun Application.configureRouting() {
 
     routing {
         get("/health") {
-            call.respond(ApiResponse(success = true, message = "ok"))
+            call.respond(ApiResponse<Unit>(success = true, message = "ok"))
         }
 
         authRoutes(authService)

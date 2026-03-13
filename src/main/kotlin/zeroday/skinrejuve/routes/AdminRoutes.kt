@@ -15,7 +15,7 @@ fun Route.adminRoutes() {
         route("/api/admin") {
             get("/dashboard") {
                 call.requireAnyRole(UserRole.ADMIN)
-                call.respond(ApiResponse(success = true, message = "Admin dashboard endpoint ready"))
+                call.respond(ApiResponse<Unit>(success = true, message = "Admin dashboard endpoint ready"))
             }
         }
     }

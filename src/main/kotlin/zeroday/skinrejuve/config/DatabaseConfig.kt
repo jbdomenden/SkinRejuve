@@ -1,6 +1,6 @@
 package zeroday.skinrejuve.config
 
-import com.typesafe.config.Config
+import io.ktor.server.config.ApplicationConfig
 
 data class DatabaseConfig(
     val jdbcUrl: String,
@@ -10,7 +10,7 @@ data class DatabaseConfig(
     val maxPoolSize: Int
 ) {
     companion object {
-        fun from(config: Config): DatabaseConfig = DatabaseConfig(
+        fun from(config: ApplicationConfig): DatabaseConfig = DatabaseConfig(
             jdbcUrl = value(config, "database.jdbcUrl", "DB_JDBC_URL", "jdbc:postgresql://localhost:5432/skinrejuve"),
             username = value(config, "database.username", "DB_USERNAME", "postgres"),
             password = value(config, "database.password", "DB_PASSWORD", "postgres"),
@@ -18,9 +18,9 @@ data class DatabaseConfig(
             maxPoolSize = value(config, "database.maxPoolSize", "DB_MAX_POOL_SIZE", "10").toInt()
         )
 
-        private fun value(config: Config, path: String, envName: String, default: String): String {
+        private fun value(config: ApplicationConfig, path: String, envName: String, default: String): String {
             val env = System.getenv(envName)
-            return if (!env.isNullOrBlank()) env else if (config.hasPath(path)) config.getString(path) else default
+            return if (!env.isNullOrBlank()) env else config.propertyOrNull(path)?.getString() ?: default
         }
     }
 }

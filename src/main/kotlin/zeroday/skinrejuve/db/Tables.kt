@@ -1,7 +1,9 @@
 package zeroday.skinrejuve.db
 
+import org.jetbrains.exposed.sql.Op
 import org.jetbrains.exposed.sql.ReferenceOption
 import org.jetbrains.exposed.sql.Table
+import org.jetbrains.exposed.sql.javatime.date
 import org.jetbrains.exposed.sql.javatime.datetime
 
 object Users : Table("users") {
@@ -126,7 +128,9 @@ object Appointments : Table("appointments") {
     init {
         index(false, patientId, createdAt)
         check("denial_reason_required_if_denied") {
-            (status neq AppointmentStatus.DENIED) or denialReason.isNotNull()
+            Op.build {
+                (status neq AppointmentStatus.DENIED) or denialReason.isNotNull()
+            }
         }
     }
 }
@@ -153,7 +157,7 @@ object Notifications : Table("notifications") {
 
 object AuditLogs : Table("audit_logs") {
     val id = uuid("id")
-    val actorUserId = uuid("actor_user_id").nullable().references(Users.id, onDelete = ReferenceOption.SET_NULL)
+    val actorUserId = optReference("actor_user_id", Users.id, onDelete = ReferenceOption.SET_NULL)
     val action = varchar("action", 120)
     val entity = varchar("entity", 120)
     val entityId = varchar("entity_id", 64)
