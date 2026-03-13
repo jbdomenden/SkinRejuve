@@ -3,6 +3,7 @@ package zeroday.skinrejuve.db
 import org.jetbrains.exposed.sql.Op
 import org.jetbrains.exposed.sql.ReferenceOption
 import org.jetbrains.exposed.sql.Table
+import org.jetbrains.exposed.sql.SqlExpressionBuilder
 import org.jetbrains.exposed.sql.javatime.date
 import org.jetbrains.exposed.sql.javatime.datetime
 
@@ -128,8 +129,10 @@ object Appointments : Table("appointments") {
     init {
         index(false, patientId, createdAt)
         check("denial_reason_required_if_denied") {
-            Op.build {
-                (status neq AppointmentStatus.DENIED) or denialReason.isNotNull()
+            SqlExpressionBuilder.run {
+                Op.build {
+                    (status neq AppointmentStatus.DENIED) or denialReason.isNotNull()
+                }
             }
         }
     }
