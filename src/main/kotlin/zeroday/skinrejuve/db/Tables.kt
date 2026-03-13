@@ -131,7 +131,7 @@ object Appointments : Table("appointments") {
         check("denial_reason_required_if_denied") {
             SqlExpressionBuilder.run {
                 Op.build {
-                    (status neq AppointmentStatus.DENIED) or denialReason.isNotNull()
+                    (status neq AppointmentStatus.DENIED).or(denialReason.isNotNull())
                 }
             }
         }
