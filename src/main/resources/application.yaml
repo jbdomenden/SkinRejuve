@@ -1,10 +1,37 @@
 ktor:
-    application:
-        modules:
-            - zeroday.ApplicationKt.module
-    deployment:
-        port: 8080
-postgres:
-  url: "jdbc:postgresql://localhost/default"
-  user: username
-  password: password
+  deployment:
+    port: 8080
+  application:
+    modules:
+      - com.clinicportal.ApplicationKt.module
+
+app:
+  url: "http://localhost:8080"
+  environment: "development"
+
+jwt:
+  issuer: "skinrejuve-api"
+  audience: "skinrejuve-clients"
+  secret: ""
+  expiresMinutes: "120"
+
+tokens:
+  expiresMinutes: "30"
+
+cors:
+  allowedOrigins: "http://localhost:5173"
+
+database:
+  jdbcUrl: "jdbc:postgresql://localhost:5432/skinrejuve"
+  username: "postgres"
+  password: "postgres"
+  driver: "org.postgresql.Driver"
+  maxPoolSize: "10"
+
+smtp:
+  host: "localhost"
+  port: "1025"
+  username: ""
+  password: ""
+  from: "no-reply@skinrejuve.local"
+  useTls: "false"
