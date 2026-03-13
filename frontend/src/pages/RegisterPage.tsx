@@ -27,9 +27,9 @@ export function RegisterPage() {
   return (
     <AuthShell>
       <div className='mx-auto max-w-3xl'>
-        <div className='mb-8 flex justify-center gap-16 border-b border-gold/50 pb-2 text-4xl text-ivory'>
-          <Link to='/login' className='text-ivory/85'>SIGN IN</Link>
-          <span className='border-b-2 border-ivory pb-2'>NEW CLIENT</span>
+        <div className='mb-8 flex justify-center border-b border-gold/40 pb-2 text-4xl text-ivory'>
+          <Link to='/login' className='w-1/2 text-center text-ivory/85'>SIGN IN</Link>
+          <span className='w-1/2 border-b-2 border-ivory pb-2 text-center'>NEW CLIENT</span>
         </div>
 
         <form className='space-y-4' onSubmit={form.handleSubmit((v) => register.mutate(v))}>
@@ -43,7 +43,7 @@ export function RegisterPage() {
           <input className='portal-input' type='password' placeholder='ENTER PASSWORD' {...form.register('password')} />
           <input className='portal-input' type='password' placeholder='CONFIRM PASSWORD' {...form.register('confirmPassword')} />
 
-          <button className='portal-btn mx-auto block w-1/2' type='submit'>
+          <button className='portal-btn mx-auto block w-[58%]' type='submit'>
             NEXT
           </button>
         </form>

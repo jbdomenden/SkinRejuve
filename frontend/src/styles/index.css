@@ -15,6 +15,10 @@ body {
     #d8ceb7;
 }
 
+.portal-bg-auth {
+  backdrop-filter: blur(1px);
+}
+
 .portal-input {
   @apply w-full border border-gold/60 bg-white/95 px-4 py-3 text-lg text-brand placeholder:text-brand/60;
 }
