@@ -15,7 +15,12 @@ data class AppConfig(
     companion object {
         fun from(config: ApplicationConfig): AppConfig {
             val environment = propertyOrEnv(config, "app.environment", "APP_ENV", "development")
-            val jwtSecret = propertyOrEnv(config, "jwt.secret", "JWT_SECRET", "")
+            val defaultJwtSecret = if (environment.equals("development", ignoreCase = true)) {
+                "dev-secret-change-me"
+            } else {
+                ""
+            }
+            val jwtSecret = propertyOrEnv(config, "jwt.secret", "JWT_SECRET", defaultJwtSecret)
             require(jwtSecret.isNotBlank()) { "JWT secret must be configured using JWT_SECRET or jwt.secret" }
 
             return AppConfig(
@@ -35,9 +40,10 @@ data class AppConfig(
 
         private fun propertyOrEnv(config: ApplicationConfig, path: String, envName: String, default: String): String {
             val envValue = System.getenv(envName)
+            val configValue = config.propertyOrNull(path)?.getString()?.takeIf { it.isNotBlank() }
             return when {
                 !envValue.isNullOrBlank() -> envValue
-                config.propertyOrNull(path) != null -> config.property(path).getString()
+                configValue != null -> configValue
                 else -> default
             }
         }
