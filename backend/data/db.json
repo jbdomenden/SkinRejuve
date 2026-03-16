@@ -1,0 +1,42 @@
+{
+  "users": [
+    {
+      "id": "usr-1773394645109",
+      "email": "a@b.com",
+      "passwordHash": "5eb23dc33d86265bca80862d6e06c78526f0e498268e8943d17134e723b0369a2fc58b7e5fc2952b863a34bcce4da9f1c1ee94108d1ba4cf1d0a9544ffd1ffb7",
+      "role": "PATIENT",
+      "emailVerified": false,
+      "createdAt": "2026-03-13T09:37:25.228Z"
+    }
+  ],
+  "emailVerificationTokens": [
+    {
+      "token": "44019748d3ca5e585a5a32d7f415f97a0700a052c1c67a8f",
+      "userId": "usr-1773394645109",
+      "expiresAt": 1773396445238,
+      "consumed": false
+    }
+  ],
+  "passwordResetTokens": [],
+  "patientProfiles": [],
+  "patientIntakes": [],
+  "services": [
+    {
+      "id": "svc-1",
+      "name": "Acne Laser",
+      "description": "Laser acne reduction",
+      "durationMinutes": 60,
+      "price": 3500,
+      "isActive": true
+    },
+    {
+      "id": "svc-2",
+      "name": "Hydra Facial",
+      "description": "Hydration and deep cleansing",
+      "durationMinutes": 45,
+      "price": 2500,
+      "isActive": true
+    }
+  ],
+  "appointments": []
+}
