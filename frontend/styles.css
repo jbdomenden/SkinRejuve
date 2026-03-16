@@ -137,62 +137,55 @@ pre {
   pointer-events: none;
 }
 
-.brand h1 {
+.skin-rejuve-logo {
   margin: 0;
+  display: inline-flex;
+  align-items: baseline;
+  justify-content: center;
   text-align: center;
   font-family: "Cormorant Garamond", "Times New Roman", serif;
-  font-size: clamp(52px, 8vw, 74px);
   font-weight: 500;
   letter-spacing: 0.02em;
   line-height: 0.95;
   white-space: nowrap;
 }
 
-.leaf-v-wrap {
-  display: inline-block;
+.skin-rejuve-logo--large {
+  font-size: clamp(52px, 8vw, 74px);
+}
+
+.skin-rejuve-logo--compact {
+  font-size: clamp(34px, 5vw, 50px);
+}
+
+.v-wrapper {
   position: relative;
-  margin: 0 2px;
+  display: inline-block;
+  width: 0.56em;
+  margin: 0 0.01em;
   line-height: 1;
 }
 
-.leaf-overlay {
+.v-letter {
+  display: inline-block;
+  position: relative;
+  z-index: 1;
+}
+
+.v-leaf {
   position: absolute;
-  left: 61%;
-  top: 49%;
-  width: 22px;
-  height: 34px;
-  border-radius: 56% 44% 60% 40% / 36% 70% 30% 64%;
-  background: linear-gradient(165deg, var(--leaf-1), var(--leaf-2) 50%, var(--leaf-3));
-  transform: translate(-50%, -50%) rotate(21deg);
-  box-shadow: inset -2px -2px 6px #05623555, 0 2px 5px #03381f66;
+  z-index: 2;
+  left: 55%;
+  bottom: 3%;
+  width: 138%;
+  height: 104%;
+  transform: translateX(-50%) rotate(17deg);
+  transform-origin: bottom center;
   pointer-events: none;
+  filter: drop-shadow(0 1px 2px #03381f66);
 }
 
-.leaf-overlay::after {
-  content: "";
-  position: absolute;
-  left: 44%;
-  top: 4px;
-  width: 2px;
-  height: 24px;
-  background: linear-gradient(#f2fff0, #c2f0ce);
-  transform: rotate(-18deg);
-  border-radius: 999px;
-}
-
-.leaf-overlay::before {
-  content: "";
-  position: absolute;
-  left: 14px;
-  bottom: -8px;
-  width: 3px;
-  height: 13px;
-  border-radius: 999px;
-  background: #13a65a;
-  transform: rotate(-18deg);
-}
-
-.brand p {
+.logo-subtitle {
   margin: 12px 0 0;
   border-top: 1px solid #b9976a4a;
   padding-top: 8px;
@@ -304,7 +297,7 @@ hr { border: 0; border-top: 1px solid #d8bd98; margin: 16px 0; }
   border-right: 1px solid #6f4920;
 }
 
-.admin-sidebar h1 {
+.admin-sidebar .skin-rejuve-logo {
   margin: 0;
   font-family: "Cormorant Garamond", "Times New Roman", serif;
   font-size: 40px;
@@ -312,7 +305,7 @@ hr { border: 0; border-top: 1px solid #d8bd98; margin: 16px 0; }
   white-space: nowrap;
 }
 
-.admin-sidebar p {
+.admin-sidebar .logo-subtitle {
   margin-top: 8px;
   letter-spacing: 0.34em;
   font-size: 11px;
@@ -386,7 +379,7 @@ hr { border: 0; border-top: 1px solid #d8bd98; margin: 16px 0; }
     border-bottom: 1px solid #6f4920;
   }
 
-  .admin-sidebar h1 {
+  .admin-sidebar .skin-rejuve-logo {
     font-size: 34px;
   }
 
@@ -405,7 +398,7 @@ hr { border: 0; border-top: 1px solid #d8bd98; margin: 16px 0; }
     padding: 28px 18px 22px;
   }
 
-  .brand p {
+  .logo-subtitle {
     letter-spacing: 0.35em;
   }
 

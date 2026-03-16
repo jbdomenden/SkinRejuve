@@ -1,3 +1,5 @@
+if (window.mountSkinRejuveLogos) window.mountSkinRejuveLogos();
+
 const api = 'http://localhost:8080';
 let token = localStorage.getItem('token') || '';
 
