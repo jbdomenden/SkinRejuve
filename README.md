@@ -4,13 +4,13 @@ This repository has been rewritten into a plain **HTML/CSS/JavaScript frontend**
 
 ## New system layout
 
-- `backend/`
+- `src/main/resources/backend/`
   - `server.js`: HTTP API server
   - `services/`: auth, patient, appointment logic
   - `lib/`: JSON storage + token utils
   - `data/db.json`: local dev datastore
   - `schema.sql`: PostgreSQL schema reference
-- `frontend/`
+- `src/main/resources/frontend/`
   - `index.html`: patient portal UI
   - `admin.html`: admin status update UI
   - `styles.css`, `app.js`, `admin.js`: vanilla frontend assets
@@ -18,7 +18,7 @@ This repository has been rewritten into a plain **HTML/CSS/JavaScript frontend**
 ## Run backend
 
 ```bash
-node backend/server.js
+node src/main/resources/backend/server.js
 ```
 
 Backend starts at `http://localhost:8080`.
@@ -26,7 +26,7 @@ Backend starts at `http://localhost:8080`.
 ## Run frontend
 
 ```bash
-cd frontend
+cd src/main/resources/frontend
 python3 -m http.server 5173
 ```
 

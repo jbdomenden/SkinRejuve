@@ -2,8 +2,8 @@
   "name": "skinrejuve-backend-node",
   "version": "1.0.0",
   "private": true,
-  "main": "backend/server.js",
+  "main": "src/main/resources/backend/server.js",
   "scripts": {
-    "start": "node backend/server.js"
+    "start": "node src/main/resources/backend/server.js"
   }
 }
