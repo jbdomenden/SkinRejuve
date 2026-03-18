@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SkinRejuve Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="auth-bg">
+  <main class="auth-shell">
+    <section class="dashboard-page">
+      <section class="auth-card dashboard-hero">
+        <div class="brand" data-skin-rejuve-logo data-logo-size="large" data-logo-subtitle="SINCE 2011"></div>
+        <div class="page-panel">
+          <div class="page-kicker">PATIENT DASHBOARD</div>
+          <h1 class="page-title">Manage your SkinRejuve care</h1>
+          <p class="page-copy">Update your patient profile, book appointments, and review your history from one page.</p>
+          <div class="dashboard-actions">
+            <a class="text-link" href="login.html">Switch account</a>
+            <button class="secondary-btn" id="logoutBtn" type="button">LOG OUT</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="dashboard-card dashboard-card-visible">
+        <h2>Patient Quick Actions</h2>
+        <div class="grid-2">
+          <div>
+            <label>First name</label>
+            <input id="firstName" placeholder="First name" />
+          </div>
+          <div>
+            <label>Last name</label>
+            <input id="lastName" placeholder="Last name" />
+          </div>
+        </div>
+        <button id="saveProfileBtn">SAVE PROFILE</button>
+        <pre id="profileMsg"></pre>
+
+        <hr />
+
+        <h3>Book appointment</h3>
+        <div class="grid-2">
+          <select id="serviceId">
+            <option value="svc-1">Acne Laser</option>
+            <option value="svc-2">Hydra Facial</option>
+          </select>
+          <input id="startAt" type="datetime-local" />
+        </div>
+        <div class="grid-2">
+          <button id="bookBtn">BOOK APPOINTMENT</button>
+          <button id="historyBtn">LOAD HISTORY</button>
+        </div>
+        <pre id="history"></pre>
+      </section>
+    </section>
+  </main>
+
+  <script src="logo.js"></script>
+  <script src="api-client.js"></script>
+  <script src="dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SkinRejuve Login</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="auth-bg">
+  <main class="auth-shell">
+    <section class="auth-card">
+      <div class="brand" data-skin-rejuve-logo data-logo-size="large" data-logo-subtitle="SINCE 2011"></div>
+
+      <section class="panel page-panel">
+        <div class="page-kicker">PATIENT PORTAL</div>
+        <h1 class="page-title">Sign in to SkinRejuve</h1>
+        <p class="page-copy">Access your appointments, profile, and treatment history.</p>
+
+        <label>USERNAME</label>
+        <input id="email" placeholder="email@example.com" />
+        <label>PASSWORD</label>
+        <input id="password" type="password" placeholder="••••••••" />
+        <div class="forgot-wrap"><small class="link">FORGOT PASSWORD?</small></div>
+        <label class="remember-row"><input type="checkbox" />Remember me on this device</label>
+        <button class="cta" id="loginBtn">ENTER PORTAL</button>
+        <pre id="authMsg"></pre>
+
+        <p class="page-link-row">New to SkinRejuve? <a href="register.html">Create an account</a></p>
+      </section>
+    </section>
+  </main>
+
+  <script src="logo.js"></script>
+  <script src="api-client.js"></script>
+  <script src="login.js"></script>
+</body>
+</html>

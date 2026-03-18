@@ -29,6 +29,8 @@ import zeroday.skinrejuve.utils.mailConfig
 import io.ktor.server.application.Application
 import io.ktor.server.application.call
 import io.ktor.server.response.respond
+import io.ktor.server.response.respondRedirect
+import io.ktor.server.http.content.staticResources
 import io.ktor.server.routing.get
 import io.ktor.server.routing.routing
 
@@ -49,9 +51,19 @@ fun Application.configureRouting() {
     val analyticsService = AnalyticsService()
 
     routing {
+        get("/") {
+            call.respondRedirect("/login", permanent = false)
+        }
+
+        get("/login") {
+            call.respondRedirect("/login.html", permanent = false)
+        }
+
         get("/health") {
             call.respond(ApiResponse<Unit>(success = true, message = "ok"))
         }
+
+        staticResources("/", "frontend")
 
         authRoutes(authService)
         patientRoutes(patientService)
