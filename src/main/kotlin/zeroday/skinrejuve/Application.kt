@@ -1,6 +1,8 @@
 package zeroday.skinrejuve
 
 import zeroday.skinrejuve.config.AppConfig
+import zeroday.skinrejuve.auth.BootstrapAdminService
+import zeroday.skinrejuve.auth.AuthRepository
 import zeroday.skinrejuve.config.DatabaseConfig
 import zeroday.skinrejuve.config.MailConfig
 import zeroday.skinrejuve.db.DatabaseFactory
@@ -21,6 +23,7 @@ fun Application.module() {
     val mailConfig = MailConfig.from(environment.config)
 
     DatabaseFactory(databaseConfig).init()
+    BootstrapAdminService(appConfig, AuthRepository()).ensureSuperAdmin()
 
     install(zeroday.skinrejuve.utils.Constants.AppDependencies) {
         this.appConfig = appConfig
