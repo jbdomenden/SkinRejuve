@@ -1,6 +1,6 @@
 ktor:
   deployment:
-    port: 8080
+    port: 8060
   application:
     modules:
       - zeroday.skinrejuve.ApplicationKt.module
@@ -22,9 +22,9 @@ cors:
   allowedOrigins: "http://localhost:5173"
 
 database:
-  jdbcUrl: "jdbc:postgresql://localhost:5432/skinrejuve"
+  jdbcUrl: "jdbc:postgresql://localhost:5432/skinrejuve_db"
   username: "postgres"
-  password: "postgres"
+  password: "root"
   driver: "org.postgresql.Driver"
   maxPoolSize: "10"
 

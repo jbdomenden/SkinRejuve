@@ -56,14 +56,14 @@ fun Application.configureRouting() {
         }
 
         get("/login") {
-            call.respondRedirect("/login.html", permanent = false)
+            call.respondRedirect("/frontend/login.html", permanent = false)
         }
 
         get("/health") {
             call.respond(ApiResponse<Unit>(success = true, message = "ok"))
         }
 
-        resources("/", "frontend")
+        resources("/")
 
         authRoutes(authService)
         patientRoutes(patientService)
