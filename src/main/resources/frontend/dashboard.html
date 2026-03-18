@@ -6,7 +6,7 @@
   <title>SkinRejuve Dashboard</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body class="auth-bg">
+<body class="portal-bg">
   <main class="auth-shell">
     <section class="dashboard-page">
       <section class="auth-card dashboard-hero">
@@ -35,17 +35,14 @@
           </div>
         </div>
         <button id="saveProfileBtn">SAVE PROFILE</button>
-        <pre id="profileMsg"></pre>
+        <p class="form-feedback" id="profileMsg"></p>
 
         <hr />
 
         <h3>Book appointment</h3>
         <div class="grid-2">
-          <select id="serviceId">
-            <option value="svc-1">Acne Laser</option>
-            <option value="svc-2">Hydra Facial</option>
-          </select>
-          <input id="startAt" type="datetime-local" />
+          <select id="serviceId"></select>
+          <select id="slotId"></select>
         </div>
         <div class="grid-2">
           <button id="bookBtn">BOOK APPOINTMENT</button>

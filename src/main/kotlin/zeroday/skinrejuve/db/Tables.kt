@@ -1,5 +1,7 @@
 package zeroday.skinrejuve.db
 
+import kotlinx.serialization.Serializable
+
 import org.jetbrains.exposed.sql.ReferenceOption
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.javatime.date
@@ -164,12 +166,14 @@ object AuditLogs : Table("audit_logs") {
     }
 }
 
+@Serializable
 enum class UserRole {
     PATIENT,
     STAFF,
     ADMIN
 }
 
+@Serializable
 enum class AppointmentStatus {
     PENDING,
     APPROVED,

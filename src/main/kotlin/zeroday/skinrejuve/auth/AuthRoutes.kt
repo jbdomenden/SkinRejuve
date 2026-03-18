@@ -15,8 +15,13 @@ fun Route.authRoutes(authService: AuthService) {
     route("/api/auth") {
         post("/register") {
             val request = call.receive<RegisterRequest>()
-            val user = authService.register(request.email, request.password)
-            call.respond(HttpStatusCode.Created, ApiResponse(success = true, data = user, message = "Registration successful"))
+            val result = authService.register(request.email, request.password)
+            val message = if (result.verificationEmailSent) {
+                "Registration successful. Please check your email to verify your account."
+            } else {
+                result.emailDeliveryMessage ?: "Registration successful, but email delivery is not configured yet."
+            }
+            call.respond(HttpStatusCode.Created, ApiResponse(success = true, data = result, message = message))
         }
 
         post("/login") {

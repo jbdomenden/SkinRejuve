@@ -24,6 +24,7 @@ fun Application.module() {
 
     DatabaseFactory(databaseConfig).init()
     BootstrapAdminService(appConfig, AuthRepository()).ensureSuperAdmin()
+    BootstrapClinicDataService().ensureSeedData()
 
     install(zeroday.skinrejuve.utils.Constants.AppDependencies) {
         this.appConfig = appConfig

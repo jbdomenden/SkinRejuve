@@ -1,5 +1,6 @@
 package zeroday.skinrejuve.auth
 
+import kotlinx.serialization.Serializable
 import zeroday.skinrejuve.db.UserRole
 import zeroday.skinrejuve.models.User
 import zeroday.skinrejuve.security.PasswordHasher
@@ -11,14 +12,19 @@ class AuthService(
     private val emailVerificationService: EmailVerificationService,
     private val passwordResetService: PasswordResetService
 ) {
-    fun register(email: String, password: String): User {
+    fun register(email: String, password: String): RegistrationResult {
         val normalizedEmail = Validators.requireEmail(email)
         Validators.requirePasswordStrength(password)
         require(authRepository.getUserByEmail(normalizedEmail) == null) { "Email already exists" }
 
         val user = authRepository.createUser(normalizedEmail, PasswordHasher.hash(password), UserRole.PATIENT)
-        emailVerificationService.issueTokenAndSend(user.id, user.email)
-        return user
+        val verification = emailVerificationService.issueTokenAndSend(user.id, user.email)
+        return RegistrationResult(
+            user = user,
+            verificationEmailSent = verification.emailSent,
+            verificationUrl = verification.verificationUrl,
+            emailDeliveryMessage = verification.message
+        )
     }
 
     fun login(email: String, password: String): AuthResult {
@@ -41,6 +47,15 @@ class AuthService(
     fun resetPassword(token: String, password: String): Boolean = passwordResetService.resetPassword(token.trim(), password)
 }
 
+@Serializable
+data class RegistrationResult(
+    val user: User,
+    val verificationEmailSent: Boolean,
+    val verificationUrl: String? = null,
+    val emailDeliveryMessage: String? = null
+)
+
+@Serializable
 data class AuthResult(
     val token: String,
     val emailVerified: Boolean

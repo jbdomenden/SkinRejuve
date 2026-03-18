@@ -23,6 +23,10 @@ import java.util.UUID
 fun Route.appointmentRoutes(appointmentService: AppointmentService, patientService: PatientService) {
     authenticate("auth-jwt") {
         route("/api/appointments") {
+            get("/slots") {
+                call.respond(ApiResponse(success = true, data = appointmentService.availableSlots()))
+            }
+
             post {
                 val userId = call.requireUserId()
                 val profile = patientService.findProfileByUserId(userId) ?: throw IllegalArgumentException("Profile must be completed first")
