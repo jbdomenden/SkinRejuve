@@ -3,27 +3,32 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SkinRejuve Registration</title>
+  <title>SkinRejuve New Client</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body class="auth-bg">
-  <main class="auth-shell">
-    <section class="auth-card">
-      <div class="brand" data-skin-rejuve-logo data-logo-size="large" data-logo-subtitle="SINCE 2011"></div>
+<body class="portal-bg">
+  <main class="portal-shell">
+    <section class="portal-card auth-card">
+      <div class="brand portal-brand" data-skin-rejuve-logo data-logo-size="large" data-logo-subtitle="SINCE 2011"></div>
 
-      <section class="panel page-panel">
-        <div class="page-kicker">NEW CLIENT</div>
-        <h1 class="page-title">Create your account</h1>
-        <p class="page-copy">Register once to manage consultations, appointments, and treatment updates.</p>
+      <div class="auth-tabs portal-tabs" role="tablist" aria-label="Authentication views">
+        <a class="tab" href="login.html">SIGN IN</a>
+        <a class="tab tab-active" href="register.html" aria-current="page">NEW CLIENT</a>
+      </div>
 
-        <label>EMAIL</label>
-        <input id="registerEmail" placeholder="new@client.com" />
-        <label>PASSWORD</label>
-        <input id="registerPassword" type="password" placeholder="at least 8 chars" />
-        <button class="cta" id="registerBtn">CREATE ACCOUNT</button>
-        <pre id="registerMsg"></pre>
+      <section class="portal-panel">
+        <form id="registerForm" class="portal-form" novalidate>
+          <label for="registerEmail">EMAIL</label>
+          <input id="registerEmail" name="email" type="email" autocomplete="email" placeholder="new@client.com" required />
 
-        <p class="page-link-row">Already registered? <a href="login.html">Go to login</a></p>
+          <label for="registerPassword">PASSWORD</label>
+          <input id="registerPassword" name="password" type="password" autocomplete="new-password" placeholder="at least 8 characters" required />
+
+          <p class="portal-helper">Create your account to book appointments and view treatment updates in the live SkinRejuve backend.</p>
+
+          <button class="cta portal-cta" id="registerBtn" type="submit">CREATE ACCOUNT</button>
+          <p class="form-feedback" id="registerMsg" role="status" aria-live="polite"></p>
+        </form>
       </section>
     </section>
   </main>
