@@ -8,9 +8,9 @@
         <span class="v-wrapper" aria-hidden="true">
           <span class="v-letter">V</span>
           <svg class="v-leaf" viewBox="0 0 100 250" role="presentation" focusable="false" aria-hidden="true">
-            <path d="M58 10 C98 30, 103 98, 58 188 C20 161, 14 95, 48 22 C51 17, 55 12, 58 10 Z" fill="#129E57"/>
-            <path d="M59 24 C67 58, 68 106, 54 174" fill="none" stroke="#F5EAD9" stroke-width="7" stroke-linecap="round" stroke-opacity="0.12"/>
-            <path d="M56 184 C59 202, 65 223, 73 244" fill="none" stroke="#0EA95B" stroke-width="7" stroke-linecap="round"/>
+            <path d="M56 150 C59 300, 5 250 , 320 320" fill="none" stroke="#0EA95B" stroke-width="8" stroke-linecap="round"></path>
+            <path d="M58 25 C98 30, 120 95, 58 188 C20 161, 1 120, 50 22 C51 37, 70 2" fill="#129E57"></path>
+            <path d="M59 24 C67 58, 68 106, 54 174" fill="none" stroke="#F5EAD9" stroke-width="5" stroke-linecap="round" stroke-opacity=".25"></path>
           </svg>
         </span>
         <span class="logo-word">E</span>

@@ -1,19 +1,14 @@
 package zeroday.skinrejuve
 
-import zeroday.skinrejuve.config.AppConfig
-import zeroday.skinrejuve.auth.BootstrapAdminService
+import io.ktor.server.application.*
 import zeroday.skinrejuve.auth.AuthRepository
+import zeroday.skinrejuve.auth.BootstrapAdminService
+import zeroday.skinrejuve.auth.BootstrapClinicDataService
+import zeroday.skinrejuve.config.AppConfig
 import zeroday.skinrejuve.config.DatabaseConfig
 import zeroday.skinrejuve.config.MailConfig
 import zeroday.skinrejuve.db.DatabaseFactory
-import zeroday.skinrejuve.plugins.configureCORS
-import zeroday.skinrejuve.plugins.configureMonitoring
-import zeroday.skinrejuve.plugins.configureRouting
-import zeroday.skinrejuve.plugins.configureSecurity
-import zeroday.skinrejuve.plugins.configureSerialization
-import zeroday.skinrejuve.plugins.configureStatusPages
-import io.ktor.server.application.Application
-import io.ktor.server.application.install
+import zeroday.skinrejuve.plugins.*
 
 fun main(args: Array<String>) = io.ktor.server.netty.EngineMain.main(args)
 
