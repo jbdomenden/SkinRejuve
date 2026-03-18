@@ -14,7 +14,7 @@ document.getElementById('updateBtn').onclick = async () => {
   const appointmentId = document.getElementById('appointmentId').value;
   const status = document.getElementById('status').value;
   const denialReason = document.getElementById('denialReason').value;
-  const r = await request(`/api/appointments/${appointmentId}`, 'PATCH', { status, denialReason });
+  const r = await request(`/api/appointments/${appointmentId}/status`, 'PATCH', { status, denialReason });
   document.getElementById('adminMsg').textContent = JSON.stringify(r, null, 2);
 };
 

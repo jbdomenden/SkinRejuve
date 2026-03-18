@@ -4,6 +4,7 @@ import zeroday.skinrejuve.db.AppointmentSlots
 import zeroday.skinrejuve.db.AppointmentStatus
 import zeroday.skinrejuve.db.Appointments
 import zeroday.skinrejuve.models.Appointment
+import zeroday.skinrejuve.models.AvailableAppointmentSlot
 import zeroday.skinrejuve.utils.DateTimeUtils
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
@@ -14,6 +15,24 @@ import org.jetbrains.exposed.sql.update
 import java.util.UUID
 
 class AppointmentService {
+
+    fun availableSlots(): List<AvailableAppointmentSlot> = transaction {
+        val now = DateTimeUtils.now()
+        AppointmentSlots.selectAll()
+            .where { AppointmentSlots.isAvailable eq true }
+            .map {
+                AvailableAppointmentSlot(
+                    id = it[AppointmentSlots.id],
+                    staffId = it[AppointmentSlots.staffId],
+                    startAt = it[AppointmentSlots.startAt],
+                    endAt = it[AppointmentSlots.endAt],
+                    isAvailable = it[AppointmentSlots.isAvailable]
+                )
+            }
+            .filter { it.startAt.isAfter(now) }
+            .sortedBy { it.startAt }
+    }
+
     fun book(patientId: UUID, serviceId: UUID, slotId: UUID): Appointment = transaction {
         val now = DateTimeUtils.now()
         val slot = AppointmentSlots.selectAll().where { AppointmentSlots.id eq slotId }.singleOrNull()
