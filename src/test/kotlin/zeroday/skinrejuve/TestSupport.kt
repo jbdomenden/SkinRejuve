@@ -78,7 +78,9 @@ fun testJwt(userId: UUID, role: UserRole, email: String = "user@test.local"): St
         jwtSecret = "test-secret",
         jwtExpiresInMinutes = 120,
         tokenExpiresInMinutes = 30,
-        allowedOrigins = listOf("http://localhost:5173")
+        allowedOrigins = listOf("http://localhost:5173"),
+        bootstrapAdminEmail = null,
+        bootstrapAdminPassword = null
     )
     return JwtConfig(appConfig).createToken(JwtPrincipalData(userId, email, role))
 }

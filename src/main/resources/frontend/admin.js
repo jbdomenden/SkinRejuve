@@ -1,15 +1,13 @@
 if (window.mountSkinRejuveLogos) window.mountSkinRejuveLogos();
 
-const api = 'http://localhost:8080';
-let token = localStorage.getItem('token') || '';
+const { request, getToken, getUserRole, setToken } = window.skinRejuveApi;
 
-async function request(path, method = 'GET', body) {
-  const res = await fetch(`${api}${path}`, {
-    method,
-    headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: `Bearer ${token}` } : {}) },
-    body: body ? JSON.stringify(body) : undefined,
-  });
-  return res.json();
+if (!getToken()) {
+  window.location.replace('login.html');
+}
+
+if (getUserRole() !== 'ADMIN') {
+  window.location.replace('dashboard.html');
 }
 
 document.getElementById('updateBtn').onclick = async () => {
@@ -19,3 +17,11 @@ document.getElementById('updateBtn').onclick = async () => {
   const r = await request(`/api/appointments/${appointmentId}`, 'PATCH', { status, denialReason });
   document.getElementById('adminMsg').textContent = JSON.stringify(r, null, 2);
 };
+
+const adminLogoutBtn = document.getElementById('adminLogoutBtn');
+if (adminLogoutBtn) {
+  adminLogoutBtn.addEventListener('click', () => {
+    setToken('');
+    window.location.replace('login.html');
+  });
+}

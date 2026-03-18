@@ -1,6 +1,7 @@
 package zeroday.skinrejuve
 
 import zeroday.skinrejuve.auth.AuthRepository
+import zeroday.skinrejuve.auth.BootstrapAdminService
 import zeroday.skinrejuve.auth.AuthService
 import zeroday.skinrejuve.auth.EmailVerificationService
 import zeroday.skinrejuve.auth.JwtService
@@ -14,7 +15,6 @@ import zeroday.skinrejuve.services.MailService
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
@@ -29,7 +29,9 @@ class AuthIntegrationTest {
         jwtSecret = "test-secret",
         jwtExpiresInMinutes = 120,
         tokenExpiresInMinutes = 30,
-        allowedOrigins = listOf("http://localhost:5173")
+        allowedOrigins = listOf("http://localhost:5173"),
+        bootstrapAdminEmail = null,
+        bootstrapAdminPassword = null
     )
 
     @BeforeTest
@@ -81,5 +83,20 @@ class AuthIntegrationTest {
         assertFailsWith<IllegalArgumentException> {
             authService.login("unverified@test.local", "Password1")
         }
+    }
+
+    @Test
+    fun `bootstrap service creates verified admin`() {
+        val repo = AuthRepository()
+        val config = appConfig.copy(bootstrapAdminEmail = "superadmin@test.local", bootstrapAdminPassword = "SuperAdmin123!")
+
+        BootstrapAdminService(config, repo).ensureSuperAdmin()
+
+        val user = repo.getUserByEmail("superadmin@test.local")
+        assertNotNull(user)
+        assertEquals(UserRole.ADMIN, user.role)
+        assertTrue(user.emailVerified)
+        assertTrue(user.isActive)
+        assertTrue(PasswordHasher.verify("SuperAdmin123!", user.passwordHash))
     }
 }

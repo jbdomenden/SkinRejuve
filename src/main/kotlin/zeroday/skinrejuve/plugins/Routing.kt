@@ -56,13 +56,18 @@ fun Application.configureRouting() {
         }
 
         get("/login") {
-            call.respondRedirect("/login.html", permanent = false)
+            call.respondRedirect("/frontend/login.html", permanent = false)
+        }
+
+        get("/frontend") {
+            call.respondRedirect("/frontend/login.html", permanent = false)
         }
 
         get("/health") {
             call.respond(ApiResponse<Unit>(success = true, message = "ok"))
         }
 
+        staticResources("/frontend", "frontend")
         staticResources("/", "frontend")
 
         authRoutes(authService)

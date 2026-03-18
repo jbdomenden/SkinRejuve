@@ -1,38 +1,26 @@
-# SkinRejuve (HTML/CSS/JS + Node.js rewrite)
+# SkinRejuve
 
-This repository has been rewritten into a plain **HTML/CSS/JavaScript frontend** and a plain **Node.js backend** (no React, no Ktor runtime required for the new stack).
+This project serves the plain HTML/CSS/JavaScript frontend from the Ktor application and uses the Kotlin backend endpoints under the same origin.
 
 ## New system layout
 
-- `src/main/resources/backend/`
-  - `server.js`: HTTP API server
-  - `services/`: auth, patient, appointment logic
-  - `lib/`: JSON storage + token utils
-  - `data/db.json`: local dev datastore
-  - `schema.sql`: PostgreSQL schema reference
-- `src/main/resources/frontend/`
-  - `index.html`: patient portal UI
-  - `admin.html`: admin status update UI
-  - `styles.css`, `app.js`, `admin.js`: vanilla frontend assets
+- `src/main/kotlin/`: Ktor application, auth, database, and API routes
+- `src/main/resources/frontend/`: static frontend assets served by Ktor
+- `src/main/resources/backend/`: legacy prototype assets retained in the repository for reference
 
-## Run backend
+## Run application
 
 ```bash
-node src/main/resources/backend/server.js
+./gradlew run
 ```
 
-Backend starts at `http://localhost:8080`.
-
-## Run frontend
-
-```bash
-cd src/main/resources/frontend
-python3 -m http.server 5173
-```
+Application starts at `http://localhost:8080`.
 
 Frontend pages:
-- `http://localhost:5173/index.html`
-- `http://localhost:5173/admin.html`
+- `http://localhost:8080/frontend/login.html`
+- `http://localhost:8080/frontend/register.html`
+- `http://localhost:8080/frontend/dashboard.html`
+- `http://localhost:8080/frontend/admin.html`
 
 ## API overview
 
@@ -58,5 +46,5 @@ Frontend pages:
   - booking defaults to `PENDING`
   - `DENIED` requires `denialReason`
   - completed appointment cannot be cancelled
-- Auth tokens are HMAC-signed JWT-like tokens for this rewrite.
-- Existing Kotlin/Ktor code remains in the repo history, but the new runtime system is Node + vanilla frontend.
+- Frontend API calls are made against the live Ktor backend using the same origin by default.
+- The `src/main/resources/backend/` directory is legacy prototype material and is not the production runtime path.
