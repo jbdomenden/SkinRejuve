@@ -10,7 +10,9 @@ data class AppConfig(
     val jwtSecret: String,
     val jwtExpiresInMinutes: Long,
     val tokenExpiresInMinutes: Long,
-    val allowedOrigins: List<String>
+    val allowedOrigins: List<String>,
+    val bootstrapAdminEmail: String?,
+    val bootstrapAdminPassword: String?
 ) {
     companion object {
         fun from(config: ApplicationConfig): AppConfig {
@@ -23,6 +25,17 @@ data class AppConfig(
             val jwtSecret = propertyOrEnv(config, "jwt.secret", "JWT_SECRET", defaultJwtSecret)
             require(jwtSecret.isNotBlank()) { "JWT secret must be configured using JWT_SECRET or jwt.secret" }
 
+            val defaultBootstrapEmail = if (environment.equals("development", ignoreCase = true)) {
+                "superadmin@skinrejuve.local"
+            } else {
+                ""
+            }
+            val defaultBootstrapPassword = if (environment.equals("development", ignoreCase = true)) {
+                "SuperAdmin123!"
+            } else {
+                ""
+            }
+
             return AppConfig(
                 environment = environment,
                 appUrl = propertyOrEnv(config, "app.url", "APP_URL", "http://localhost:8080"),
@@ -34,7 +47,9 @@ data class AppConfig(
                 allowedOrigins = propertyOrEnv(config, "cors.allowedOrigins", "CORS_ALLOWED_ORIGINS", "http://localhost:5173")
                     .split(",")
                     .map { it.trim() }
-                    .filter { it.isNotEmpty() }
+                    .filter { it.isNotEmpty() },
+                bootstrapAdminEmail = propertyOrEnv(config, "bootstrapAdmin.email", "SUPERADMIN_EMAIL", defaultBootstrapEmail).ifBlank { null },
+                bootstrapAdminPassword = propertyOrEnv(config, "bootstrapAdmin.password", "SUPERADMIN_PASSWORD", defaultBootstrapPassword).ifBlank { null }
             )
         }
 

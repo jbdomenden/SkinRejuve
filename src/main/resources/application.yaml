@@ -35,3 +35,7 @@ smtp:
   password: ""
   from: "no-reply@skinrejuve.local"
   useTls: "false"
+
+bootstrapAdmin:
+  email: "superadmin@skinrejuve.local"
+  password: "SuperAdmin123!"
