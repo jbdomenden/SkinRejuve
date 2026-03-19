@@ -356,7 +356,7 @@ pre {
 .v-leaf {
   position: absolute;
   z-index: 2;
-  left: 50%;
+  left: 35%;
   bottom: 3%;
   width: 150%;
   height: 100%;
