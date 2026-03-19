@@ -3,7 +3,7 @@ if (window.mountSkinRejuveLogos) window.mountSkinRejuveLogos();
 const { request, getToken, getUserRole, setToken } = window.skinRejuveApi;
 
 if (!getToken()) {
-  window.location.replace('login.html');
+  window.location.replace('index.html?auth=login');
 }
 
 if (getUserRole() !== 'ADMIN' && getUserRole() !== 'STAFF') {
@@ -22,7 +22,7 @@ const logoutButton = document.getElementById('adminLogoutBtn');
 if (logoutButton) {
   logoutButton.addEventListener('click', () => {
     setToken('');
-    window.location.replace('login.html');
+    window.location.replace('index.html?auth=login');
   });
 }
 
