@@ -8,9 +8,9 @@ function renderHighlights(items) {
     completed: items.filter((item) => item.status === 'COMPLETED').length,
   };
   document.getElementById('reviewHighlights').innerHTML = [
-    { label: 'Total queued', value: counts.total },
-    { label: 'Pending review', value: counts.pending },
-    { label: 'Denied', value: counts.denied },
+    { label: 'Total Requests', value: counts.total },
+    { label: 'Pending Review', value: counts.pending },
+    { label: 'Rejected', value: counts.denied },
     { label: 'Completed', value: counts.completed },
   ].map((metric) => `
     <article class="metric-card">
@@ -26,7 +26,7 @@ async function loadReviewAppointments() {
   const root = document.getElementById('reviewAppointments');
   renderHighlights(items);
   if (!items.length) {
-    root.innerHTML = renderEmptyState('No appointments are ready for review.');
+    root.innerHTML = renderEmptyState('No requests found.');
     return;
   }
   root.innerHTML = `
@@ -57,7 +57,7 @@ document.getElementById('updateBtn').onclick = async () => {
   const status = document.getElementById('status').value;
   const denialReason = document.getElementById('denialReason').value.trim();
   const response = await request(`/api/appointments/${appointmentId}/status`, 'PATCH', { status, denialReason });
-  setPanelMessage(document.getElementById('adminMsg'), response?.message || (response?.success ? 'Appointment updated.' : 'Unable to update appointment.'), response?.success ? 'success' : 'error');
+  setPanelMessage(document.getElementById('adminMsg'), response?.message || (response?.success ? 'Status updated.' : 'Unable to update status.'), response?.success ? 'success' : 'error');
   if (response?.success) {
     await loadReviewAppointments();
   }

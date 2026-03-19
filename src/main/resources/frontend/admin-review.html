@@ -10,7 +10,6 @@
   <main class="admin-shell modern-shell">
     <aside class="admin-sidebar glass-sidebar">
       <div class="brand" data-skin-rejuve-logo data-logo-size="compact" data-logo-subtitle="SINCE 2011"></div>
-      <p class="sidebar-copy">Review and resolve appointment requests with a dedicated approval workspace.</p>
       <nav>
         <a href="admin-dashboard.html" data-admin-nav="dashboard">Dashboard</a>
         <a href="admin-appointments.html" data-admin-nav="appointments">Appointments</a>
@@ -26,8 +25,8 @@
       <section class="hero-strip compact-hero dashboard-hero">
         <div>
           <div class="page-kicker">REVIEW</div>
-          <h1 class="page-title page-title-dark">Appointment status review</h1>
-          <p class="page-copy page-copy-dark">Select an appointment, see its journey clearly, and resolve approval decisions with a more modern review workspace.</p>
+          <h1 class="page-title page-title-dark">Review Queue</h1>
+          <p class="page-copy page-copy-dark">Approve or deny appointment requests.</p>
         </div>
       </section>
       <section id="reviewHighlights" class="metric-grid"></section>
@@ -35,8 +34,8 @@
         <div>
           <div class="section-header compact-section-header">
             <div>
-              <h2>Requests for review</h2>
-              <p class="section-copy">Choose a patient record from the queue to prefill the update form.</p>
+              <h2>Requests</h2>
+              <p class="section-copy">Select a request to review.</p>
             </div>
           </div>
           <div id="reviewAppointments"></div>
@@ -57,7 +56,7 @@
             <option>NO_SHOW</option>
           </select>
 
-          <label>Denial reason (required for DENIED)</label>
+          <label>Denial Reason</label>
           <input id="denialReason" placeholder="Reason" />
 
           <button id="updateBtn">UPDATE STATUS</button>

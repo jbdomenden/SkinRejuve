@@ -8,10 +8,10 @@ function summarize(items) {
     revenue: items.reduce((sum, item) => sum + Number(item.servicePrice || 0), 0),
   };
   document.getElementById('appointmentHighlights').innerHTML = [
-    { label: 'Total requests', value: totals.total },
-    { label: 'Pending review', value: totals.pending },
-    { label: 'Approved', value: totals.approved },
-    { label: 'Projected revenue', value: renderCurrency(totals.revenue) },
+    { label: 'Total Requests', value: totals.total },
+    { label: 'Pending Review', value: totals.pending },
+    { label: 'Accepted', value: totals.approved },
+    { label: 'Amount', value: renderCurrency(totals.revenue) },
   ].map((metric) => `
     <article class="metric-card">
       <div class="metric-label">${metric.label}</div>
@@ -26,7 +26,7 @@ function summarize(items) {
   const root = document.getElementById('appointmentsTable');
   summarize(items);
   if (!items.length) {
-    root.innerHTML = renderEmptyState('No appointments are available yet.');
+    root.innerHTML = renderEmptyState('No appointments found.');
     return;
   }
   root.innerHTML = `
@@ -34,11 +34,11 @@ function summarize(items) {
       <table class="data-table data-table-elevated">
         <thead>
           <tr>
-            <th>Patient</th>
+            <th>Registrant</th>
             <th>Service</th>
-            <th>Visit time</th>
-            <th>Status</th>
-            <th>Revenue</th>
+            <th>Amount</th>
+            <th>Date</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
@@ -46,9 +46,9 @@ function summarize(items) {
             <tr>
               <td><strong>${item.patientName}</strong><span>${item.patientEmail}</span></td>
               <td>${item.serviceName}</td>
+              <td>${renderCurrency(item.servicePrice)}</td>
               <td>${renderDate(item.startAt)}</td>
               <td><span class="status-pill">${item.status}</span></td>
-              <td>${renderCurrency(item.servicePrice)}</td>
             </tr>
           `).join('')}
         </tbody>
