@@ -7,7 +7,7 @@ const forgotPasswordBtn = document.getElementById('forgotPasswordBtn');
 
 function redirectForRole(role) {
   if (role === 'ADMIN') {
-    window.location.replace('admin.html');
+    window.location.replace('admin-dashboard.html');
     return;
   }
   window.location.replace('dashboard.html');
@@ -42,7 +42,7 @@ loginForm.addEventListener('submit', async (event) => {
   authMsg.dataset.state = 'info';
 
   const response = await request('/api/auth/login', 'POST', { email, password });
-  const token = response?.data?.token;
+  const token = response?.data?.accessToken;
 
   if (response?.success && token) {
     setToken(token, rememberMe);

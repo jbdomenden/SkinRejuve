@@ -4,12 +4,18 @@ const { verify } = require('./lib/token');
 const authService = require('./services/authService');
 const patientService = require('./services/patientService');
 const appointmentService = require('./services/appointmentService');
+const adminService = require('./services/adminService');
 const { readDb } = require('./lib/storage');
 
 const PORT = Number(process.env.PORT || 8080);
 
 function send(res, status, body) {
-  res.writeHead(status, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'Content-Type, Authorization', 'Access-Control-Allow-Methods': 'GET,POST,PATCH,OPTIONS' });
+  res.writeHead(status, {
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    'Access-Control-Allow-Methods': 'GET,POST,PATCH,OPTIONS'
+  });
   res.end(JSON.stringify(body));
 }
 
@@ -25,6 +31,14 @@ function authUser(req) {
   const auth = req.headers.authorization || '';
   const token = auth.startsWith('Bearer ') ? auth.slice(7) : '';
   return token ? verify(token) : null;
+}
+
+function requireAdmin(user, res) {
+  if (!['ADMIN', 'STAFF'].includes(user?.role)) {
+    send(res, 403, { success: false, message: 'Forbidden' });
+    return false;
+  }
+  return true;
 }
 
 const server = http.createServer(async (req, res) => {
@@ -50,13 +64,23 @@ const server = http.createServer(async (req, res) => {
     if (req.method === 'GET' && url.pathname === '/api/patient/profile') return send(res, 200, { success: true, data: patientService.getProfile(user.sub) });
     if (req.method === 'POST' && url.pathname === '/api/patient/profile') return send(res, 200, { success: true, data: patientService.upsertProfile(user.sub, await parseBody(req)) });
     if (req.method === 'POST' && url.pathname === '/api/patient/intake') return send(res, 201, { success: true, data: patientService.saveIntake(user.sub, await parseBody(req)) });
+    if (req.method === 'GET' && url.pathname === '/api/patient/overview') return send(res, 200, { success: true, data: patientService.getOverview(user.sub) });
 
+    if (req.method === 'GET' && url.pathname === '/api/appointments/slots') return send(res, 200, { success: true, data: appointmentService.getAvailableSlots() });
     if (req.method === 'POST' && url.pathname === '/api/appointments') return send(res, 201, { success: true, data: appointmentService.book(user.sub, await parseBody(req)) });
     if (req.method === 'GET' && url.pathname === '/api/appointments/history') return send(res, 200, { success: true, data: appointmentService.history(user.sub) });
     if (req.method === 'PATCH' && url.pathname.startsWith('/api/appointments/')) {
-      if (!['ADMIN', 'STAFF'].includes(user.role)) return send(res, 403, { success: false, message: 'Forbidden' });
+      if (!requireAdmin(user, res)) return;
       const id = url.pathname.split('/')[3];
       return send(res, 200, { success: true, data: appointmentService.updateStatus(id, await parseBody(req)) });
+    }
+
+    if (url.pathname.startsWith('/api/admin/')) {
+      if (!requireAdmin(user, res)) return;
+      if (req.method === 'GET' && url.pathname === '/api/admin/overview') return send(res, 200, { success: true, data: adminService.getOverview() });
+      if (req.method === 'GET' && url.pathname === '/api/admin/appointments') return send(res, 200, { success: true, data: adminService.getAppointments() });
+      if (req.method === 'GET' && url.pathname === '/api/admin/registrations') return send(res, 200, { success: true, data: adminService.getRegistrations() });
+      if (req.method === 'GET' && url.pathname === '/api/admin/reports') return send(res, 200, { success: true, data: adminService.getReports() });
     }
 
     return send(res, 404, { success: false, message: 'Not found' });
