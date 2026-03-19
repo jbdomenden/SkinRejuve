@@ -56,7 +56,7 @@ Development demo accounts:
 
 ## Deploy on Render
 
-This repository includes a Render Blueprint in `render.yaml` that deploys the Ktor backend with Render's native Java runtime. That replaces the previous Docker-based setup that failed because the repository does not include a `Dockerfile`.
+This repository includes both a Render Blueprint in `render.yaml` for Render's native Java runtime and a `Dockerfile` for container-based deployments. Keep both deployment paths aligned with the project's Java 21 requirement.
 
 ### Provisioned infrastructure
 
