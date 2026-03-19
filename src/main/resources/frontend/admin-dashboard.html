@@ -4,13 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SkinRejuve Admin Dashboard</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="admin-dashboard.css" />
 </head>
 <body class="admin-bg" data-admin-page="dashboard">
   <main class="admin-shell modern-shell">
     <aside class="admin-sidebar glass-sidebar">
       <div class="brand" data-skin-rejuve-logo data-logo-size="compact" data-logo-subtitle="SINCE 2011"></div>
-      <p class="sidebar-copy">A sleek command center for appointments, approvals, and patient growth.</p>
       <nav>
         <a href="admin-dashboard.html" data-admin-nav="dashboard">Dashboard</a>
         <a href="admin-appointments.html" data-admin-nav="appointments">Appointments</a>
@@ -23,28 +22,28 @@
     </aside>
 
     <section class="admin-content admin-page-grid">
-      <section class="hero-strip">
+      <section class="hero-strip dashboard-hero">
         <div>
           <div class="page-kicker">ADMIN DASHBOARD</div>
-          <h1 class="page-title page-title-dark">Operational snapshot</h1>
-          <p class="page-copy page-copy-dark">Track live demand, upcoming visit flow, and open capacity without leaving the sidebar workflow.</p>
+          <h1 class="page-title page-title-dark">Admin Dashboard</h1>
+          <p class="page-copy page-copy-dark">Users, appointments, and clinic activity.</p>
         </div>
       </section>
       <section id="metricsGrid" class="metric-grid"></section>
-      <section class="admin-card wide-card">
+      <section class="admin-card wide-card admin-surface-card">
         <div class="section-header">
           <div>
-            <h2>Recent appointments</h2>
-            <p class="section-copy">The five most recent bookings flowing in from the backend database.</p>
+            <h2>Recent Appointments</h2>
+            <p class="section-copy">Latest booked visits.</p>
           </div>
         </div>
         <div id="recentAppointments"></div>
       </section>
-      <section class="admin-card wide-card">
+      <section class="admin-card wide-card admin-surface-card">
         <div class="section-header">
           <div>
-            <h2>Open slot capacity</h2>
-            <p class="section-copy">Preview the next available treatment windows for the clinic team.</p>
+            <h2>Schedule Overview</h2>
+            <p class="section-copy">Status counts and upcoming visits.</p>
           </div>
         </div>
         <div id="slotCapacity"></div>
