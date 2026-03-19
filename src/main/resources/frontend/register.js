@@ -13,9 +13,9 @@ registerForm.addEventListener('submit', async (event) => {
   registerMsg.dataset.state = 'info';
 
   const response = await request('/api/auth/register', 'POST', { email, password });
-  const verificationUrl = response?.data?.verificationUrl;
-  const baseMessage = response?.message || 'Registration complete.';
-  registerMsg.textContent = verificationUrl ? `${baseMessage} Verify here: ${verificationUrl}` : baseMessage;
+  const verifyToken = response?.data?.verifyToken;
+  const baseMessage = response?.message || 'Registration complete. Verify the email with the backend /api/auth/verify-email endpoint.';
+  registerMsg.textContent = verifyToken ? `${baseMessage} Verification token: ${verifyToken}` : baseMessage;
   registerMsg.dataset.state = response?.success ? 'success' : 'error';
 
   if (response?.success) {

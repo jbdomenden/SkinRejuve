@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SkinRejuve Review Queue</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="admin-bg" data-admin-page="review">
+  <main class="admin-shell modern-shell">
+    <aside class="admin-sidebar glass-sidebar">
+      <div class="brand" data-skin-rejuve-logo data-logo-size="compact" data-logo-subtitle="SINCE 2011"></div>
+      <p class="sidebar-copy">Review and resolve appointment requests with a dedicated approval workspace.</p>
+      <nav>
+        <a href="admin-dashboard.html" data-admin-nav="dashboard">Dashboard</a>
+        <a href="admin-appointments.html" data-admin-nav="appointments">Appointments</a>
+        <a href="admin-registration.html" data-admin-nav="registration">Registration</a>
+        <a href="admin-review.html" data-admin-nav="review">Review</a>
+        <a href="admin-reports.html" data-admin-nav="reports">Reports</a>
+      </nav>
+      <button class="secondary-btn admin-logout" id="adminLogoutBtn" type="button">LOG OUT</button>
+    </aside>
+
+    <section class="admin-content admin-page-grid">
+      <section class="hero-strip compact-hero">
+        <div>
+          <div class="page-kicker">REVIEW</div>
+          <h1 class="page-title page-title-dark">Appointment status review</h1>
+          <p class="page-copy page-copy-dark">Select any appointment, update its journey state, and capture denial reasons when needed.</p>
+        </div>
+      </section>
+      <section class="admin-card wide-card split-card">
+        <div>
+          <div id="reviewAppointments"></div>
+        </div>
+        <div class="review-form">
+          <label>Appointment ID</label>
+          <input id="appointmentId" placeholder="apt-..." />
+
+          <label>Status</label>
+          <select id="status">
+            <option>PENDING</option>
+            <option>APPROVED</option>
+            <option>DENIED</option>
+            <option>CHECKED_IN</option>
+            <option>IN_PROGRESS</option>
+            <option>COMPLETED</option>
+            <option>CANCELLED</option>
+            <option>NO_SHOW</option>
+          </select>
+
+          <label>Denial reason (required for DENIED)</label>
+          <input id="denialReason" placeholder="Reason" />
+
+          <button id="updateBtn">UPDATE STATUS</button>
+          <pre id="adminMsg"></pre>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script src="logo.js"></script>
+  <script src="api-client.js"></script>
+  <script src="admin-shell.js"></script>
+  <script src="admin-review.js"></script>
+</body>
+</html>

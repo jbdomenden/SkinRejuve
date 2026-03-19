@@ -2,53 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta http-equiv="refresh" content="0; url=admin-dashboard.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SkinRejuve Admin</title>
-  <link rel="stylesheet" href="styles.css" />
+  <script>
+    window.location.replace('admin-dashboard.html');
+  </script>
 </head>
-<body class="admin-bg">
-  <main class="admin-shell">
-    <aside class="admin-sidebar">
-      <div class="brand" data-skin-rejuve-logo data-logo-size="compact" data-logo-subtitle="SINCE 2011"></div>
-      <nav>
-        <a href="#">Dashboard</a>
-        <a href="#">Appointments</a>
-        <a href="#">Registration</a>
-        <a href="#">Review</a>
-        <a href="#">Reports</a>
-      </nav>
-      <button class="secondary-btn admin-logout" id="adminLogoutBtn" type="button">LOG OUT</button>
-    </aside>
-
-    <section class="admin-content">
-      <h2>Appointment Status Review</h2>
-      <div class="admin-card">
-        <label>Appointment ID</label>
-        <input id="appointmentId" placeholder="apt-..." />
-
-        <label>Status</label>
-        <select id="status">
-          <option>PENDING</option>
-          <option>APPROVED</option>
-          <option>DENIED</option>
-          <option>CHECKED_IN</option>
-          <option>IN_PROGRESS</option>
-          <option>COMPLETED</option>
-          <option>CANCELLED</option>
-          <option>NO_SHOW</option>
-        </select>
-
-        <label>Denial reason (required for DENIED)</label>
-        <input id="denialReason" placeholder="Reason" />
-
-        <button id="updateBtn">UPDATE STATUS</button>
-        <pre id="adminMsg"></pre>
-      </div>
-    </section>
-  </main>
-
-  <script src="logo.js"></script>
-  <script src="api-client.js"></script>
-  <script src="admin.js"></script>
+<body>
+  <p>Redirecting to the <a href="admin-dashboard.html">admin dashboard</a>…</p>
 </body>
 </html>

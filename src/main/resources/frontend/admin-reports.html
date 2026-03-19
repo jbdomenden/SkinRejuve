@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SkinRejuve Reports</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="admin-bg" data-admin-page="reports">
+  <main class="admin-shell modern-shell">
+    <aside class="admin-sidebar glass-sidebar">
+      <div class="brand" data-skin-rejuve-logo data-logo-size="compact" data-logo-subtitle="SINCE 2011"></div>
+      <p class="sidebar-copy">Keep a polished pulse on service demand, appointment outcomes, and revenue trends.</p>
+      <nav>
+        <a href="admin-dashboard.html" data-admin-nav="dashboard">Dashboard</a>
+        <a href="admin-appointments.html" data-admin-nav="appointments">Appointments</a>
+        <a href="admin-registration.html" data-admin-nav="registration">Registration</a>
+        <a href="admin-review.html" data-admin-nav="review">Review</a>
+        <a href="admin-reports.html" data-admin-nav="reports">Reports</a>
+      </nav>
+      <button class="secondary-btn admin-logout" id="adminLogoutBtn" type="button">LOG OUT</button>
+    </aside>
+    <section class="admin-content admin-page-grid">
+      <section class="hero-strip compact-hero">
+        <div>
+          <div class="page-kicker">REPORTS</div>
+          <h1 class="page-title page-title-dark">Performance overview</h1>
+          <p class="page-copy page-copy-dark">Use backend-powered reporting cards to see volume, revenue, and service-level traction.</p>
+        </div>
+      </section>
+      <section id="reportMetrics" class="metric-grid"></section>
+      <section class="admin-card wide-card">
+        <div class="section-header">
+          <div>
+            <h2>Status mix</h2>
+            <p class="section-copy">Quick count of the operational appointment pipeline.</p>
+          </div>
+        </div>
+        <div id="statusMetrics"></div>
+      </section>
+      <section class="admin-card wide-card">
+        <div class="section-header">
+          <div>
+            <h2>Service performance</h2>
+            <p class="section-copy">Compare bookings and completed revenue by treatment offering.</p>
+          </div>
+        </div>
+        <div id="servicePerformance"></div>
+      </section>
+    </section>
+  </main>
+  <script src="logo.js"></script>
+  <script src="api-client.js"></script>
+  <script src="admin-shell.js"></script>
+  <script src="admin-reports.js"></script>
+</body>
+</html>
