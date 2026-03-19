@@ -12,17 +12,41 @@ data class MailConfig(
 ) {
     companion object {
         fun from(config: ApplicationConfig): MailConfig = MailConfig(
-            host = value(config, "smtp.host", "SMTP_HOST", "localhost"),
-            port = value(config, "smtp.port", "SMTP_PORT", "1025").toInt(),
-            username = value(config, "smtp.username", "SMTP_USERNAME", ""),
-            password = value(config, "smtp.password", "SMTP_PASSWORD", ""),
-            from = value(config, "smtp.from", "SMTP_FROM", "no-reply@skinrejuve.local"),
-            useTls = value(config, "smtp.useTls", "SMTP_USE_TLS", "false").toBoolean()
+            host = firstNonBlank(
+                System.getenv("SMTP_HOST"),
+                config.propertyOrNull("smtp.host")?.getString(),
+                "localhost"
+            ),
+            port = firstNonBlank(
+                System.getenv("SMTP_PORT"),
+                config.propertyOrNull("smtp.port")?.getString(),
+                "1025"
+            ).toInt(),
+            username = firstNonBlank(
+                System.getenv("SMTP_USERNAME"),
+                System.getenv("SMTP_USER"),
+                config.propertyOrNull("smtp.username")?.getString(),
+                ""
+            ),
+            password = firstNonBlank(
+                System.getenv("SMTP_PASSWORD"),
+                config.propertyOrNull("smtp.password")?.getString(),
+                ""
+            ),
+            from = firstNonBlank(
+                System.getenv("SMTP_FROM"),
+                config.propertyOrNull("smtp.from")?.getString(),
+                "no-reply@skinrejuve.local"
+            ),
+            useTls = firstNonBlank(
+                System.getenv("SMTP_USE_TLS"),
+                System.getenv("SMTP_TLS"),
+                config.propertyOrNull("smtp.useTls")?.getString(),
+                "false"
+            ).toBoolean()
         )
 
-        private fun value(config: ApplicationConfig, path: String, envName: String, default: String): String {
-            val env = System.getenv(envName)
-            return if (!env.isNullOrBlank()) env else config.propertyOrNull(path)?.getString() ?: default
-        }
+        private fun firstNonBlank(vararg values: String?): String =
+            values.firstOrNull { !it.isNullOrBlank() } ?: ""
     }
 }

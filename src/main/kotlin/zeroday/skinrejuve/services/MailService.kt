@@ -18,6 +18,8 @@ class MailService(private val mailConfig: MailConfig) {
             put("mail.smtp.port", mailConfig.port.toString())
             put("mail.smtp.auth", (!mailConfig.username.isBlank()).toString())
             put("mail.smtp.starttls.enable", mailConfig.useTls.toString())
+            put("mail.smtp.starttls.required", mailConfig.useTls.toString())
+            put("mail.smtp.ssl.protocols", "TLSv1.2")
             put("mail.smtp.connectiontimeout", "10000")
             put("mail.smtp.timeout", "10000")
             put("mail.smtp.writetimeout", "10000")

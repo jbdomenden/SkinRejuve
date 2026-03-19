@@ -77,16 +77,24 @@ java -jar build/libs/SkinRejuve-all.jar
 - `APP_URL` — set this to your Render app URL, such as `https://skinrejuve.onrender.com`
 - `CORS_ALLOWED_ORIGINS` — set this to the frontend origin allowed to call the API
 
+### Gmail SMTP configuration on Render
+
+The Render blueprint is configured for Gmail SMTP by default:
+
+- `SMTP_HOST=smtp.gmail.com`
+- `SMTP_PORT=587`
+- `SMTP_TLS=true`
+
+Set the following secrets in Render to enable real email delivery:
+
+- `SMTP_USER` — your Gmail address
+- `SMTP_PASSWORD` — a Gmail App Password (do not use your normal account password)
+- `SMTP_FROM` — usually the same Gmail address as `SMTP_USER`
+
 ### Optional production environment variables
 
-Use these when enabling email delivery or seeding a production admin account:
+Use these when seeding a production admin account:
 
-- `SMTP_HOST`
-- `SMTP_PORT`
-- `SMTP_USER`
-- `SMTP_PASSWORD`
-- `SMTP_FROM`
-- `SMTP_TLS`
 - `SUPERADMIN_EMAIL`
 - `SUPERADMIN_PASSWORD`
 
