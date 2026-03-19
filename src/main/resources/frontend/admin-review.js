@@ -1,9 +1,30 @@
 const { request, renderDate, renderEmptyState, setPanelMessage } = window.adminShell;
 
+function renderHighlights(items) {
+  const counts = {
+    total: items.length,
+    pending: items.filter((item) => item.status === 'PENDING').length,
+    denied: items.filter((item) => item.status === 'DENIED').length,
+    completed: items.filter((item) => item.status === 'COMPLETED').length,
+  };
+  document.getElementById('reviewHighlights').innerHTML = [
+    { label: 'Total queued', value: counts.total },
+    { label: 'Pending review', value: counts.pending },
+    { label: 'Denied', value: counts.denied },
+    { label: 'Completed', value: counts.completed },
+  ].map((metric) => `
+    <article class="metric-card">
+      <div class="metric-label">${metric.label}</div>
+      <div class="metric-value">${metric.value}</div>
+    </article>
+  `).join('');
+}
+
 async function loadReviewAppointments() {
   const response = await request('/api/admin/appointments');
   const items = response?.data || [];
   const root = document.getElementById('reviewAppointments');
+  renderHighlights(items);
   if (!items.length) {
     root.innerHTML = renderEmptyState('No appointments are ready for review.');
     return;
@@ -11,7 +32,7 @@ async function loadReviewAppointments() {
   root.innerHTML = `
     <div class="list-stack">
       ${items.map((item) => `
-        <button class="selection-card" type="button" data-appointment-id="${item.id}" data-status="${item.status}">
+        <button class="selection-card selection-card-rich" type="button" data-appointment-id="${item.id}" data-status="${item.status}">
           <div>
             <strong>${item.patientName}</strong>
             <p>${item.serviceName} • ${renderDate(item.startAt)}</p>
