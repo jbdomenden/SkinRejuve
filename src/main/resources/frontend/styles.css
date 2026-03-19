@@ -1300,3 +1300,96 @@ hr { border: 0; border-top: 1px solid #d8bd98; margin: 16px 0; }
     grid-template-columns: 1fr;
   }
 }
+
+
+.auth-modal[hidden] {
+  display: none;
+}
+
+.auth-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: grid;
+  place-items: center;
+  padding: 24px 16px;
+}
+
+.auth-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(26, 14, 4, 0.7);
+  backdrop-filter: blur(10px);
+}
+
+.auth-modal-dialog {
+  position: relative;
+  width: min(620px, 100%);
+  max-height: min(92vh, 980px);
+  overflow-y: auto;
+  z-index: 1;
+}
+
+.auth-modal-close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 48px;
+  height: 48px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 244, 231, 0.2);
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff5e8;
+  font-size: 30px;
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+.auth-modal-tabs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.auth-modal-copy h2 {
+  margin: 6px 0 10px;
+  font-size: clamp(2rem, 4vw, 2.6rem);
+  line-height: 1.05;
+  color: #fff6e8;
+}
+
+.auth-modal-copy p:last-child {
+  margin: 0 0 18px;
+  color: #ead8bd;
+  line-height: 1.6;
+}
+
+.auth-modal-panel[hidden] {
+  display: none;
+}
+
+body.auth-modal-open {
+  overflow: hidden;
+}
+
+.dashboard-card.booking-focus {
+  box-shadow: 0 0 0 3px rgba(199, 137, 36, 0.2), 0 24px 40px rgba(55, 28, 4, 0.18);
+  border-color: rgba(199, 137, 36, 0.45);
+}
+
+@media (max-width: 720px) {
+  .auth-modal-dialog {
+    padding: 34px 20px 28px;
+  }
+
+  .auth-modal-copy h2 {
+    font-size: 1.8rem;
+  }
+
+  .auth-modal-close {
+    top: 14px;
+    right: 14px;
+    width: 42px;
+    height: 42px;
+    font-size: 26px;
+  }
+}
