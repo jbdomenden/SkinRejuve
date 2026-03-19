@@ -12,7 +12,9 @@ data class AppConfig(
     val tokenExpiresInMinutes: Long,
     val allowedOrigins: List<String>,
     val bootstrapAdminEmail: String?,
-    val bootstrapAdminPassword: String?
+    val bootstrapAdminPassword: String?,
+    val bootstrapPatientEmail: String?,
+    val bootstrapPatientPassword: String?
 ) {
     companion object {
         fun from(config: ApplicationConfig): AppConfig {
@@ -49,7 +51,9 @@ data class AppConfig(
                     .map { it.trim() }
                     .filter { it.isNotEmpty() },
                 bootstrapAdminEmail = propertyOrEnv(config, "bootstrapAdmin.email", "SUPERADMIN_EMAIL", defaultBootstrapEmail).ifBlank { null },
-                bootstrapAdminPassword = propertyOrEnv(config, "bootstrapAdmin.password", "SUPERADMIN_PASSWORD", defaultBootstrapPassword).ifBlank { null }
+                bootstrapAdminPassword = propertyOrEnv(config, "bootstrapAdmin.password", "SUPERADMIN_PASSWORD", defaultBootstrapPassword).ifBlank { null },
+                bootstrapPatientEmail = propertyOrEnv(config, "bootstrapPatient.email", "DEMO_PATIENT_EMAIL", if (environment.equals("development", ignoreCase = true)) "patient@skinrejuve.local" else "").ifBlank { null },
+                bootstrapPatientPassword = propertyOrEnv(config, "bootstrapPatient.password", "DEMO_PATIENT_PASSWORD", if (environment.equals("development", ignoreCase = true)) "Patient123!" else "").ifBlank { null }
             )
         }
 

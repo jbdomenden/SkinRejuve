@@ -4,6 +4,7 @@ import io.ktor.server.application.*
 import zeroday.skinrejuve.auth.AuthRepository
 import zeroday.skinrejuve.auth.BootstrapAdminService
 import zeroday.skinrejuve.auth.BootstrapClinicDataService
+import zeroday.skinrejuve.auth.BootstrapPatientService
 import zeroday.skinrejuve.config.AppConfig
 import zeroday.skinrejuve.config.DatabaseConfig
 import zeroday.skinrejuve.config.MailConfig
@@ -18,7 +19,9 @@ fun Application.module() {
     val mailConfig = MailConfig.from(environment.config)
 
     DatabaseFactory(databaseConfig).init()
-    BootstrapAdminService(appConfig, AuthRepository()).ensureSuperAdmin()
+    val authRepository = AuthRepository()
+    BootstrapAdminService(appConfig, authRepository).ensureSuperAdmin()
+    BootstrapPatientService(appConfig, authRepository).ensureDemoPatient()
     BootstrapClinicDataService().ensureSeedData()
 
     install(zeroday.skinrejuve.utils.Constants.AppDependencies) {
