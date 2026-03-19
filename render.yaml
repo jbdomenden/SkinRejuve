@@ -1,7 +1,45 @@
+databases:
+  - name: skinrejuve-db
+    plan: free
+
 services:
   - type: web
-    name: SkinRejuve
+    name: skinrejuve
     plan: free
-    runtime: docker
-    buildCommand: ""
-    startCommand: ""
+    runtime: java
+    rootDir: .
+    buildCommand: ./gradlew buildFatJar
+    startCommand: java -jar build/libs/SkinRejuve-all.jar
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: skinrejuve-db
+          property: connectionString
+      - key: DB_MAX_POOL_SIZE
+        value: 5
+      - key: CORS_ALLOWED_ORIGINS
+        sync: false
+      - key: APP_URL
+        sync: false
+      - key: SMTP_HOST
+        value: smtp.gmail.com
+      - key: SMTP_PORT
+        value: 587
+      - key: SMTP_USER
+        sync: false
+      - key: SMTP_PASSWORD
+        sync: false
+      - key: SMTP_FROM
+        sync: false
+      - key: SMTP_TLS
+        value: true
+      - key: SUPERADMIN_EMAIL
+        sync: false
+      - key: SUPERADMIN_PASSWORD
+        sync: false

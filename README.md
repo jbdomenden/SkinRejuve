@@ -53,3 +53,51 @@ Development demo accounts:
   - completed appointment cannot be cancelled
 - Frontend API calls are made against the live Ktor backend using the same origin by default.
 - The `src/main/resources/backend/` directory is legacy prototype material and is not the production runtime path.
+
+## Deploy on Render
+
+This repository includes a Render Blueprint in `render.yaml` that deploys the Ktor backend with Render's native Java runtime. That replaces the previous Docker-based setup that failed because the repository does not include a `Dockerfile`.
+
+### Provisioned infrastructure
+
+- Web service: `skinrejuve`
+- PostgreSQL database: `skinrejuve-db`
+- Health check: `GET /health`
+- Generated secret: `JWT_SECRET`
+
+### Build and start commands
+
+```bash
+./gradlew buildFatJar
+java -jar build/libs/SkinRejuve-all.jar
+```
+
+### Required Render environment variables after first deploy
+
+- `APP_URL` — set this to your Render app URL, such as `https://skinrejuve.onrender.com`
+- `CORS_ALLOWED_ORIGINS` — set this to the frontend origin allowed to call the API
+
+### Gmail SMTP configuration on Render
+
+The Render blueprint is configured for Gmail SMTP by default:
+
+- `SMTP_HOST=smtp.gmail.com`
+- `SMTP_PORT=587`
+- `SMTP_TLS=true`
+
+Set the following secrets in Render to enable real email delivery:
+
+- `SMTP_USER` — your Gmail address
+- `SMTP_PASSWORD` — a Gmail App Password (do not use your normal account password)
+- `SMTP_FROM` — usually the same Gmail address as `SMTP_USER`
+
+### Optional production environment variables
+
+Use these when seeding a production admin account:
+
+- `SUPERADMIN_EMAIL`
+- `SUPERADMIN_PASSWORD`
+
+### Database URL handling
+
+The application now accepts Render-style `DATABASE_URL` values in `postgres://...` format and converts them to the JDBC URL required by PostgreSQL/Hikari at startup.
