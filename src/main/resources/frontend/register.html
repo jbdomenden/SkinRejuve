@@ -3,38 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SkinRejuve New Client</title>
-  <link rel="stylesheet" href="styles.css" />
+  <title>Redirecting</title>
 </head>
-<body class="portal-bg">
-  <main class="portal-shell">
-    <section class="portal-card auth-card">
-      <div class="brand portal-brand" data-skin-rejuve-logo data-logo-size="large" data-logo-subtitle="SINCE 2011"></div>
-
-      <div class="auth-tabs portal-tabs" role="tablist" aria-label="Authentication views">
-        <a class="tab" href="login.html">SIGN IN</a>
-        <a class="tab tab-active" href="register.html" aria-current="page">NEW CLIENT</a>
-      </div>
-
-      <section class="portal-panel">
-        <form id="registerForm" class="portal-form" novalidate>
-          <label for="registerEmail">EMAIL</label>
-          <input id="registerEmail" name="email" type="email" autocomplete="email" placeholder="new@client.com" required />
-
-          <label for="registerPassword">PASSWORD</label>
-          <input id="registerPassword" name="password" type="password" autocomplete="new-password" placeholder="at least 8 characters" required />
-
-          <p class="portal-helper">Create your account to book appointments and view treatment updates in the live SkinRejuve backend.</p>
-
-          <button class="cta portal-cta" id="registerBtn" type="submit">CREATE ACCOUNT</button>
-          <p class="form-feedback" id="registerMsg" role="status" aria-live="polite"></p>
-        </form>
-      </section>
-    </section>
-  </main>
-
-  <script src="logo.js"></script>
+<body>
+  <p>Redirecting…</p>
   <script src="api-client.js"></script>
-  <script src="register.js"></script>
+  <script>window.skinRejuveAuthGuard = { guestOnly: true, authenticatedRedirect: 'dashboard.html', authenticatedRedirectAdmin: 'admin-dashboard.html' };</script>
+  <script src="auth-guard.js"></script>
+  <script>window.location.replace('index.html?auth=register');</script>
 </body>
 </html>

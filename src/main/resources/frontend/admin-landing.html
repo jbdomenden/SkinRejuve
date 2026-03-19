@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SkinRejuve Landing Content</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="admin-bg" data-admin-page="landing">
+  <main class="admin-shell modern-shell">
+    <aside class="admin-sidebar glass-sidebar">
+      <div class="brand" data-skin-rejuve-logo data-logo-size="compact" data-logo-subtitle="SINCE 2011"></div>
+      <p class="sidebar-copy">Update the guest landing experience with current copy, links, and clinic details.</p>
+      <nav>
+        <a href="admin-dashboard.html" data-admin-nav="dashboard">Dashboard</a>
+        <a href="admin-appointments.html" data-admin-nav="appointments">Appointments</a>
+        <a href="admin-registration.html" data-admin-nav="registration">Registration</a>
+        <a href="admin-review.html" data-admin-nav="review">Review</a>
+        <a href="admin-reports.html" data-admin-nav="reports">Reports</a>
+        <a href="admin-landing.html" data-admin-nav="landing">Landing Page</a>
+      </nav>
+      <button class="secondary-btn admin-logout" id="adminLogoutBtn" type="button">LOG OUT</button>
+    </aside>
+    <section class="admin-content admin-page-grid">
+      <section class="hero-strip compact-hero">
+        <div>
+          <div class="page-kicker">LANDING PAGE</div>
+          <h1 class="page-title page-title-dark">Edit public-facing content</h1>
+          <p class="page-copy page-copy-dark">Refresh the landing page copy, service stories, social links, and location details without touching source files.</p>
+        </div>
+      </section>
+      <section class="admin-card wide-card landing-editor-card">
+        <form id="landingContentForm" class="landing-editor-form">
+          <div class="grid-2">
+            <div>
+              <label for="eyebrow">Eyebrow</label>
+              <input id="eyebrow" />
+            </div>
+            <div>
+              <label for="updatedAtLabel">Support note</label>
+              <input id="updatedAtLabel" />
+            </div>
+          </div>
+          <label for="heroTitle">Hero title</label>
+          <textarea id="heroTitle" rows="3"></textarea>
+          <label for="heroDescription">Hero description</label>
+          <textarea id="heroDescription" rows="4"></textarea>
+          <div class="grid-2">
+            <div>
+              <label for="primaryCtaLabel">Primary CTA</label>
+              <input id="primaryCtaLabel" />
+            </div>
+            <div>
+              <label for="secondaryCtaLabel">Secondary CTA</label>
+              <input id="secondaryCtaLabel" />
+            </div>
+          </div>
+          <div class="grid-2">
+            <div>
+              <label for="featureTitle">Feature title</label>
+              <textarea id="featureTitle" rows="3"></textarea>
+            </div>
+            <div>
+              <label for="featureBullets">Feature bullets (one per line)</label>
+              <textarea id="featureBullets" rows="6"></textarea>
+            </div>
+          </div>
+          <div class="grid-3 landing-editor-grid">
+            <div>
+              <label for="quickStatLabel">Quick stat label</label>
+              <input id="quickStatLabel" />
+            </div>
+            <div>
+              <label for="quickStatValue">Quick stat value</label>
+              <input id="quickStatValue" />
+            </div>
+            <div>
+              <label for="quickStatDescription">Quick stat description</label>
+              <input id="quickStatDescription" />
+            </div>
+          </div>
+          <div class="grid-2">
+            <div>
+              <label for="servicesHeading">Services heading</label>
+              <input id="servicesHeading" />
+            </div>
+            <div>
+              <label for="servicesSubheading">Services subheading</label>
+              <textarea id="servicesSubheading" rows="3"></textarea>
+            </div>
+          </div>
+          <div class="grid-2">
+            <div>
+              <label for="experienceHeading">Experience heading</label>
+              <textarea id="experienceHeading" rows="3"></textarea>
+            </div>
+            <div>
+              <label for="contactHeading">Contact heading</label>
+              <textarea id="contactHeading" rows="3"></textarea>
+            </div>
+          </div>
+          <label for="contactDescription">Contact description</label>
+          <textarea id="contactDescription" rows="3"></textarea>
+          <div class="grid-2">
+            <div>
+              <label for="contactPhoneLabel">Phone label</label>
+              <input id="contactPhoneLabel" />
+            </div>
+            <div>
+              <label for="contactPhone">Phone</label>
+              <input id="contactPhone" />
+            </div>
+          </div>
+          <div class="grid-2">
+            <div>
+              <label for="locationHeading">Location heading</label>
+              <textarea id="locationHeading" rows="3"></textarea>
+            </div>
+            <div>
+              <label for="address">Address</label>
+              <textarea id="address" rows="3"></textarea>
+            </div>
+          </div>
+          <div class="grid-2">
+            <div>
+              <label for="mapUrl">Map embed URL</label>
+              <textarea id="mapUrl" rows="3"></textarea>
+            </div>
+            <div>
+              <label for="directionsUrl">Directions URL</label>
+              <textarea id="directionsUrl" rows="3"></textarea>
+            </div>
+          </div>
+          <label for="proofCards">Proof cards (Title | Description per line)</label>
+          <textarea id="proofCards" rows="6"></textarea>
+          <label for="services">Service cards (Title | Description per line)</label>
+          <textarea id="services" rows="7"></textarea>
+          <label for="experiencePoints">Experience points (Title | Description per line)</label>
+          <textarea id="experiencePoints" rows="6"></textarea>
+          <label for="socialLinks">Social links (Label | URL per line)</label>
+          <textarea id="socialLinks" rows="5"></textarea>
+          <div class="landing-editor-actions">
+            <button type="submit">SAVE LANDING CONTENT</button>
+            <a class="landing-btn landing-btn-secondary" href="index.html" target="_blank" rel="noreferrer">OPEN LANDING PAGE</a>
+          </div>
+          <p class="form-feedback page-copy-dark" id="landingEditorMsg"></p>
+        </form>
+      </section>
+    </section>
+  </main>
+  <script src="logo.js"></script>
+  <script src="api-client.js"></script>
+  <script>window.skinRejuveAuthGuard = { requireAuth: true, roles: ['ADMIN'], redirectTo: 'index.html?auth=login', unauthorizedRedirect: 'dashboard.html' };</script>
+  <script src="auth-guard.js"></script>
+  <script src="admin-shell.js"></script>
+  <script src="admin-landing.js"></script>
+</body>
+</html>

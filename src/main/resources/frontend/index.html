@@ -2,14 +2,290 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="refresh" content="0; url=login.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SkinRejuve Portal</title>
-  <script>
-    window.location.replace('login.html');
-  </script>
+  <title>Skin Rejuve</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
-  <p>Redirecting to the <a href="login.html">login page</a>…</p>
+<body class="landing-body">
+  <div class="landing-noise"></div>
+  <main class="landing-shell">
+    <header class="landing-header">
+      <a class="landing-brand" href="index.html" aria-label="SkinRejuve home">
+        <span data-skin-rejuve-logo data-logo-size="compact" data-logo-subtitle="since 2011"></span>
+      </a>
+      <nav class="landing-nav" aria-label="Primary">
+        <a href="#services">Services</a>
+        <a href="#experience">Experience</a>
+        <a href="#contact">Contact</a>
+        <a href="#location">Location</a>
+      </nav>
+      <div class="landing-actions">
+        <button class="landing-btn landing-btn-secondary" type="button" data-auth-open="login">Log in</button>
+        <button class="landing-btn" type="button" data-auth-open="register" data-auth-intent="booking">Book now</button>
+      </div>
+    </header>
+
+    <section class="landing-hero">
+      <div class="landing-copy">
+        <p class="landing-kicker" id="landingEyebrow">Skin Rejuve Official · since 2011</p>
+        <h1 id="landingHeroTitle">Quezon City skin, facial, and rejuvenation care shaped around the clinic's social presence.</h1>
+        <p class="landing-lead" id="landingHeroDescription"></p>
+        <div class="landing-cta-row">
+          <button class="landing-btn" type="button" data-auth-open="register" data-landing-primary-cta>Create patient account</button>
+          <button class="landing-btn landing-btn-ghost" type="button" data-auth-open="login" data-landing-secondary-cta>Sign in to portal</button>
+        </div>
+        <div class="landing-proof-grid" id="landingProofCards"></div>
+      </div>
+
+      <aside class="landing-showcase" aria-label="SkinRejuve highlights">
+        <div class="showcase-card showcase-card-primary">
+          <p class="showcase-label">Social-backed focus</p>
+          <h2 id="landingFeatureTitle"></h2>
+          <ul id="landingFeatureBullets"></ul>
+        </div>
+        <div class="showcase-stack">
+          <div class="showcase-card showcase-metric">
+            <span class="showcase-label" id="landingQuickStatLabel"></span>
+            <strong id="landingQuickStatValue"></strong>
+            <p id="landingQuickStatDescription"></p>
+          </div>
+          <div class="showcase-card showcase-social">
+            <span class="showcase-label">Official channels</span>
+            <div class="social-links" id="landingSocialLinks"></div>
+            <p class="landing-updated-label" id="landingUpdatedAtLabel"></p>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="landing-section" id="services">
+      <div class="section-heading">
+        <p class="landing-kicker">Service stories</p>
+        <h2 id="servicesHeading"></h2>
+        <p class="landing-lead landing-section-lead" id="servicesSubheading"></p>
+      </div>
+      <div class="service-grid" id="servicesGrid"></div>
+    </section>
+
+    <section class="landing-section landing-experience" id="experience">
+      <div class="experience-panel">
+        <div>
+          <p class="landing-kicker">System refresh</p>
+          <h2 id="experienceHeading"></h2>
+        </div>
+        <div class="experience-points" id="experiencePoints"></div>
+      </div>
+    </section>
+
+    <section class="landing-section contact-panel" id="contact">
+      <div class="contact-copy">
+        <p class="landing-kicker">Stay connected</p>
+        <h2 id="contactHeading"></h2>
+        <p class="landing-lead contact-lead" id="contactDescription"></p>
+      </div>
+      <div class="contact-grid">
+        <article class="contact-card contact-card-social">
+          <span class="showcase-label">Social media</span>
+          <div class="social-links social-links-stack" id="contactSocialLinks"></div>
+        </article>
+
+        <article class="contact-card">
+          <span class="showcase-label" id="contactPhoneLabel">Clinic line</span>
+          <a class="contact-phone" id="contactPhone" href="tel:+63234942315">(02) 3494 2315</a>
+          <p>Call the clinic for appointment assistance, treatment questions, and schedule updates.</p>
+        </article>
+
+        <article class="contact-card contact-card-actions">
+          <span class="showcase-label">Portal actions</span>
+          <div class="contact-actions">
+            <button class="landing-btn" type="button" data-auth-open="register" data-auth-intent="booking" data-landing-primary-cta>Create patient account</button>
+            <button class="landing-btn landing-btn-secondary" type="button" data-auth-open="login" data-landing-secondary-cta>Sign in to portal</button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="landing-section location-panel" id="location">
+      <div class="section-heading">
+        <p class="landing-kicker">Clinic location</p>
+        <h2 id="locationHeading"></h2>
+      </div>
+      <div class="location-layout">
+        <article class="location-card">
+          <span class="showcase-label">Address</span>
+          <p id="locationAddress"></p>
+          <div class="contact-actions">
+            <a class="landing-btn" id="mapDirectionsLink" href="#" target="_blank" rel="noreferrer">Open in Google Maps</a>
+            <button class="landing-btn landing-btn-secondary" type="button" data-auth-open="login">Patient sign in</button>
+          </div>
+        </article>
+
+        <div class="map-card">
+          <iframe
+            id="mapFrame"
+            title="Skin Rejuve map"
+            src=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="auth-modal" id="authModal" hidden>
+    <div class="auth-modal-backdrop" data-auth-close></div>
+    <section class="auth-modal-dialog auth-card" role="dialog" aria-modal="true" aria-labelledby="authModalTitle">
+      <button class="auth-modal-close" type="button" aria-label="Close authentication modal" data-auth-close>&times;</button>
+      <div class="brand portal-brand" data-skin-rejuve-logo data-logo-size="large" data-logo-subtitle="SINCE 2011"></div>
+
+      <div class="auth-tabs portal-tabs auth-modal-tabs" role="tablist" aria-label="Authentication views">
+        <button class="tab tab-active" type="button" data-auth-tab="login">SIGN IN</button>
+        <button class="tab" type="button" data-auth-tab="register">NEW CLIENT</button>
+      </div>
+
+      <section class="portal-panel auth-modal-panel" data-auth-panel="login">
+        <div class="auth-modal-copy">
+          <p class="landing-kicker">Existing client access</p>
+          <h2 id="authModalTitle">Sign in to your clinic portal</h2>
+          <p>Sign in with the live backend and continue to the right dashboard automatically.</p>
+        </div>
+        <form id="loginForm" class="portal-form" novalidate>
+          <label for="email">EMAIL</label>
+          <input id="email" name="email" type="email" autocomplete="username" placeholder="email@example.com" required />
+
+          <label for="password">PASSWORD</label>
+          <input id="password" name="password" type="password" autocomplete="current-password" placeholder="••••••••" required />
+
+          <div class="portal-utility-row">
+            <label class="remember-row portal-remember"><input type="checkbox" id="rememberMe" checked />Remember me on this device</label>
+            <button class="link-button" id="forgotPasswordBtn" type="button">FORGOT PASSWORD?</button>
+          </div>
+
+          <button class="cta portal-cta" id="loginBtn" type="submit">ENTER PORTAL</button>
+          <p class="form-feedback" id="authMsg" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+
+      <section class="portal-panel auth-modal-panel" data-auth-panel="register" hidden>
+        <form id="registerForm" class="portal-form" novalidate>
+          <section class="register-step" data-register-step="1">
+            <div class="auth-modal-copy auth-modal-copy-centered">
+              <p class="landing-kicker">New client</p>
+              <h2>Create your SkinRejuve account</h2>
+              <p>Start with your basic details to open your secure patient profile.</p>
+            </div>
+
+            <div class="register-grid register-grid-2">
+              <div>
+                <label for="registerFullName">FULL NAME</label>
+                <input id="registerFullName" name="fullName" type="text" autocomplete="name" placeholder="Your full name" required />
+              </div>
+              <div>
+                <label for="registerUsername">USERNAME</label>
+                <input id="registerUsername" name="username" type="text" autocomplete="username" placeholder="Preferred username" />
+              </div>
+            </div>
+
+            <label for="registerEmail">EMAIL ADDRESS</label>
+            <input id="registerEmail" name="email" type="email" autocomplete="email" placeholder="new@client.com" required />
+
+            <label for="registerPhone">PHONE NUMBER</label>
+            <input id="registerPhone" name="phone" type="tel" autocomplete="tel" placeholder="09xx xxx xxxx / (02) xxxx xxxx" />
+
+            <label for="registerDob">DATE OF BIRTH</label>
+            <input id="registerDob" name="dateOfBirth" type="date" autocomplete="bday" />
+
+            <label for="registerPassword">ENTER PASSWORD</label>
+            <input id="registerPassword" name="password" type="password" autocomplete="new-password" placeholder="At least 8 characters" required />
+
+            <label for="registerConfirmPassword">CONFIRM PASSWORD</label>
+            <input id="registerConfirmPassword" name="confirmPassword" type="password" autocomplete="new-password" placeholder="Retype your password" required />
+
+            <button class="cta portal-cta" id="registerNextBtn" type="button">NEXT</button>
+          </section>
+
+          <section class="register-step register-step-privacy" data-register-step="2" hidden>
+            <div class="auth-modal-copy auth-modal-copy-centered">
+              <p class="landing-kicker">Data privacy consent</p>
+              <h2>Protecting your personal information matters to us.</h2>
+              <p>Review how SkinRejuve uses your profile and treatment details before completing registration.</p>
+            </div>
+
+            <div class="privacy-card-list">
+              <article class="privacy-card">
+                <span class="privacy-icon">☑</span>
+                <div>
+                  <strong>What we collect</strong>
+                  <ul>
+                    <li>Personal identification details</li>
+                    <li>Contact information and booking updates</li>
+                    <li>Skin concerns and treatment-related information</li>
+                  </ul>
+                </div>
+              </article>
+              <article class="privacy-card">
+                <span class="privacy-icon">✦</span>
+                <div>
+                  <strong>How we use your data</strong>
+                  <ul>
+                    <li>Patient registration and appointment verification</li>
+                    <li>Treatment notes and clinic follow-up preparation</li>
+                    <li>Service communication and care continuity</li>
+                  </ul>
+                </div>
+              </article>
+            </div>
+
+            <div class="register-grid register-grid-4 skin-type-grid">
+              <label class="choice-chip"><input type="radio" name="skinType" value="Oily" /><span>Oily</span></label>
+              <label class="choice-chip"><input type="radio" name="skinType" value="Dry" /><span>Dry</span></label>
+              <label class="choice-chip"><input type="radio" name="skinType" value="Combination" /><span>Combination</span></label>
+              <label class="choice-chip"><input type="radio" name="skinType" value="Sensitive" /><span>Sensitive</span></label>
+            </div>
+
+            <div class="register-grid register-grid-3">
+              <div>
+                <label for="registerAllergies">ALLERGIES</label>
+                <select id="registerAllergies" name="allergiesChoice">
+                  <option value="NO">No</option>
+                  <option value="YES">Yes</option>
+                </select>
+              </div>
+              <div class="register-span-2">
+                <label for="registerAllergyNotes">IF YES, SPECIFY</label>
+                <input id="registerAllergyNotes" name="allergyNotes" type="text" placeholder="List allergies or sensitivities" />
+              </div>
+            </div>
+
+            <label for="registerConditions">MEDICAL CONDITIONS</label>
+            <input id="registerConditions" name="conditions" type="text" placeholder="Relevant medical conditions" />
+
+            <label for="registerTreatments">PAST TREATMENT</label>
+            <input id="registerTreatments" name="pastTreatments" type="text" placeholder="Previous aesthetic or skin treatments" />
+
+            <label class="consent-row">
+              <input id="privacyConsent" name="privacyConsent" type="checkbox" required />
+              <span>I have read and agree to the data privacy policy.</span>
+            </label>
+
+            <div class="register-action-row">
+              <button class="landing-btn landing-btn-secondary auth-inline-btn" id="registerBackBtn" type="button">BACK</button>
+              <button class="cta portal-cta" id="registerBtn" type="submit">CONTINUE REGISTRATION</button>
+            </div>
+          </section>
+
+          <p class="form-feedback" id="registerMsg" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+    </section>
+  </div>
+
+  <script src="logo.js"></script>
+  <script src="api-client.js"></script>
+  <script src="landing.js"></script>
+  <script src="auth-modal.js"></script>
 </body>
 </html>

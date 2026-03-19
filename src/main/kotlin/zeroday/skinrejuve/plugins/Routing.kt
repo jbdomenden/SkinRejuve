@@ -27,14 +27,19 @@ fun Application.configureRouting() {
     val treatmentService = TreatmentService()
     val notificationService = NotificationService()
     val analyticsService = AnalyticsService()
+    val landingPageContentService = LandingPageContentService()
 
     routing {
         get("/") {
-            call.respondRedirect("/login", permanent = false)
+            call.respondRedirect("/frontend/index.html", permanent = false)
         }
 
         get("/login") {
-            call.respondRedirect("/frontend/login.html", permanent = false)
+            call.respondRedirect("/frontend/index.html?auth=login", permanent = false)
+        }
+
+        get("/register") {
+            call.respondRedirect("/frontend/index.html?auth=register", permanent = false)
         }
 
         get("/health") {
@@ -45,6 +50,7 @@ fun Application.configureRouting() {
         staticResources("/", "frontend")
 
         authRoutes(authService)
+        landingPageContentRoutes(landingPageContentService)
         patientRoutes(patientService)
         serviceRoutes(serviceService)
         appointmentRoutes(appointmentService, patientService)

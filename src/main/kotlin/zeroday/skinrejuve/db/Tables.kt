@@ -151,6 +151,14 @@ object Notifications : Table("notifications") {
     override val primaryKey = PrimaryKey(id)
 }
 
+
+object LandingPageContents : Table("landing_page_contents") {
+    val slug = varchar("slug", 64)
+    val payload = text("payload")
+    val updatedAt = datetime("updated_at")
+    override val primaryKey = PrimaryKey(slug)
+}
+
 object AuditLogs : Table("audit_logs") {
     val id = uuid("id")
     val actorUserId = optReference("actor_user_id", Users.id, onDelete = ReferenceOption.SET_NULL)
