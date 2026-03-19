@@ -4,13 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SkinRejuve Registrations</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="admin-registration.css" />
 </head>
 <body class="admin-bg" data-admin-page="registration">
   <main class="admin-shell modern-shell">
     <aside class="admin-sidebar glass-sidebar">
       <div class="brand" data-skin-rejuve-logo data-logo-size="compact" data-logo-subtitle="SINCE 2011"></div>
-      <p class="sidebar-copy">Monitor new client signups, verification progress, and onboarding completeness.</p>
       <nav>
         <a href="admin-dashboard.html" data-admin-nav="dashboard">Dashboard</a>
         <a href="admin-appointments.html" data-admin-nav="appointments">Appointments</a>
@@ -22,14 +21,21 @@
       <button class="secondary-btn admin-logout" id="adminLogoutBtn" type="button">LOG OUT</button>
     </aside>
     <section class="admin-content admin-page-grid">
-      <section class="hero-strip compact-hero">
+      <section class="hero-strip compact-hero dashboard-hero">
         <div>
           <div class="page-kicker">REGISTRATION</div>
-          <h1 class="page-title page-title-dark">Client onboarding</h1>
-          <p class="page-copy page-copy-dark">See which new clients are verified, profile-complete, and ready to convert into booked visits.</p>
+          <h1 class="page-title page-title-dark">Registration</h1>
+          <p class="page-copy page-copy-dark">Manage clinic staff account requests.</p>
         </div>
       </section>
-      <section class="admin-card wide-card">
+      <section id="registrationHighlights" class="metric-grid"></section>
+      <section class="admin-card wide-card admin-surface-card">
+        <div class="section-header">
+          <div>
+            <h2>Registration Queue</h2>
+            <p class="section-copy">All registration requests.</p>
+          </div>
+        </div>
         <div id="registrationsTable"></div>
       </section>
     </section>
