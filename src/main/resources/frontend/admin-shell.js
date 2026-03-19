@@ -10,13 +10,6 @@ if (getUserRole() !== 'ADMIN' && getUserRole() !== 'STAFF') {
 
 const page = document.body.dataset.adminPage || 'dashboard';
 const navGroup = page === 'review' ? 'appointments' : page;
-const pageTitles = {
-  dashboard: 'Operations overview',
-  appointments: 'Manage schedules',
-  registration: 'Review new signups',
-  reports: 'Audit & analytics',
-  landing: 'Settings & content controls',
-};
 const tokenPayload = decodeTokenPayload(getToken()) || {};
 const displayName = tokenPayload.fullName || tokenPayload.name || tokenPayload.email || 'Admin';
 const roleLabel = getUserRole() === 'STAFF' ? 'Staff' : 'Admin';
@@ -38,11 +31,7 @@ function mountSidebar() {
 
   sidebar.innerHTML = `
     <div class="admin-sidebar-top">
-      <div class="brand admin-sidebar-brand" data-skin-rejuve-logo data-logo-size="compact" data-logo-subtitle="ADMIN CONTROL CENTER"></div>
-      <div class="sidebar-intro">
-        <span class="sidebar-chip">${roleLabel}</span>
-        <p>${pageTitles[navGroup] || 'Clinic operations'}</p>
-      </div>
+      <div class="brand admin-sidebar-brand" data-skin-rejuve-logo data-logo-size="compact" data-logo-subtitle="since 2011"></div>
       <nav class="admin-nav-list" aria-label="Admin navigation">
         <a href="admin-dashboard.html" data-admin-nav="dashboard"><span class="admin-nav-icon">${sidebarIcon('dashboard')}</span><span class="admin-nav-copy"><strong>Dashboard</strong><small>Pulse of daily activity</small></span></a>
         <a href="admin-appointments.html" data-admin-nav="appointments"><span class="admin-nav-icon">${sidebarIcon('appointments')}</span><span class="admin-nav-copy"><strong>Appointments</strong><small>Bookings and queue flow</small></span></a>
@@ -50,13 +39,6 @@ function mountSidebar() {
         <a href="admin-reports.html" data-admin-nav="reports"><span class="admin-nav-icon">${sidebarIcon('reports')}</span><span class="admin-nav-copy"><strong>Audit Log</strong><small>History, reports, and tracking</small></span></a>
         <a href="admin-landing.html" data-admin-nav="landing"><span class="admin-nav-icon">${sidebarIcon('landing')}</span><span class="admin-nav-copy"><strong>Settings</strong><small>Profile, security, and landing page</small></span></a>
       </nav>
-    </div>
-    <div class="sidebar-utility-card">
-      <div>
-        <span class="sidebar-utility-label">Active workspace</span>
-        <strong>${pageTitles[navGroup] || 'Clinic operations'}</strong>
-      </div>
-      <span class="status-pill status-muted">${roleLabel}</span>
     </div>
     <div class="sidebar-user-card">
       <div class="sidebar-user-avatar">${displayName.trim().charAt(0).toUpperCase() || 'A'}</div>

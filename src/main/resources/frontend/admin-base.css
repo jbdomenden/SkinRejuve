@@ -679,7 +679,7 @@
 
 .admin-sidebar-top {
   display: grid;
-  gap: 18px;
+  gap: 14px;
 }
 
 .admin-sidebar-brand {
@@ -693,37 +693,10 @@
 .admin-sidebar .logo-subtitle {
   border-top: 1px solid rgba(244, 228, 199, .24);
   padding-top: 10px;
-  letter-spacing: .22em;
+  letter-spacing: .18em;
   font-size: 10px;
-}
-
-.sidebar-intro {
-  padding: 14px 14px 12px;
-  border-radius: 22px;
-  background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
-  border: 1px solid rgba(244, 228, 199, .1);
-  color: #f8ecd8;
-}
-
-.sidebar-chip,
-.sidebar-utility-label {
-  display: inline-flex;
-  align-items: center;
-  min-height: 26px;
-  padding: 0 10px;
-  border-radius: 999px;
-  background: rgba(244, 228, 199, .12);
-  color: #f9ead0;
-  font-size: 11px;
-  letter-spacing: .12em;
+  text-align: center;
   text-transform: uppercase;
-}
-
-.sidebar-intro p {
-  margin: 12px 0 0;
-  color: rgba(255, 240, 219, .78);
-  line-height: 1.55;
-  font-size: 13px;
 }
 
 .admin-nav-list {
@@ -791,24 +764,6 @@
 .admin-nav-icon svg {
   width: 30px;
   height: 30px;
-}
-
-.sidebar-utility-card {
-  display: grid;
-  gap: 10px;
-  padding: 14px;
-  border-radius: 22px;
-  background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
-  border: 1px solid rgba(247,229,196,.12);
-  color: #fff4e4;
-}
-
-.sidebar-utility-card strong {
-  display: block;
-  margin-top: 8px;
-  font-family: "Cormorant Garamond", serif;
-  font-size: 24px;
-  line-height: 1;
 }
 
 .sidebar-user-card {
