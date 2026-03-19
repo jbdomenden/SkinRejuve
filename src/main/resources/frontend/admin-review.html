@@ -4,13 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SkinRejuve Review Queue</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="admin-review.css" />
 </head>
 <body class="admin-bg" data-admin-page="review">
   <main class="admin-shell modern-shell">
     <aside class="admin-sidebar glass-sidebar">
       <div class="brand" data-skin-rejuve-logo data-logo-size="compact" data-logo-subtitle="SINCE 2011"></div>
-      <p class="sidebar-copy">Review and resolve appointment requests with a dedicated approval workspace.</p>
       <nav>
         <a href="admin-dashboard.html" data-admin-nav="dashboard">Dashboard</a>
         <a href="admin-appointments.html" data-admin-nav="appointments">Appointments</a>
@@ -23,18 +22,25 @@
     </aside>
 
     <section class="admin-content admin-page-grid">
-      <section class="hero-strip compact-hero">
+      <section class="hero-strip compact-hero dashboard-hero">
         <div>
           <div class="page-kicker">REVIEW</div>
-          <h1 class="page-title page-title-dark">Appointment status review</h1>
-          <p class="page-copy page-copy-dark">Select any appointment, update its journey state, and capture denial reasons when needed.</p>
+          <h1 class="page-title page-title-dark">Review Queue</h1>
+          <p class="page-copy page-copy-dark">Approve or deny appointment requests.</p>
         </div>
       </section>
-      <section class="admin-card wide-card split-card">
+      <section id="reviewHighlights" class="metric-grid"></section>
+      <section class="admin-card wide-card split-card admin-surface-card">
         <div>
+          <div class="section-header compact-section-header">
+            <div>
+              <h2>Requests</h2>
+              <p class="section-copy">Select a request to review.</p>
+            </div>
+          </div>
           <div id="reviewAppointments"></div>
         </div>
-        <div class="review-form">
+        <div class="review-form review-form-card">
           <label>Appointment ID</label>
           <input id="appointmentId" placeholder="apt-..." />
 
@@ -50,7 +56,7 @@
             <option>NO_SHOW</option>
           </select>
 
-          <label>Denial reason (required for DENIED)</label>
+          <label>Denial Reason</label>
           <input id="denialReason" placeholder="Reason" />
 
           <button id="updateBtn">UPDATE STATUS</button>
