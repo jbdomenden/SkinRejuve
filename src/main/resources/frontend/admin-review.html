@@ -23,18 +23,25 @@
     </aside>
 
     <section class="admin-content admin-page-grid">
-      <section class="hero-strip compact-hero">
+      <section class="hero-strip compact-hero dashboard-hero">
         <div>
           <div class="page-kicker">REVIEW</div>
           <h1 class="page-title page-title-dark">Appointment status review</h1>
-          <p class="page-copy page-copy-dark">Select any appointment, update its journey state, and capture denial reasons when needed.</p>
+          <p class="page-copy page-copy-dark">Select an appointment, see its journey clearly, and resolve approval decisions with a more modern review workspace.</p>
         </div>
       </section>
-      <section class="admin-card wide-card split-card">
+      <section id="reviewHighlights" class="metric-grid"></section>
+      <section class="admin-card wide-card split-card admin-surface-card">
         <div>
+          <div class="section-header compact-section-header">
+            <div>
+              <h2>Requests for review</h2>
+              <p class="section-copy">Choose a patient record from the queue to prefill the update form.</p>
+            </div>
+          </div>
           <div id="reviewAppointments"></div>
         </div>
-        <div class="review-form">
+        <div class="review-form review-form-card">
           <label>Appointment ID</label>
           <input id="appointmentId" placeholder="apt-..." />
 

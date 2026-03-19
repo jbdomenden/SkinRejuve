@@ -22,14 +22,21 @@
       <button class="secondary-btn admin-logout" id="adminLogoutBtn" type="button">LOG OUT</button>
     </aside>
     <section class="admin-content admin-page-grid">
-      <section class="hero-strip compact-hero">
+      <section class="hero-strip compact-hero dashboard-hero">
         <div>
           <div class="page-kicker">REGISTRATION</div>
           <h1 class="page-title page-title-dark">Client onboarding</h1>
-          <p class="page-copy page-copy-dark">See which new clients are verified, profile-complete, and ready to convert into booked visits.</p>
+          <p class="page-copy page-copy-dark">Track verification, profile readiness, and intake progress with a polished admin registration queue.</p>
         </div>
       </section>
-      <section class="admin-card wide-card">
+      <section id="registrationHighlights" class="metric-grid"></section>
+      <section class="admin-card wide-card admin-surface-card">
+        <div class="section-header">
+          <div>
+            <h2>Registration queue</h2>
+            <p class="section-copy">Spot who is verified, who still needs intake completion, and who is ready for conversion.</p>
+          </div>
+        </div>
         <div id="registrationsTable"></div>
       </section>
     </section>

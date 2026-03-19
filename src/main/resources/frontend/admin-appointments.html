@@ -22,14 +22,21 @@
       <button class="secondary-btn admin-logout" id="adminLogoutBtn" type="button">LOG OUT</button>
     </aside>
     <section class="admin-content admin-page-grid">
-      <section class="hero-strip compact-hero">
+      <section class="hero-strip compact-hero dashboard-hero">
         <div>
           <div class="page-kicker">APPOINTMENTS</div>
           <h1 class="page-title page-title-dark">Live schedule board</h1>
-          <p class="page-copy page-copy-dark">Every booked treatment is pulled from the backend with patient, service, and status details.</p>
+          <p class="page-copy page-copy-dark">Review treatment demand, queue statuses, and upcoming visits in a cleaner, more elegant operations view.</p>
         </div>
       </section>
-      <section class="admin-card wide-card">
+      <section id="appointmentHighlights" class="metric-grid"></section>
+      <section class="admin-card wide-card admin-surface-card">
+        <div class="section-header">
+          <div>
+            <h2>Appointment queue</h2>
+            <p class="section-copy">Searchable, status-aware appointment records with revenue visibility for each treatment.</p>
+          </div>
+        </div>
         <div id="appointmentsTable"></div>
       </section>
     </section>
