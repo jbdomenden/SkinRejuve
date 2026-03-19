@@ -313,7 +313,7 @@ pre {
   text-align: center;
   font-family: "Cormorant Garamond", "Times New Roman", serif;
   font-weight: 500;
-  letter-spacing: 0.035em;
+  letter-spacing: 0.15em;
   line-height: 0.95;
   white-space: nowrap;
 }
@@ -329,40 +329,29 @@ pre {
 .v-wrapper {
   position: relative;
   display: inline-block;
-  width: 0.5em;
-  margin: 0 0.05em 0 0.03em;
+  width: 0.56em;
+  margin: 0 0.01em;
   line-height: 1;
 }
 
 .v-letter {
   display: inline-block;
   position: relative;
+  letter-spacing: 0.15em;
   z-index: 1;
 }
 
 .v-leaf {
   position: absolute;
   z-index: 2;
-  left: 40%;
-  bottom: 5%;
-  width: 112%;
-  height: 94%;
-  transform: translateX(-50%) rotate(13deg);
+  left: 50%;
+  bottom: 3%;
+  width: 150%;
+  height: 100%;
+  transform: translateX(-40%) rotate(10deg) scaleY(1.15);
   transform-origin: bottom center;
   pointer-events: none;
   filter: drop-shadow(0 1px 2px #03381f66);
-}
-
-.logo-subtitle {
-  margin: 12px 0 0;
-  border-top: 1px solid #b9976a4a;
-  padding-top: 8px;
-  text-align: center;
-  letter-spacing: 0.52em;
-  color: var(--text-muted);
-  font-family: "Cormorant Garamond", "Times New Roman", serif;
-  font-size: 13px;
-  font-weight: 700;
 }
 
 .auth-tabs {
