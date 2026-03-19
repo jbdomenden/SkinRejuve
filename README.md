@@ -53,3 +53,43 @@ Development demo accounts:
   - completed appointment cannot be cancelled
 - Frontend API calls are made against the live Ktor backend using the same origin by default.
 - The `src/main/resources/backend/` directory is legacy prototype material and is not the production runtime path.
+
+## Deploy on Render
+
+This repository includes a Render Blueprint in `render.yaml` that deploys the Ktor backend with Render's native Java runtime. That replaces the previous Docker-based setup that failed because the repository does not include a `Dockerfile`.
+
+### Provisioned infrastructure
+
+- Web service: `skinrejuve`
+- PostgreSQL database: `skinrejuve-db`
+- Health check: `GET /health`
+- Generated secret: `JWT_SECRET`
+
+### Build and start commands
+
+```bash
+./gradlew buildFatJar
+java -jar build/libs/SkinRejuve-all.jar
+```
+
+### Required Render environment variables after first deploy
+
+- `APP_URL` — set this to your Render app URL, such as `https://skinrejuve.onrender.com`
+- `CORS_ALLOWED_ORIGINS` — set this to the frontend origin allowed to call the API
+
+### Optional production environment variables
+
+Use these when enabling email delivery or seeding a production admin account:
+
+- `SMTP_HOST`
+- `SMTP_PORT`
+- `SMTP_USER`
+- `SMTP_PASSWORD`
+- `SMTP_FROM`
+- `SMTP_TLS`
+- `SUPERADMIN_EMAIL`
+- `SUPERADMIN_PASSWORD`
+
+### Database URL handling
+
+The application now accepts Render-style `DATABASE_URL` values in `postgres://...` format and converts them to the JDBC URL required by PostgreSQL/Hikari at startup.
