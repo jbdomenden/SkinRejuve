@@ -1,44 +1,44 @@
 ktor:
   deployment:
-    port: 8060
+    port: ${PORT:8060}
   application:
     modules:
       - zeroday.skinrejuve.ApplicationKt.module
 
 app:
-  url: "http://localhost:8080"
-  environment: "development"
+  url: ${APP_URL:http://localhost:8060}
+  environment: ${APP_ENV:development}
 
 jwt:
   issuer: "skinrejuve-api"
   audience: "skinrejuve-clients"
-  secret: ""
+  secret: ${JWT_SECRET:dev-secret}
   expiresMinutes: "120"
 
 tokens:
   expiresMinutes: "30"
 
 cors:
-  allowedOrigins: "http://localhost:5173"
+  allowedOrigins: ${CORS_ORIGINS:http://localhost:5173}
 
 database:
-  jdbcUrl: "jdbc:postgresql://localhost:5432/skinrejuve_db"
-  username: "postgres"
-  password: "root"
+  jdbcUrl: ${DB_URL:jdbc:postgresql://localhost:5432/skinrejuve_db}
+  username: ${DB_USER:postgres}
+  password: ${DB_PASSWORD:root}
   driver: "org.postgresql.Driver"
-  maxPoolSize: "10"
+  maxPoolSize: ${DB_POOL_SIZE:5}
 
 smtp:
-  host: "localhost"
-  port: "1025"
-  username: ""
-  password: ""
-  from: "no-reply@skinrejuve.local"
-  useTls: "false"
+  host: ${SMTP_HOST:localhost}
+  port: ${SMTP_PORT:1025}
+  username: ${SMTP_USER:}
+  password: ${SMTP_PASSWORD:}
+  from: ${SMTP_FROM:no-reply@skinrejuve.local}
+  useTls: ${SMTP_TLS:false}
 
 bootstrapAdmin:
-  email: "superadmin@skinrejuve.local"
-  password: "SuperAdmin123!"
+  email: ${ADMIN_EMAIL:superadmin@skinrejuve.local}
+  password: ${ADMIN_PASSWORD:SuperAdmin123!}
 
 bootstrapPatient:
   email: "patient@skinrejuve.local"
