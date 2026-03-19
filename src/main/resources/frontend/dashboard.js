@@ -3,7 +3,7 @@ if (window.mountSkinRejuveLogos) window.mountSkinRejuveLogos();
 const { request, getToken, setToken } = window.skinRejuveApi;
 
 if (!getToken()) {
-  window.location.replace('login.html');
+  window.location.replace('index.html?auth=login');
 }
 
 const profileMsg = document.getElementById('profileMsg');
@@ -106,7 +106,7 @@ async function loadHistory() {
 
 document.getElementById('logoutBtn').onclick = () => {
   setToken('');
-  window.location.replace('login.html');
+  window.location.replace('index.html?auth=login');
 };
 
 document.getElementById('saveProfileBtn').onclick = async () => {
@@ -130,5 +130,11 @@ document.getElementById('bookBtn').onclick = async () => {
 };
 
 document.getElementById('historyBtn').onclick = loadHistory;
+
+const bookingIntent = new URLSearchParams(window.location.search).get('booking');
+if (bookingIntent === '1') {
+  document.getElementById('bookingPanel')?.classList.add('booking-focus');
+  document.getElementById('serviceId')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
 
 Promise.all([loadProfile(), loadServicesAndSlots(), loadHistory(), loadOverview()]);
