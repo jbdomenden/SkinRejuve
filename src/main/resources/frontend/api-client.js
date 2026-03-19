@@ -2,6 +2,7 @@
   const sameOriginBase = window.location.origin;
   const configuredBase = window.SKINREJUVE_API_BASE || localStorage.getItem('skinrejuve.apiBase') || '';
   const apiBase = (configuredBase || sameOriginBase).replace(/\/$/, '');
+  const postLoginRedirectKey = 'skinrejuve.postLoginRedirect';
 
   function getToken() {
     return localStorage.getItem('token') || sessionStorage.getItem('token') || '';
@@ -17,6 +18,20 @@
     } else {
       storage.removeItem('token');
     }
+  }
+
+  function setPostLoginRedirect(path) {
+    if (path) sessionStorage.setItem(postLoginRedirectKey, path);
+  }
+
+  function consumePostLoginRedirect() {
+    const value = sessionStorage.getItem(postLoginRedirectKey) || '';
+    sessionStorage.removeItem(postLoginRedirectKey);
+    return value;
+  }
+
+  function clearPostLoginRedirect() {
+    sessionStorage.removeItem(postLoginRedirectKey);
   }
 
   function parseJsonSafe(text) {
@@ -43,9 +58,20 @@
     return decodeTokenPayload(getToken())?.role || '';
   }
 
+  function normalizeBackendPath(pathOrUrl) {
+    if (!pathOrUrl) return '';
+    try {
+      const url = new URL(pathOrUrl, apiBase);
+      return `${url.pathname}${url.search}${url.hash}`;
+    } catch {
+      return pathOrUrl;
+    }
+  }
+
   async function request(path, method = 'GET', body) {
     const token = getToken();
-    const response = await fetch(`${apiBase}${path}`, {
+    const normalizedPath = normalizeBackendPath(path);
+    const response = await fetch(`${apiBase}${normalizedPath}`, {
       method,
       headers: {
         'Content-Type': 'application/json',
@@ -71,5 +97,9 @@
     request,
     getUserRole,
     decodeTokenPayload,
+    setPostLoginRedirect,
+    consumePostLoginRedirect,
+    clearPostLoginRedirect,
+    normalizeBackendPath,
   };
 })();

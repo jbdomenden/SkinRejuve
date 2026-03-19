@@ -22,8 +22,8 @@
         <a href="#contact">Contact</a>
       </nav>
       <div class="landing-actions">
-        <a class="landing-btn landing-btn-secondary" href="login.html">Log in</a>
-        <a class="landing-btn" href="register.html">Book now</a>
+        <button class="landing-btn landing-btn-secondary" type="button" data-auth-open="login">Log in</button>
+        <button class="landing-btn" type="button" data-auth-open="register" data-auth-intent="booking">Book now</button>
       </div>
     </header>
 
@@ -36,8 +36,8 @@
           Inspired by the brand’s social presence, the page highlights aesthetic treatments, visible results, and easy patient access.
         </p>
         <div class="landing-cta-row">
-          <a class="landing-btn" href="register.html">Create patient account</a>
-          <a class="landing-btn landing-btn-ghost" href="login.html">Enter clinic portal</a>
+          <button class="landing-btn" type="button" data-auth-open="register">Create patient account</button>
+          <button class="landing-btn landing-btn-ghost" type="button" data-auth-open="login">Enter clinic portal</button>
         </div>
         <div class="landing-proof-grid">
           <article>
@@ -141,15 +141,68 @@
         <h2>Let patients discover the brand, then continue inside the portal.</h2>
       </div>
       <div class="contact-actions">
-        <a class="landing-btn" href="register.html">Start with booking</a>
-        <a class="landing-btn landing-btn-secondary" href="login.html">Patient sign in</a>
+        <button class="landing-btn" type="button" data-auth-open="register" data-auth-intent="booking">Start with booking</button>
+        <button class="landing-btn landing-btn-secondary" type="button" data-auth-open="login">Patient sign in</button>
       </div>
     </section>
   </main>
 
+  <div class="auth-modal" id="authModal" hidden>
+    <div class="auth-modal-backdrop" data-auth-close></div>
+    <section class="auth-modal-dialog auth-card" role="dialog" aria-modal="true" aria-labelledby="authModalTitle">
+      <button class="auth-modal-close" type="button" aria-label="Close authentication modal" data-auth-close>&times;</button>
+      <div class="brand portal-brand" data-skin-rejuve-logo data-logo-size="large" data-logo-subtitle="SINCE 2011"></div>
+
+      <div class="auth-tabs portal-tabs auth-modal-tabs" role="tablist" aria-label="Authentication views">
+        <button class="tab tab-active" type="button" data-auth-tab="login">SIGN IN</button>
+        <button class="tab" type="button" data-auth-tab="register">NEW CLIENT</button>
+      </div>
+
+      <section class="portal-panel auth-modal-panel" data-auth-panel="login">
+        <div class="auth-modal-copy">
+          <p class="landing-kicker">Existing client access</p>
+          <h2 id="authModalTitle">Sign in to your clinic portal</h2>
+          <p>Authenticate against the live backend, then continue to the correct dashboard automatically.</p>
+        </div>
+        <form id="loginForm" class="portal-form" novalidate>
+          <label for="email">EMAIL</label>
+          <input id="email" name="email" type="email" autocomplete="username" placeholder="email@example.com" required />
+
+          <label for="password">PASSWORD</label>
+          <input id="password" name="password" type="password" autocomplete="current-password" placeholder="••••••••" required />
+
+          <div class="portal-utility-row">
+            <label class="remember-row portal-remember"><input type="checkbox" id="rememberMe" checked />Remember me on this device</label>
+            <button class="link-button" id="forgotPasswordBtn" type="button">FORGOT PASSWORD?</button>
+          </div>
+
+          <button class="cta portal-cta" id="loginBtn" type="submit">ENTER PORTAL</button>
+          <p class="form-feedback" id="authMsg" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+
+      <section class="portal-panel auth-modal-panel" data-auth-panel="register" hidden>
+        <div class="auth-modal-copy">
+          <p class="landing-kicker">New patient signup</p>
+          <h2>Create your SkinRejuve account</h2>
+          <p>Register with the real backend, verify automatically when possible, and continue directly into the patient experience.</p>
+        </div>
+        <form id="registerForm" class="portal-form" novalidate>
+          <label for="registerEmail">EMAIL</label>
+          <input id="registerEmail" name="email" type="email" autocomplete="email" placeholder="new@client.com" required />
+
+          <label for="registerPassword">PASSWORD</label>
+          <input id="registerPassword" name="password" type="password" autocomplete="new-password" placeholder="at least 8 characters" required />
+
+          <button class="cta portal-cta" id="registerBtn" type="submit">CREATE ACCOUNT</button>
+          <p class="form-feedback" id="registerMsg" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+    </section>
+  </div>
+
   <script src="logo.js"></script>
-  <script>
-    window.mountSkinRejuveLogos?.();
-  </script>
+  <script src="api-client.js"></script>
+  <script src="auth-modal.js"></script>
 </body>
 </html>
