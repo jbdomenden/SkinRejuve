@@ -27,6 +27,7 @@ fun Application.configureRouting() {
     val treatmentService = TreatmentService()
     val notificationService = NotificationService()
     val analyticsService = AnalyticsService()
+    val landingPageContentService = LandingPageContentService()
 
     routing {
         get("/") {
@@ -49,6 +50,7 @@ fun Application.configureRouting() {
         staticResources("/", "frontend")
 
         authRoutes(authService)
+        landingPageContentRoutes(landingPageContentService)
         patientRoutes(patientService)
         serviceRoutes(serviceService)
         appointmentRoutes(appointmentService, patientService)

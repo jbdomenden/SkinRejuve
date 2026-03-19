@@ -36,6 +36,7 @@ fun cleanDatabase() {
         listOf(
             zeroday.skinrejuve.db.AuditLogs,
             zeroday.skinrejuve.db.Notifications,
+            zeroday.skinrejuve.db.LandingPageContents,
             zeroday.skinrejuve.db.TreatmentRecords,
             zeroday.skinrejuve.db.Appointments,
             zeroday.skinrejuve.db.AppointmentSlots,

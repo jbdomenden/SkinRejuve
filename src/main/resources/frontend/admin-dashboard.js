@@ -1,39 +1,24 @@
-const { request, renderCurrency, renderDate, renderEmptyState } = window.adminShell;
+const { request, renderEmptyState } = window.adminShell;
 
 function renderMetrics(metrics) {
   const root = document.getElementById('metricsGrid');
   root.innerHTML = metrics.map((metric) => `
     <article class="metric-card">
       <div class="metric-label">${metric.label}</div>
-      <div class="metric-value">${typeof metric.value === 'number' && metric.label.toLowerCase().includes('revenue') ? renderCurrency(metric.value) : metric.value}</div>
-    </article>
-  `).join('');
-}
-
-function renderAppointmentList(containerId, items, emptyMessage) {
-  const root = document.getElementById(containerId);
-  if (!items.length) {
-    root.innerHTML = renderEmptyState(emptyMessage);
-    return;
-  }
-  root.innerHTML = items.map((item) => `
-    <article class="list-card">
-      <div>
-        <strong>${item.patientName || item.staffName}</strong>
-        <p>${item.serviceName || item.startAt}</p>
-      </div>
-      <div class="list-card-meta">
-        <span class="status-pill">${item.status || item.staffName}</span>
-        <span>${renderDate(item.startAt)}</span>
-      </div>
+      <div class="metric-value">${metric.value}</div>
     </article>
   `).join('');
 }
 
 (async function loadPage() {
-  const response = await request('/api/admin/overview');
-  const data = response?.data || { metrics: [], recentAppointments: [], slotCapacity: [] };
-  renderMetrics(data.metrics || []);
-  renderAppointmentList('recentAppointments', data.recentAppointments || [], 'No appointments have been booked yet.');
-  renderAppointmentList('slotCapacity', data.slotCapacity || [], 'No available slots are currently open.');
+  const response = await request('/api/analytics/overview');
+  const data = response?.data || {};
+  renderMetrics([
+    { label: 'Patients', value: data.totalPatients || 0 },
+    { label: 'Staff', value: data.totalStaff || 0 },
+    { label: 'Services', value: data.totalServices || 0 },
+    { label: 'Appointments', value: data.totalAppointments || 0 },
+  ]);
+  document.getElementById('recentAppointments').innerHTML = renderEmptyState('Use the landing-page editor and appointment views to manage current activity.');
+  document.getElementById('slotCapacity').innerHTML = renderEmptyState('Analytics overview is live. Additional operational boards can be layered in here next.');
 })();
