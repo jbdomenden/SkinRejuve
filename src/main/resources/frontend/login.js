@@ -42,7 +42,7 @@ loginForm.addEventListener('submit', async (event) => {
   authMsg.dataset.state = 'info';
 
   const response = await request('/api/auth/login', 'POST', { email, password });
-  const token = response?.data?.accessToken;
+  const token = response?.data?.token;
 
   if (response?.success && token) {
     setToken(token, rememberMe);

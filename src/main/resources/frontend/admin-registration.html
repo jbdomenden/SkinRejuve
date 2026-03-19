@@ -17,6 +17,7 @@
         <a href="admin-registration.html" data-admin-nav="registration">Registration</a>
         <a href="admin-review.html" data-admin-nav="review">Review</a>
         <a href="admin-reports.html" data-admin-nav="reports">Reports</a>
+        <a href="admin-landing.html" data-admin-nav="landing">Landing Page</a>
       </nav>
       <button class="secondary-btn admin-logout" id="adminLogoutBtn" type="button">LOG OUT</button>
     </aside>
@@ -35,6 +36,8 @@
   </main>
   <script src="logo.js"></script>
   <script src="api-client.js"></script>
+  <script>window.skinRejuveAuthGuard = { requireAuth: true, roles: ['ADMIN', 'STAFF'], redirectTo: 'index.html?auth=login', unauthorizedRedirect: 'dashboard.html' };</script>
+  <script src="auth-guard.js"></script>
   <script src="admin-shell.js"></script>
   <script src="admin-registration.js"></script>
 </body>

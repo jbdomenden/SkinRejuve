@@ -25,6 +25,7 @@ class DatabaseFactory(private val config: DatabaseConfig) {
                 Appointments,
                 TreatmentRecords,
                 Notifications,
+                LandingPageContents,
                 AuditLogs
             )
         }

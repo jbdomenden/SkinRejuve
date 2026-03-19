@@ -28,6 +28,7 @@ body {
 
 input,
 select,
+textarea,
 button {
   width: 100%;
   margin: 0;
@@ -37,7 +38,8 @@ button {
 }
 
 input,
-select {
+select,
+textarea {
   background: var(--input-bg);
   color: var(--input-text);
   padding: 13px 14px;
@@ -47,7 +49,8 @@ select {
 }
 
 input:focus,
-select:focus {
+select:focus,
+textarea:focus {
   outline: none;
   border-color: #c1893c;
   box-shadow: 0 0 0 3px #d7a35a40;
@@ -66,6 +69,15 @@ button {
 button:hover {
   transform: translateY(-1px);
   box-shadow: 0 8px 16px #1d12061f;
+}
+
+textarea {
+  min-height: 120px;
+  resize: vertical;
+  padding: 14px;
+  font-size: 15px;
+  font-family: inherit;
+  line-height: 1.5;
 }
 
 label {
@@ -327,9 +339,10 @@ pre {
 
 .v-wrapper {
   position: relative;
-  display: inline-block;
-  width: 0.56em;
-  margin: 0 0.01em;
+  display: inline-flex;
+  justify-content: center;
+  width: 0.62em;
+  margin: 0 0.08em 0 0.01em;
   line-height: 1;
 }
 
@@ -347,7 +360,7 @@ pre {
   bottom: 3%;
   width: 150%;
   height: 100%;
-  transform: translateX(-40%) rotate(10deg) scaleY(1.15);
+  transform: translateX(-46%) rotate(10deg) scaleY(1.15);
   transform-origin: bottom center;
   pointer-events: none;
   filter: drop-shadow(0 1px 2px #03381f66);
@@ -1076,6 +1089,7 @@ hr { border: 0; border-top: 1px solid #d8bd98; margin: 16px 0; }
   font-size: clamp(42px, 6vw, 76px);
   line-height: 0.92;
   color: #452503;
+  text-wrap: balance;
 }
 
 .landing-lead {
@@ -1135,6 +1149,7 @@ hr { border: 0; border-top: 1px solid #d8bd98; margin: 16px 0; }
   border-radius: 36px;
   display: grid;
   gap: 16px;
+  align-content: start;
 }
 
 .showcase-card {
@@ -1868,5 +1883,50 @@ body.auth-modal-open {
     width: 38px;
     height: 38px;
     font-size: 24px;
+  }
+}
+
+
+.landing-section-lead {
+  margin: 0;
+  max-width: 70ch;
+}
+
+.landing-updated-label {
+  margin-top: 14px;
+  font-size: 13px;
+  color: #8b6535;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.landing-editor-card {
+  padding: 28px;
+}
+
+.landing-editor-form label {
+  color: #5d370a;
+}
+
+.landing-editor-actions {
+  margin-top: 18px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+.landing-editor-actions .landing-btn {
+  min-height: 48px;
+}
+
+@media (max-width: 760px) {
+  .grid-3,
+  .landing-editor-grid {
+    grid-template-columns: 1fr;
   }
 }
