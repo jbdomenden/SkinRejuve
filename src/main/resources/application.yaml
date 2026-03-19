@@ -39,3 +39,7 @@ smtp:
 bootstrapAdmin:
   email: "superadmin@skinrejuve.local"
   password: "SuperAdmin123!"
+
+bootstrapPatient:
+  email: "patient@skinrejuve.local"
+  password: "Patient123!"

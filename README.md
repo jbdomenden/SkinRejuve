@@ -18,6 +18,11 @@ Application starts at `http://localhost:8080`.
 
 Frontend pages:
 - `http://localhost:8080/frontend/login.html`
+
+Development demo accounts:
+- Patient: `patient@skinrejuve.local` / `Patient123!`
+- Admin: `superadmin@skinrejuve.local` / `SuperAdmin123!`
+
 - `http://localhost:8080/frontend/register.html`
 - `http://localhost:8080/frontend/dashboard.html`
 - `http://localhost:8080/frontend/admin.html`

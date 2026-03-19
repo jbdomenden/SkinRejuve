@@ -2,6 +2,7 @@ package zeroday.skinrejuve
 
 import zeroday.skinrejuve.auth.AuthRepository
 import zeroday.skinrejuve.auth.BootstrapAdminService
+import zeroday.skinrejuve.auth.BootstrapPatientService
 import zeroday.skinrejuve.auth.AuthService
 import zeroday.skinrejuve.auth.EmailVerificationService
 import zeroday.skinrejuve.auth.JwtService
@@ -12,6 +13,7 @@ import zeroday.skinrejuve.db.UserRole
 import zeroday.skinrejuve.security.JwtConfig
 import zeroday.skinrejuve.security.PasswordHasher
 import zeroday.skinrejuve.services.MailService
+import zeroday.skinrejuve.services.PatientService
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -31,7 +33,9 @@ class AuthIntegrationTest {
         tokenExpiresInMinutes = 30,
         allowedOrigins = listOf("http://localhost:5173"),
         bootstrapAdminEmail = null,
-        bootstrapAdminPassword = null
+        bootstrapAdminPassword = null,
+        bootstrapPatientEmail = null,
+        bootstrapPatientPassword = null
     )
 
     @BeforeTest
@@ -83,6 +87,26 @@ class AuthIntegrationTest {
         assertFailsWith<IllegalArgumentException> {
             authService.login("unverified@test.local", "Password1")
         }
+    }
+
+    @Test
+    fun `bootstrap service creates verified patient with profile`() {
+        val repo = AuthRepository()
+        val config = appConfig.copy(bootstrapPatientEmail = "patient@test.local", bootstrapPatientPassword = "Patient123!")
+
+        BootstrapPatientService(config, repo).ensureDemoPatient()
+
+        val user = repo.getUserByEmail("patient@test.local")
+        assertNotNull(user)
+        assertEquals(UserRole.PATIENT, user.role)
+        assertTrue(user.emailVerified)
+        assertTrue(user.isActive)
+        assertTrue(PasswordHasher.verify("Patient123!", user.passwordHash))
+
+        val profile = PatientService().findProfileByUserId(user.id)
+        assertNotNull(profile)
+        assertEquals("Demo", profile.firstName)
+        assertEquals("Patient", profile.lastName)
     }
 
     @Test
