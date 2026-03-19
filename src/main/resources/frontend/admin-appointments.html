@@ -10,7 +10,6 @@
   <main class="admin-shell modern-shell">
     <aside class="admin-sidebar glass-sidebar">
       <div class="brand" data-skin-rejuve-logo data-logo-size="compact" data-logo-subtitle="SINCE 2011"></div>
-      <p class="sidebar-copy">Navigate the full appointment queue with richer patient and treatment context.</p>
       <nav>
         <a href="admin-dashboard.html" data-admin-nav="dashboard">Dashboard</a>
         <a href="admin-appointments.html" data-admin-nav="appointments">Appointments</a>
@@ -22,14 +21,21 @@
       <button class="secondary-btn admin-logout" id="adminLogoutBtn" type="button">LOG OUT</button>
     </aside>
     <section class="admin-content admin-page-grid">
-      <section class="hero-strip compact-hero">
+      <section class="hero-strip compact-hero dashboard-hero">
         <div>
           <div class="page-kicker">APPOINTMENTS</div>
-          <h1 class="page-title page-title-dark">Live schedule board</h1>
-          <p class="page-copy page-copy-dark">Every booked treatment is pulled from the backend with patient, service, and status details.</p>
+          <h1 class="page-title page-title-dark">Appointments</h1>
+          <p class="page-copy page-copy-dark">Manage patient appointments and scheduling.</p>
         </div>
       </section>
-      <section class="admin-card wide-card">
+      <section id="appointmentHighlights" class="metric-grid"></section>
+      <section class="admin-card wide-card admin-surface-card">
+        <div class="section-header">
+          <div>
+            <h2>Registration Queue</h2>
+            <p class="section-copy">All appointment requests.</p>
+          </div>
+        </div>
         <div id="appointmentsTable"></div>
       </section>
     </section>
