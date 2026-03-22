@@ -9,7 +9,9 @@
 .admin-shell {
   min-height: 100vh;
   display: grid;
-  grid-template-columns: 280px 1fr;
+  grid-template-columns: minmax(0, 280px) minmax(0, 1fr);
+  width: 100%;
+  overflow-x: clip;
 }
 
 .admin-sidebar {
@@ -58,6 +60,7 @@
 }
 
 .admin-content {
+  min-width: 0;
   padding: 34px;
   display: grid;
   align-content: start;
@@ -660,17 +663,19 @@
 
 /* sleek sidebar refresh */
 .admin-shell {
-  grid-template-columns: minmax(248px, 272px) 1fr;
+  grid-template-columns: minmax(220px, 272px) minmax(0, 1fr);
 }
 
 .admin-sidebar {
   position: sticky;
   top: 0;
   min-height: 100vh;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 16px;
   padding: 22px 18px 18px;
+  overflow: hidden;
   background:
     linear-gradient(180deg, rgba(67, 38, 6, 0.98), rgba(55, 31, 4, 0.97)),
     radial-gradient(circle at top right, rgba(208, 156, 77, 0.18), transparent 30%);
@@ -678,8 +683,10 @@
 }
 
 .admin-sidebar-top {
+  min-width: 0;
   display: grid;
   gap: 14px;
+  flex: 1 1 auto;
 }
 
 .admin-sidebar-brand {
@@ -700,11 +707,14 @@
 }
 
 .admin-nav-list {
+  min-width: 0;
   display: grid;
   gap: 10px;
 }
 
 .admin-nav-list a {
+  min-width: 0;
+  width: 100%;
   display: grid;
   grid-template-columns: 40px minmax(0, 1fr);
   align-items: center;
@@ -734,14 +744,16 @@
 }
 
 .admin-nav-copy {
+  min-width: 0;
   display: grid;
   gap: 2px;
 }
 
 .admin-nav-copy strong {
   font-family: "Cormorant Garamond", serif;
-  font-size: 25px;
-  line-height: .95;
+  font-size: clamp(20px, 2vw, 25px);
+  line-height: 1;
+  overflow-wrap: anywhere;
 }
 
 .admin-nav-copy small {
@@ -749,6 +761,7 @@
   opacity: .7;
   font-size: 12px;
   letter-spacing: .02em;
+  overflow-wrap: anywhere;
 }
 
 .admin-nav-icon {
@@ -767,9 +780,11 @@
 }
 
 .sidebar-user-card {
+  min-width: 0;
   display: flex;
   align-items: center;
   gap: 12px;
+  flex-wrap: wrap;
   padding: 14px;
   border-radius: 22px;
   background: rgba(255,255,255,.04);
@@ -793,8 +808,9 @@
 .sidebar-user-card strong {
   display: block;
   font-family: "Cormorant Garamond", serif;
-  font-size: 22px;
-  line-height: 1;
+  font-size: clamp(18px, 2vw, 22px);
+  line-height: 1.1;
+  overflow-wrap: anywhere;
 }
 
 .sidebar-user-card span {
@@ -802,6 +818,7 @@
   margin-top: 4px;
   font-size: 14px;
   color: rgba(255, 240, 219, .8);
+  overflow-wrap: anywhere;
 }
 
 .admin-logout.secondary-btn {
@@ -973,4 +990,75 @@
   .landing-editor-shell,
   .landing-module-card { padding: 20px; }
   .settings-profile-banner { padding: 20px; }
+}
+
+.sidebar-user-card > div {
+  min-width: 0;
+  flex: 1 1 140px;
+}
+
+.hero-strip,
+.admin-surface-card,
+.metric-card,
+.list-card,
+.selection-card,
+.next-appointment-card,
+.table-wrap,
+.data-table {
+  min-width: 0;
+  max-width: 100%;
+}
+
+@media (max-width: 1200px) {
+  .admin-shell {
+    grid-template-columns: minmax(200px, 240px) minmax(0, 1fr);
+  }
+
+  .admin-content {
+    padding: 28px 24px;
+  }
+}
+
+@media (max-width: 900px) {
+  .admin-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-sidebar {
+    position: static;
+    min-height: auto;
+    border-right: 0;
+    border-bottom: 1px solid rgba(255, 240, 214, .08);
+  }
+}
+
+@media (max-width: 640px) {
+  .admin-sidebar {
+    padding: 18px 14px;
+  }
+
+  .admin-nav-list a {
+    grid-template-columns: 34px minmax(0, 1fr);
+    gap: 10px;
+    min-height: 60px;
+    padding: 12px;
+    border-radius: 18px;
+  }
+
+  .admin-nav-icon,
+  .admin-nav-icon svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .admin-content {
+    padding: 18px 14px 22px;
+  }
+
+  .hero-strip,
+  .admin-surface-card,
+  .metric-card {
+    padding: 18px;
+    border-radius: 20px;
+  }
 }
