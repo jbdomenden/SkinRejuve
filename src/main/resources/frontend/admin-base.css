@@ -694,14 +694,15 @@
 }
 
 .admin-sidebar .skin-rejuve-logo {
-  font-size: 32px;
+  font-size: clamp(24px, 1.9vw, 29px);
+  letter-spacing: .04em;
 }
 
 .admin-sidebar .logo-subtitle {
   border-top: 1px solid rgba(244, 228, 199, .24);
   padding-top: 10px;
-  letter-spacing: .18em;
-  font-size: 10px;
+  letter-spacing: .14em;
+  font-size: 9px;
   text-align: center;
   text-transform: uppercase;
 }
@@ -709,19 +710,19 @@
 .admin-nav-list {
   min-width: 0;
   display: grid;
-  gap: 10px;
+  gap: 9px;
 }
 
 .admin-nav-list a {
   min-width: 0;
   width: 100%;
   display: grid;
-  grid-template-columns: 40px minmax(0, 1fr);
+  grid-template-columns: 36px minmax(0, 1fr);
   align-items: center;
-  gap: 12px;
-  min-height: 68px;
-  padding: 12px 14px;
-  border-radius: 22px;
+  gap: 11px;
+  min-height: 62px;
+  padding: 11px 13px;
+  border-radius: 20px;
   border: 1px solid rgba(255,255,255,.06);
   color: #f8ecd8;
   text-decoration: none;
@@ -746,61 +747,63 @@
 .admin-nav-copy {
   min-width: 0;
   display: grid;
-  gap: 2px;
+  gap: 3px;
 }
 
 .admin-nav-copy strong {
   font-family: "Cormorant Garamond", serif;
-  font-size: clamp(20px, 2vw, 25px);
-  line-height: 1;
+  font-size: clamp(17px, 1.35vw, 21px);
+  font-weight: 600;
+  line-height: 1.05;
   overflow-wrap: anywhere;
 }
 
 .admin-nav-copy small {
   color: inherit;
-  opacity: .7;
-  font-size: 12px;
-  letter-spacing: .02em;
+  opacity: .72;
+  font-size: 11px;
+  line-height: 1.35;
+  letter-spacing: .01em;
   overflow-wrap: anywhere;
 }
 
 .admin-nav-icon {
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   color: currentColor;
-  flex: 0 0 40px;
+  flex: 0 0 36px;
 }
 
 .admin-nav-icon svg {
-  width: 30px;
-  height: 30px;
+  width: 24px;
+  height: 24px;
 }
 
 .sidebar-user-card {
   min-width: 0;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   flex-wrap: wrap;
-  padding: 14px;
-  border-radius: 22px;
+  padding: 12px 13px;
+  border-radius: 20px;
   background: rgba(255,255,255,.04);
   border: 1px solid rgba(247,229,196,.08);
   color: #fff4e4;
 }
 
 .sidebar-user-avatar {
-  width: 48px;
-  height: 48px;
-  border-radius: 16px;
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
   border: 1px solid rgba(247, 229, 196, .28);
   display: grid;
   place-items: center;
   font-weight: 700;
-  font-size: 20px;
+  font-size: 18px;
   color: #f8ecd8;
   background: rgba(255,255,255,.05);
 }
@@ -808,27 +811,30 @@
 .sidebar-user-card strong {
   display: block;
   font-family: "Cormorant Garamond", serif;
-  font-size: clamp(18px, 2vw, 22px);
+  font-size: clamp(16px, 1.2vw, 19px);
+  font-weight: 600;
   line-height: 1.1;
   overflow-wrap: anywhere;
 }
 
 .sidebar-user-card span {
   display: block;
-  margin-top: 4px;
-  font-size: 14px;
-  color: rgba(255, 240, 219, .8);
+  margin-top: 3px;
+  font-size: 12px;
+  letter-spacing: .03em;
+  color: rgba(255, 240, 219, .76);
   overflow-wrap: anywhere;
 }
 
 .admin-logout.secondary-btn {
   width: 100%;
-  min-height: 48px;
-  border-radius: 16px;
+  min-height: 46px;
+  border-radius: 15px;
   background: rgba(255,255,255,.06);
   border: 1px solid rgba(247,229,196,.16);
   color: #fff4e4;
-  letter-spacing: .14em;
+  font-size: 12px;
+  letter-spacing: .16em;
 }
 
 .settings-page-grid {
@@ -969,7 +975,7 @@
 
 @media (max-width: 1200px) {
   .admin-shell { grid-template-columns: 236px 1fr; }
-  .admin-nav-copy strong { font-size: 22px; }
+  .admin-nav-copy strong { font-size: 19px; }
   .settings-form-grid,
   .security-form-grid,
   .landing-module-grid { grid-template-columns: 1fr; }
@@ -984,8 +990,8 @@
 }
 
 @media (max-width: 760px) {
-  .admin-nav-list a { min-height: 60px; }
-  .admin-nav-copy strong { font-size: 20px; }
+  .admin-nav-list a { min-height: 58px; }
+  .admin-nav-copy strong { font-size: 18px; }
   .settings-card,
   .landing-editor-shell,
   .landing-module-card { padding: 20px; }
@@ -1038,17 +1044,17 @@
   }
 
   .admin-nav-list a {
-    grid-template-columns: 34px minmax(0, 1fr);
-    gap: 10px;
-    min-height: 60px;
-    padding: 12px;
-    border-radius: 18px;
+    grid-template-columns: 30px minmax(0, 1fr);
+    gap: 9px;
+    min-height: 56px;
+    padding: 11px;
+    border-radius: 16px;
   }
 
   .admin-nav-icon,
   .admin-nav-icon svg {
-    width: 24px;
-    height: 24px;
+    width: 22px;
+    height: 22px;
   }
 
   .admin-content {
