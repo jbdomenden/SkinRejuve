@@ -31,15 +31,15 @@ fun Application.configureRouting() {
 
     routing {
         get("/") {
-            call.respondRedirect("/frontend/index.html", permanent = false)
+            call.respondRedirect("/frontend/landing/html/index.html", permanent = false)
         }
 
         get("/login") {
-            call.respondRedirect("/frontend/index.html?auth=login", permanent = false)
+            call.respondRedirect("/frontend/landing/html/index.html?auth=login", permanent = false)
         }
 
         get("/register") {
-            call.respondRedirect("/frontend/index.html?auth=register", permanent = false)
+            call.respondRedirect("/frontend/landing/html/index.html?auth=register", permanent = false)
         }
 
         get("/health") {
