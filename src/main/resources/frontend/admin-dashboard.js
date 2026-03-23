@@ -1,4 +1,4 @@
-const { request, renderEmptyState, renderDate, renderCurrency } = window.adminShell;
+const { request } = window.adminShell;
 
 let currentModalStep = 1;
 
@@ -109,6 +109,28 @@ function renderCapacityBoard(items) {
       </section>
     </div>
   `;
+
+  root.querySelectorAll('[data-row-index]').forEach((button) => {
+    button.addEventListener('click', () => {
+      const row = rows[Number(button.dataset.rowIndex)];
+      window.alert(`Viewing ${row.name} (${row.status})`);
+    });
+  });
+}
+
+function bindToolbar() {
+  searchInput.addEventListener('input', renderTable);
+
+  filterButton.addEventListener('click', () => {
+    const statusCycle = ['ALL', 'PENDING', 'DENIED', 'COMPLETED'];
+    activeFilter = statusCycle[(statusCycle.indexOf(activeFilter) + 1) % statusCycle.length];
+    filterButton.textContent = activeFilter === 'ALL' ? 'Filter' : activeFilter;
+    renderTable();
+  });
+
+  addUserButton.addEventListener('click', () => {
+    window.alert('Add user flow can be connected here.');
+  });
 }
 
 function renderUserManagement(items) {
