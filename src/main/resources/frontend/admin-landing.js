@@ -1,7 +1,14 @@
 const { request, setPanelMessage } = window.adminShell;
+const tokenPayload = window.skinRejuveApi.decodeTokenPayload(window.skinRejuveApi.getToken()) || {};
 
 const form = document.getElementById('landingContentForm');
 const message = document.getElementById('landingEditorMsg');
+const profileForm = document.getElementById('adminProfileForm');
+const securityForm = document.getElementById('adminSecurityForm');
+const profileMessage = document.getElementById('profileSettingsMsg');
+const securityMessage = document.getElementById('securitySettingsMsg');
+const profileToggle = document.getElementById('toggleProfileEditBtn');
+const securityToggle = document.getElementById('toggleSecurityEditBtn');
 
 function serializeCards(value) {
   return value.split('\n').map((line) => line.trim()).filter(Boolean).map((line) => {
@@ -71,7 +78,120 @@ function collectPayload() {
   };
 }
 
+function getStoredSettings() {
+  try {
+    return JSON.parse(window.localStorage.getItem('skinrejuveAdminSettings') || '{}');
+  } catch (error) {
+    return {};
+  }
+}
+
+function saveStoredSettings(payload) {
+  window.localStorage.setItem('skinrejuveAdminSettings', JSON.stringify(payload));
+}
+
+function buildProfileDefaults() {
+  const stored = getStoredSettings();
+  return {
+    fullName: stored.fullName || tokenPayload.fullName || tokenPayload.name || 'Juan John Cruz',
+    username: stored.username || tokenPayload.sub || tokenPayload.username || 'ADMIN123',
+    birthday: stored.birthday || 'March 4, 2026',
+    phone: stored.phone || '+63 917 000 1234',
+    email: stored.email || tokenPayload.email || 'juanjohncruz@gmail.com',
+    memberSince: stored.memberSince || 'January 2024',
+  };
+}
+
+function populateSettingsProfile() {
+  const defaults = buildProfileDefaults();
+  setValue('settingsFullName', defaults.fullName);
+  setValue('settingsUsername', defaults.username);
+  setValue('settingsBirthday', defaults.birthday);
+  setValue('settingsPhone', defaults.phone);
+  setValue('settingsEmail', defaults.email);
+  setValue('settingsMemberSince', defaults.memberSince);
+  document.getElementById('settingsProfileName').textContent = defaults.fullName;
+  document.getElementById('settingsProfileRole').textContent = `${defaults.username} · Administrator account`;
+  document.getElementById('settingsAvatar').textContent = defaults.fullName.trim().charAt(0).toUpperCase() || 'A';
+}
+
+function setEditable(formElement, editable) {
+  formElement.querySelectorAll('input, textarea').forEach((input) => {
+    input.disabled = !editable;
+  });
+}
+
+function syncToggleLabel(button, editable) {
+  button.textContent = editable ? 'LOCK' : 'EDIT';
+}
+
+function initSettingsForms() {
+  setEditable(profileForm, false);
+  setEditable(securityForm, false);
+  syncToggleLabel(profileToggle, false);
+  syncToggleLabel(securityToggle, false);
+
+  profileToggle.addEventListener('click', () => {
+    const editable = profileForm.querySelector('input').disabled;
+    setEditable(profileForm, editable);
+    syncToggleLabel(profileToggle, editable);
+  });
+
+  securityToggle.addEventListener('click', () => {
+    const editable = securityForm.querySelector('input').disabled;
+    setEditable(securityForm, editable);
+    syncToggleLabel(securityToggle, editable);
+  });
+
+  profileForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const payload = {
+      ...getStoredSettings(),
+      fullName: document.getElementById('settingsFullName').value.trim(),
+      username: document.getElementById('settingsUsername').value.trim(),
+      birthday: document.getElementById('settingsBirthday').value.trim(),
+      phone: document.getElementById('settingsPhone').value.trim(),
+      email: document.getElementById('settingsEmail').value.trim(),
+      memberSince: document.getElementById('settingsMemberSince').value.trim(),
+    };
+    saveStoredSettings(payload);
+    populateSettingsProfile();
+    setEditable(profileForm, false);
+    syncToggleLabel(profileToggle, false);
+    setPanelMessage(profileMessage, 'Administrator profile saved on this device.', 'success');
+  });
+
+  securityForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const newPassword = document.getElementById('settingsNewPassword').value.trim();
+    const confirmPassword = document.getElementById('settingsConfirmPassword').value.trim();
+
+    if (!newPassword || newPassword.length < 8) {
+      setPanelMessage(securityMessage, 'New password must be at least 8 characters.', 'error');
+      return;
+    }
+
+    if (newPassword !== confirmPassword) {
+      setPanelMessage(securityMessage, 'New password and confirmation must match.', 'error');
+      return;
+    }
+
+    const payload = {
+      ...getStoredSettings(),
+      currentPasswordMask: 'Updated just now',
+    };
+    saveStoredSettings(payload);
+    securityForm.reset();
+    setEditable(securityForm, false);
+    syncToggleLabel(securityToggle, false);
+    setPanelMessage(securityMessage, 'Security details updated locally for the admin workspace.', 'success');
+  });
+}
+
 (async function init() {
+  populateSettingsProfile();
+  initSettingsForms();
+
   const response = await request('/api/admin/landing-content');
   if (response?.success && response.data) {
     populateForm(response.data);

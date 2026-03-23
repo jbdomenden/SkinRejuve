@@ -4,50 +4,37 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SkinRejuve Admin Dashboard</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="admin-dashboard.css" />
 </head>
 <body class="admin-bg" data-admin-page="dashboard">
   <main class="admin-shell modern-shell">
-    <aside class="admin-sidebar glass-sidebar">
-      <div class="brand" data-skin-rejuve-logo data-logo-size="compact" data-logo-subtitle="SINCE 2011"></div>
-      <p class="sidebar-copy">A sleek command center for appointments, approvals, and patient growth.</p>
-      <nav>
-        <a href="admin-dashboard.html" data-admin-nav="dashboard">Dashboard</a>
-        <a href="admin-appointments.html" data-admin-nav="appointments">Appointments</a>
-        <a href="admin-registration.html" data-admin-nav="registration">Registration</a>
-        <a href="admin-review.html" data-admin-nav="review">Review</a>
-        <a href="admin-reports.html" data-admin-nav="reports">Reports</a>
-        <a href="admin-landing.html" data-admin-nav="landing">Landing Page</a>
-      </nav>
-      <button class="secondary-btn admin-logout" id="adminLogoutBtn" type="button">LOG OUT</button>
-    </aside>
+    <aside class="admin-sidebar glass-sidebar"></aside>
 
-    <section class="admin-content admin-page-grid">
-      <section class="hero-strip">
+    <section class="admin-content admin-page-grid dashboard-reference-layout">
+      <section class="hero-strip dashboard-reference-hero">
         <div>
           <div class="page-kicker">ADMIN DASHBOARD</div>
-          <h1 class="page-title page-title-dark">Operational snapshot</h1>
-          <p class="page-copy page-copy-dark">Track live demand, upcoming visit flow, and open capacity without leaving the sidebar workflow.</p>
+          <h1 class="page-title page-title-dark dashboard-reference-title">Admin Dashboard</h1>
         </div>
       </section>
-      <section id="metricsGrid" class="metric-grid"></section>
-      <section class="admin-card wide-card">
-        <div class="section-header">
+
+      <section id="metricsGrid" class="metric-grid dashboard-reference-metrics"></section>
+
+      <section class="admin-card wide-card admin-surface-card dashboard-management-card">
+        <div class="dashboard-management-toolbar">
           <div>
-            <h2>Recent appointments</h2>
-            <p class="section-copy">The five most recent bookings flowing in from the backend database.</p>
+            <h2>User Management</h2>
+          </div>
+          <div class="dashboard-toolbar-actions">
+            <label class="dashboard-search-field" aria-label="Search users">
+              <span>⌕</span>
+              <input id="dashboardSearchInput" type="search" placeholder="Search users" />
+            </label>
+            <button class="secondary-btn dashboard-filter-btn" id="dashboardFilterBtn" type="button">Filter</button>
+            <button class="dashboard-add-btn" id="dashboardAddUserBtn" type="button">+ Add User</button>
           </div>
         </div>
-        <div id="recentAppointments"></div>
-      </section>
-      <section class="admin-card wide-card">
-        <div class="section-header">
-          <div>
-            <h2>Open slot capacity</h2>
-            <p class="section-copy">Preview the next available treatment windows for the clinic team.</p>
-          </div>
-        </div>
-        <div id="slotCapacity"></div>
+        <div id="dashboardUserTable"></div>
       </section>
     </section>
   </main>
