@@ -25,8 +25,12 @@ if (window.mountSkinRejuveLogos) window.mountSkinRejuveLogos();
   const registerSteps = Array.from(document.querySelectorAll('[data-register-step]'));
   const registerNextBtn = document.getElementById('registerNextBtn');
   const registerBackBtn = document.getElementById('registerBackBtn');
+  const registerBtn = document.getElementById('registerBtn');
+  const registerProgress = document.getElementById('registerProgress');
+  const registerReview = document.getElementById('registerReview');
 
   let activeRegisterStep = 1;
+  let lastFocusedElement = null;
 
   function setMessage(element, message, state) {
     if (!element) return;
@@ -44,14 +48,6 @@ if (window.mountSkinRejuveLogos) window.mountSkinRejuveLogos();
     };
   }
 
-  function renderRegisterStep(step) {
-    activeRegisterStep = step;
-    registerSteps.forEach((section) => {
-      section.hidden = Number(section.dataset.registerStep) !== step;
-    });
-    setMessage(registerMsg, '', 'info');
-  }
-
   function redirectForRole(role) {
     const intendedPath = consumePostLoginRedirect();
     if (role === 'ADMIN' || role === 'STAFF') {
@@ -63,6 +59,39 @@ if (window.mountSkinRejuveLogos) window.mountSkinRejuveLogos();
       return;
     }
     window.location.replace('/frontend/dashboard/html/dashboard.html');
+  }
+
+  function renderRegisterProgress() {
+    if (!registerProgress) return;
+    registerProgress.innerHTML = [1, 2, 3, 4].map((step) => `
+      <span class="progress-pill ${step === activeRegisterStep ? 'is-active' : ''} ${step < activeRegisterStep ? 'is-complete' : ''}">Step ${step}</span>
+    `).join('');
+  }
+
+  function buildReviewPanel() {
+    const preferredBranch = document.getElementById('registerPreferredBranch');
+    const skinType = registerForm.querySelector('input[name="skinType"]:checked')?.value || 'Not selected';
+    registerReview.innerHTML = `
+      <p><strong>Name:</strong> ${document.getElementById('registerFullName').value.trim()}</p>
+      <p><strong>Email:</strong> ${document.getElementById('registerEmail').value.trim()}</p>
+      <p><strong>Phone:</strong> ${document.getElementById('registerPhone').value.trim()}</p>
+      <p><strong>Preferred branch:</strong> ${preferredBranch.options[preferredBranch.selectedIndex]?.text || ''}</p>
+      <p><strong>Skin type:</strong> ${skinType}</p>
+      <p><strong>Allergies:</strong> ${document.getElementById('registerAllergies').value || 'Not specified'}</p>
+    `;
+  }
+
+  function renderRegisterStep(step) {
+    activeRegisterStep = step;
+    registerSteps.forEach((section) => {
+      section.hidden = Number(section.dataset.registerStep) !== step;
+    });
+    registerBackBtn.hidden = step === 1;
+    registerNextBtn.hidden = step === 4;
+    registerBtn.hidden = step !== 4;
+    if (step === 4) buildReviewPanel();
+    renderRegisterProgress();
+    setMessage(registerMsg, '', 'info');
   }
 
   function selectTab(tab) {
@@ -79,6 +108,7 @@ if (window.mountSkinRejuveLogos) window.mountSkinRejuveLogos();
 
   function openModal(tab = 'login', intent = '') {
     if (!authModal) return;
+    lastFocusedElement = document.activeElement;
     if (intent === 'booking') {
       setPostLoginRedirect('/frontend/dashboard/html/dashboard.html?booking=1');
     } else if (!getToken()) {
@@ -87,37 +117,55 @@ if (window.mountSkinRejuveLogos) window.mountSkinRejuveLogos();
     authModal.hidden = false;
     document.body.classList.add('auth-modal-open');
     selectTab(tab);
+    authModal.querySelector('button, input, select')?.focus();
   }
 
   function closeModal() {
     if (!authModal) return;
     authModal.hidden = true;
-    document.body.classList.remove('auth-modal-open');
+    if (!document.querySelector('.modal-shell:not([hidden])')) {
+      document.body.classList.remove('auth-modal-open');
+    }
+    lastFocusedElement?.focus?.();
   }
 
-  function validateRegisterStepOne() {
+  function validateRegisterStep(step) {
     const fullName = document.getElementById('registerFullName').value.trim();
     const email = document.getElementById('registerEmail').value.trim();
     const password = document.getElementById('registerPassword').value;
     const confirmPassword = document.getElementById('registerConfirmPassword').value;
+    const phone = document.getElementById('registerPhone').value.trim();
+    const dob = document.getElementById('registerDob').value;
+    const preferredBranch = document.getElementById('registerPreferredBranch').value;
+    const allergies = document.getElementById('registerAllergies').value;
+    const allergyNotes = document.getElementById('registerAllergyNotes').value.trim();
+    const privacyConsent = document.getElementById('privacyConsent').checked;
+    const skinType = registerForm.querySelector('input[name="skinType"]:checked')?.value || '';
 
-    if (!fullName) {
-      setMessage(registerMsg, 'Please enter your full name to continue.', 'error');
-      return false;
+    if (step === 1) {
+      if (!fullName) return 'Please enter your full name to continue.';
+      if (!email) return 'Please enter your email address.';
+      if (!password || password.length < 8) return 'Please create a password with at least 8 characters.';
+      if (password !== confirmPassword) return 'Password and confirm password must match.';
     }
-    if (!email) {
-      setMessage(registerMsg, 'Please enter your email address.', 'error');
-      return false;
+
+    if (step === 2) {
+      if (!phone) return 'Please enter your contact number.';
+      if (!dob) return 'Please enter your date of birth.';
+      if (!preferredBranch) return 'Please choose your preferred branch.';
     }
-    if (!password) {
-      setMessage(registerMsg, 'Please create a password.', 'error');
-      return false;
+
+    if (step === 3) {
+      if (!skinType) return 'Please select your skin type.';
+      if (!allergies) return 'Please tell us whether you have allergies.';
+      if (allergies === 'YES' && !allergyNotes) return 'Please list your allergies or sensitivities.';
     }
-    if (password !== confirmPassword) {
-      setMessage(registerMsg, 'Password and confirm password must match.', 'error');
-      return false;
+
+    if (step === 4 && !privacyConsent) {
+      return 'Please accept the privacy and consent policy before continuing.';
     }
-    return true;
+
+    return '';
   }
 
   async function completeRegistration() {
@@ -131,11 +179,12 @@ if (window.mountSkinRejuveLogos) window.mountSkinRejuveLogos();
     const allergyNotes = document.getElementById('registerAllergyNotes').value.trim();
     const conditions = document.getElementById('registerConditions').value.trim();
     const pastTreatments = document.getElementById('registerTreatments').value.trim();
-    const privacyConsent = document.getElementById('privacyConsent').checked;
+    const preferredBranch = document.getElementById('registerPreferredBranch').selectedOptions[0]?.textContent || '';
     const skinType = registerForm.querySelector('input[name="skinType"]:checked')?.value || '';
 
-    if (!privacyConsent) {
-      setMessage(registerMsg, 'Please accept the data privacy policy before continuing.', 'error');
+    const finalValidationMessage = validateRegisterStep(4);
+    if (finalValidationMessage) {
+      setMessage(registerMsg, finalValidationMessage, 'error');
       return;
     }
 
@@ -143,6 +192,7 @@ if (window.mountSkinRejuveLogos) window.mountSkinRejuveLogos();
     const notes = [
       skinType ? `Skin type: ${skinType}` : '',
       username ? `Preferred username: ${username}` : '',
+      preferredBranch ? `Preferred branch: ${preferredBranch}` : '',
       pastTreatments ? `Past treatment: ${pastTreatments}` : '',
     ].filter(Boolean).join(' • ');
 
@@ -196,7 +246,7 @@ if (window.mountSkinRejuveLogos) window.mountSkinRejuveLogos();
       return;
     }
 
-    setMessage(registerMsg, 'Welcome to SkinRejuve. Redirecting...', 'success');
+    setMessage(registerMsg, 'Welcome to Skin Rejuve. Redirecting...', 'success');
     redirectForRole(getUserRole());
   }
 
@@ -218,12 +268,15 @@ if (window.mountSkinRejuveLogos) window.mountSkinRejuveLogos();
   loginTabs.forEach((button) => button.addEventListener('click', () => selectTab(button.dataset.authTab)));
 
   registerNextBtn?.addEventListener('click', () => {
-    if (validateRegisterStepOne()) {
-      renderRegisterStep(2);
+    const error = validateRegisterStep(activeRegisterStep);
+    if (error) {
+      setMessage(registerMsg, error, 'error');
+      return;
     }
+    renderRegisterStep(Math.min(activeRegisterStep + 1, 4));
   });
 
-  registerBackBtn?.addEventListener('click', () => renderRegisterStep(1));
+  registerBackBtn?.addEventListener('click', () => renderRegisterStep(Math.max(activeRegisterStep - 1, 1)));
 
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape' && authModal && !authModal.hidden) closeModal();
@@ -255,7 +308,6 @@ if (window.mountSkinRejuveLogos) window.mountSkinRejuveLogos();
     const rememberMe = document.getElementById('rememberMe').checked;
 
     setMessage(authMsg, 'Signing you in...', 'info');
-
     const response = await request('/api/auth/login', 'POST', { email, password });
     const token = response?.data?.token;
 
@@ -273,4 +325,6 @@ if (window.mountSkinRejuveLogos) window.mountSkinRejuveLogos();
     event.preventDefault();
     await completeRegistration();
   });
+
+  renderRegisterProgress();
 })();
