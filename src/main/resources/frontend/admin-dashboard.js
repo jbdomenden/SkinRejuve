@@ -7,12 +7,41 @@ let dashboardRows = [];
 let appointmentsSnapshot = [];
 let activeFilter = 'ALL';
 
-function renderMetrics(metrics) {
+let currentModalStep = 1;
+
+let registrationItems = [];
+let appointmentsCache = [];
+
+function escapeHtml(value) {
+  return String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function formatRegistrationStatus(item) {
+  if (['ADMIN', 'STAFF'].includes(item.role)) return 'Admin / Staff';
+  if (item.profileComplete && item.intakeComplete) return 'Complete';
+  if (item.emailVerified) return 'Verified';
+  return 'Pending';
+}
+
+function registrationTone(item) {
+  if (['ADMIN', 'STAFF'].includes(item.role)) return 'status-muted';
+  if (item.profileComplete && item.intakeComplete) return 'status-good';
+  if (item.emailVerified) return 'status-pill';
+  return 'status-muted';
+}
+
+function renderMetrics(appointments, registrations, overview) {
   const root = document.getElementById('metricsGrid');
   root.innerHTML = metrics.map((metric) => `
     <article class="metric-card dashboard-reference-metric ${metric.tone || ''}">
       <div class="metric-label">${metric.label}</div>
       <div class="metric-value">${metric.value}</div>
+      <div class="metric-footnote">${metric.note}</div>
     </article>
   `).join('');
 }

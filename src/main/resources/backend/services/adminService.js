@@ -1,4 +1,5 @@
-const { readDb } = require('../lib/storage');
+const { readDb, writeDb } = require('../lib/storage');
+const { hashPassword } = require('./authService');
 const { getAvailableSlots } = require('./appointmentService');
 
 function enrichAppointment(db, appointment) {
@@ -62,6 +63,70 @@ function getRegistrations() {
     .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 }
 
+
+function createUser(payload) {
+  const db = readDb();
+  const email = String(payload.email || '').trim().toLowerCase();
+  if (!email) throw new Error('Email is required');
+  if (!payload.password) throw new Error('Password is required');
+  if (db.users.some((user) => user.email.toLowerCase() === email)) throw new Error('Email already exists');
+
+  const userId = `usr-${Date.now()}`;
+  const profileId = `pat-${Date.now() + 1}`;
+  const intakeId = `int-${Date.now() + 2}`;
+  const createdAt = new Date().toISOString();
+
+  const user = {
+    id: userId,
+    email,
+    username: String(payload.username || '').trim(),
+    passwordHash: hashPassword(payload.password),
+    role: 'PATIENT',
+    emailVerified: true,
+    createdAt
+  };
+
+  const nameParts = String(payload.fullName || '').trim().split(/\s+/).filter(Boolean);
+  const firstName = nameParts.shift() || 'New';
+  const lastName = nameParts.join(' ') || 'User';
+
+  const profile = {
+    id: profileId,
+    userId,
+    firstName,
+    lastName,
+    phone: payload.phone || '',
+    dateOfBirth: payload.dateOfBirth || '',
+    createdAt,
+    updatedAt: createdAt
+  };
+
+  const intake = {
+    id: intakeId,
+    patientId: profileId,
+    skinTypes: Array.isArray(payload.skinTypes) ? payload.skinTypes : [],
+    allergies: Boolean(payload.hasAllergies),
+    allergyNotes: payload.allergyNotes || '',
+    medicalConditions: payload.medicalConditions || '',
+    pastTreatment: payload.pastTreatment || '',
+    createdAt
+  };
+
+  db.users.push(user);
+  db.patientProfiles.push(profile);
+  db.patientIntakes.push(intake);
+  writeDb(db);
+
+  return {
+    id: user.id,
+    email: user.email,
+    username: user.username,
+    role: user.role,
+    patientName: `${profile.firstName} ${profile.lastName}`.trim(),
+    createdAt
+  };
+}
+
 function getReports() {
   const db = readDb();
   const appointments = enrichCollection(db.appointments, db);
@@ -98,4 +163,4 @@ function enrichCollection(items, db) {
     .sort((a, b) => new Date(a.startAt).getTime() - new Date(b.startAt).getTime());
 }
 
-module.exports = { getOverview, getAppointments, getRegistrations, getReports };
+module.exports = { getOverview, getAppointments, getRegistrations, createUser, getReports };

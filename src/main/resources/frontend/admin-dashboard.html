@@ -36,8 +36,128 @@
         </div>
         <div id="dashboardUserTable"></div>
       </section>
+
+      <div class="dashboard-secondary-grid">
+        <section class="admin-card wide-card admin-surface-card dashboard-secondary-card">
+          <div class="section-header compact-section-header">
+            <div>
+              <div class="page-kicker">RECENT APPOINTMENTS</div>
+              <h2>Latest bookings</h2>
+              <p class="section-copy">Recent booked visits, service value, and current appointment status.</p>
+            </div>
+          </div>
+          <div id="recentAppointments"></div>
+        </section>
+
+        <section class="admin-card wide-card admin-surface-card dashboard-secondary-card">
+          <div class="section-header compact-section-header">
+            <div>
+              <div class="page-kicker">SCHEDULE OVERVIEW</div>
+              <h2>Queue and schedule health</h2>
+              <p class="section-copy">See status distribution and the next upcoming visits at a glance.</p>
+            </div>
+          </div>
+          <div id="slotCapacity"></div>
+        </section>
+      </div>
     </section>
   </main>
+
+
+
+  <div class="dashboard-modal-backdrop" id="addUserModal" hidden>
+    <div class="dashboard-modal-shell" role="dialog" aria-modal="true" aria-labelledby="addUserModalTitle">
+      <button class="dashboard-modal-close" id="closeAddUserModalBtn" type="button" aria-label="Close add user modal">×</button>
+      <div class="dashboard-modal-brand">
+        <div class="brand" data-skin-rejuve-logo data-logo-size="compact" data-logo-subtitle="ADMIN ACCESS CONTROL"></div>
+      </div>
+      <form id="addUserForm" class="dashboard-add-user-form">
+        <div class="dashboard-form-step is-active" data-step="1">
+          <div class="dashboard-modal-head">
+            <h2 id="addUserModalTitle">Add User</h2>
+            <p>Create the account basics first, then complete the intake details on the next step.</p>
+          </div>
+          <div class="dashboard-form-grid two-col">
+            <label>
+              <span>Fullname</span>
+              <input name="fullName" type="text" required />
+            </label>
+            <label>
+              <span>Username</span>
+              <input name="username" type="text" required />
+            </label>
+          </div>
+          <div class="dashboard-form-grid">
+            <label>
+              <span>Email Address</span>
+              <input name="email" type="email" required />
+            </label>
+            <label>
+              <span>Phone Number</span>
+              <input name="phone" type="tel" required />
+            </label>
+            <label>
+              <span>Date of Birth</span>
+              <input name="dateOfBirth" type="date" required />
+            </label>
+            <label>
+              <span>Enter Password</span>
+              <input name="password" type="password" minlength="8" required />
+            </label>
+            <label>
+              <span>Confirm Password</span>
+              <input name="confirmPassword" type="password" minlength="8" required />
+            </label>
+          </div>
+          <button class="dashboard-modal-submit" id="nextAddUserStepBtn" type="button">Next</button>
+        </div>
+
+        <div class="dashboard-form-step" data-step="2">
+          <div class="dashboard-modal-head">
+            <h2>You're almost there!</h2>
+            <p>Complete this form to finish the patient setup and save the intake information.</p>
+          </div>
+          <div class="dashboard-checkbox-group">
+            <span>Skin Type</span>
+            <div class="dashboard-checkbox-row">
+              <label><input type="checkbox" name="skinTypes" value="Oily" /> <span>Oily</span></label>
+              <label><input type="checkbox" name="skinTypes" value="Dry" /> <span>Dry</span></label>
+              <label><input type="checkbox" name="skinTypes" value="Combination" /> <span>Combination</span></label>
+              <label><input type="checkbox" name="skinTypes" value="Sensitive" /> <span>Sensitive</span></label>
+            </div>
+          </div>
+          <div class="dashboard-form-grid allergy-grid">
+            <div class="dashboard-checkbox-group">
+              <span>Allergies?</span>
+              <div class="dashboard-checkbox-row">
+                <label><input type="radio" name="hasAllergies" value="false" checked /> <span>No</span></label>
+                <label><input type="radio" name="hasAllergies" value="true" /> <span>Yes</span></label>
+              </div>
+            </div>
+            <label>
+              <span>If yes, specify</span>
+              <input name="allergyNotes" type="text" />
+            </label>
+          </div>
+          <div class="dashboard-form-grid">
+            <label>
+              <span>Medical Conditions</span>
+              <textarea name="medicalConditions" rows="3"></textarea>
+            </label>
+            <label>
+              <span>Past Treatment</span>
+              <textarea name="pastTreatment" rows="3"></textarea>
+            </label>
+          </div>
+          <div class="dashboard-modal-actions">
+            <button class="secondary-btn dashboard-modal-secondary" id="backAddUserStepBtn" type="button">Back</button>
+            <button class="dashboard-modal-submit" type="submit">Add User</button>
+          </div>
+        </div>
+        <p class="dashboard-form-message" id="addUserFormMessage" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
 
   <script src="logo.js"></script>
   <script src="api-client.js"></script>
