@@ -1,1 +1,428 @@
 @import url("./styles.css");
+
+.landing-body {
+  min-height: 100vh;
+  background:
+    linear-gradient(180deg, rgba(248, 244, 236, 0.96), rgba(240, 228, 206, 0.94)),
+    radial-gradient(circle at top left, rgba(184, 140, 71, 0.15), transparent 32%),
+    radial-gradient(circle at bottom right, rgba(102, 68, 26, 0.14), transparent 28%);
+}
+
+.landing-shell {
+  width: min(1280px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 24px 0 56px;
+}
+
+.landing-section,
+.landing-hero-modern,
+.landing-header-modern {
+  width: 100%;
+}
+
+.landing-header-modern {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 18px;
+  padding: 18px 22px;
+  border-radius: 26px;
+  border: 1px solid rgba(176, 136, 84, 0.16);
+  background: rgba(255, 252, 246, 0.76);
+  box-shadow: 0 18px 42px rgba(64, 36, 6, 0.08);
+  backdrop-filter: blur(16px);
+}
+
+.landing-nav {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px 18px;
+}
+
+.landing-nav a {
+  color: #69461e;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.landing-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.landing-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 18px;
+  border-radius: 16px;
+  text-decoration: none;
+}
+
+.landing-btn-ghost {
+  background: rgba(255, 255, 255, 0.54);
+  color: #6c4513;
+  border: 1px solid rgba(176, 136, 84, 0.2);
+}
+
+.landing-btn-secondary {
+  background: rgba(111, 70, 16, 0.1);
+  color: #6b4512;
+  border: 1px solid rgba(176, 136, 84, 0.2);
+}
+
+.landing-hero-modern {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(320px, 0.9fr);
+  gap: 22px;
+  margin-top: 20px;
+}
+
+.hero-copy-panel,
+.landing-showcase-modern,
+.landing-section,
+.landing-network-band article,
+.clinic-gallery-card,
+.contact-card,
+.location-card,
+.map-card {
+  border-radius: 30px;
+  border: 1px solid rgba(176, 136, 84, 0.16);
+  background: rgba(255, 252, 246, 0.72);
+  box-shadow: 0 20px 48px rgba(64, 36, 6, 0.08);
+  backdrop-filter: blur(18px);
+}
+
+.hero-copy-panel {
+  padding: 34px;
+}
+
+.landing-kicker,
+.page-kicker {
+  margin: 0 0 12px;
+  color: #9a6f2d;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+#landingHeroTitle {
+  margin: 0;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(44px, 6vw, 78px);
+  line-height: 0.96;
+  color: #4a2906;
+  max-width: 12ch;
+}
+
+.landing-lead {
+  color: #755430;
+  line-height: 1.8;
+  font-size: 17px;
+}
+
+.landing-updated-label,
+.showcase-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 34px;
+  padding: 0 12px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.78);
+  border: 1px solid rgba(166,124,67,.16);
+  color: #7a5a31;
+  font-size: 12px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.hero-action-row,
+.contact-actions,
+.social-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.landing-proof-grid,
+.service-grid,
+.experience-points,
+.contact-grid,
+.location-branch-grid {
+  display: grid;
+  gap: 18px;
+}
+
+.landing-proof-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 22px;
+}
+
+.landing-proof-grid article,
+.experience-points article {
+  padding: 18px;
+  border-radius: 20px;
+  background: rgba(255,255,255,.66);
+}
+
+.landing-proof-grid strong,
+.experience-points strong,
+.service-card h3,
+.contact-card h3,
+.location-card h3,
+.clinic-gallery-card h3 {
+  font-family: "Cormorant Garamond", serif;
+  color: #4e2d07;
+}
+
+.landing-showcase-modern {
+  display: grid;
+  gap: 18px;
+  padding: 24px;
+  background:
+    linear-gradient(180deg, rgba(74, 42, 6, 0.94), rgba(54, 30, 4, 0.94)),
+    radial-gradient(circle at top right, rgba(205, 156, 79, 0.16), transparent 26%);
+}
+
+.landing-showcase-modern * {
+  color: #fff6ea;
+}
+
+.showcase-card {
+  padding: 22px;
+  border-radius: 24px;
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.12);
+}
+
+.showcase-card ul {
+  padding-left: 20px;
+  line-height: 1.7;
+}
+
+.showcase-stack {
+  display: grid;
+  gap: 16px;
+}
+
+.social-links a,
+.clinic-gallery-card {
+  color: #6c4513;
+  text-decoration: none;
+}
+
+.landing-section {
+  padding: 30px;
+  margin-top: 20px;
+}
+
+.section-heading {
+  margin-bottom: 20px;
+}
+
+.section-heading-inline {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, .8fr);
+  gap: 20px;
+  align-items: end;
+}
+
+.landing-section-lead {
+  margin: 0;
+  color: #765533;
+  line-height: 1.8;
+}
+
+.service-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.service-card {
+  padding: 22px;
+  border-radius: 24px;
+  background: rgba(255,255,255,.7);
+}
+
+.service-card span {
+  display: inline-flex;
+  margin-bottom: 16px;
+  color: #a06c26;
+  font-weight: 700;
+}
+
+.landing-network-band {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 20px;
+}
+
+.landing-network-band article {
+  padding: 24px;
+}
+
+.landing-network-band span {
+  display: inline-flex;
+  margin-bottom: 12px;
+  color: #9a6f2d;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.clinic-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.clinic-gallery-card {
+  min-height: 260px;
+  padding: 26px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background-blend-mode: overlay;
+}
+
+.clinic-gallery-instagram {
+  background: linear-gradient(180deg, rgba(92, 45, 16, 0.1), rgba(63, 35, 2, 0.74)), radial-gradient(circle at top left, rgba(243, 166, 76, 0.38), transparent 32%), rgba(255,252,246,.82);
+}
+
+.clinic-gallery-facebook {
+  background: linear-gradient(180deg, rgba(92, 45, 16, 0.06), rgba(63, 35, 2, 0.7)), radial-gradient(circle at top right, rgba(125, 88, 33, 0.32), transparent 34%), rgba(255,252,246,.82);
+}
+
+.clinic-gallery-cybo {
+  background: linear-gradient(180deg, rgba(92, 45, 16, 0.06), rgba(63, 35, 2, 0.72)), radial-gradient(circle at center, rgba(201, 156, 78, 0.22), transparent 38%), rgba(255,252,246,.82);
+}
+
+.clinic-gallery-card h3,
+.clinic-gallery-card p {
+  color: #fff6ea;
+}
+
+.contact-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.contact-card,
+.location-card {
+  padding: 24px;
+}
+
+.contact-phone {
+  color: #6b4512;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(24px, 3vw, 34px);
+  text-decoration: none;
+}
+
+.location-branch-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-bottom: 18px;
+}
+
+.branch-location-card p {
+  margin: 0 0 10px;
+  color: #765533;
+}
+
+.location-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.map-card {
+  overflow: hidden;
+  min-height: 340px;
+}
+
+.map-card iframe {
+  width: 100%;
+  min-height: 340px;
+  border: 0;
+}
+
+.auth-modal-copy,
+.auth-modal-copy p,
+.portal-form label {
+  color: inherit;
+}
+
+@media (max-width: 1100px) {
+  .landing-header-modern,
+  .landing-hero-modern,
+  .section-heading-inline,
+  .service-grid,
+  .clinic-gallery-grid,
+  .contact-grid,
+  .location-branch-grid,
+  .landing-network-band {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .landing-header-modern {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+
+  .landing-nav,
+  .landing-actions {
+    justify-content: center;
+  }
+
+  .landing-hero-modern,
+  .section-heading-inline {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-grid,
+  .location-branch-grid,
+  .clinic-gallery-grid,
+  .service-grid,
+  .landing-network-band {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .landing-shell {
+    width: min(100%, calc(100% - 20px));
+    padding-top: 14px;
+  }
+
+  .hero-copy-panel,
+  .landing-showcase-modern,
+  .landing-section,
+  .contact-card,
+  .location-card,
+  .service-card {
+    padding: 20px;
+    border-radius: 22px;
+  }
+
+  .landing-proof-grid,
+  .service-grid,
+  .clinic-gallery-grid,
+  .contact-grid,
+  .location-branch-grid,
+  .landing-network-band {
+    grid-template-columns: 1fr;
+  }
+
+  .landing-actions {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .landing-btn,
+  .landing-btn-secondary,
+  .landing-btn-ghost {
+    width: 100%;
+  }
+}
