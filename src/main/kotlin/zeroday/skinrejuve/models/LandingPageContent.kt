@@ -18,6 +18,9 @@ data class LandingPageContent(
     val servicesHeading: String,
     val servicesSubheading: String,
     val services: List<LandingInfoCard>,
+    val galleryHeading: String = "",
+    val galleryDescription: String = "",
+    val galleryImages: List<LandingMediaItem> = emptyList(),
     val experienceHeading: String,
     val experiencePoints: List<LandingInfoCard>,
     val contactHeading: String,
@@ -33,53 +36,78 @@ data class LandingPageContent(
 ) {
     companion object {
         fun default() = LandingPageContent(
-            eyebrow = "Skin Rejuve Official · since 2011",
-            heroTitle = "Quezon City skin, facial, and rejuvenation care shaped around the clinic's social presence.",
-            heroDescription = "Skin Rejuve's public pages consistently point clients to glow-focused facial care, rejuvenation support, and direct booking through Facebook, Instagram, and Google. This landing page now reflects those live brand touchpoints instead of placeholder copy.",
-            primaryCtaLabel = "Create patient account",
+            eyebrow = "Skin Rejuve care network · since 2011",
+            heroTitle = "Patient-first skin, facial, and rejuvenation care presented with a cleaner, medical-grade digital experience.",
+            heroDescription = "Inspired by the structured, trust-building approach used on leading healthcare sites like The Medical City, the Skin Rejuve landing page now highlights coordinated care, visible treatment pathways, and clear access to each branch.",
+            primaryCtaLabel = "Book consultation",
             secondaryCtaLabel = "Sign in to portal",
             proofCards = listOf(
-                LandingInfoCard("Established presence", "The logo and public profiles highlight Skin Rejuve as operating since 2011."),
-                LandingInfoCard("Social-first discovery", "Facebook and Instagram are surfaced as the main channels for treatment discovery and inquiries."),
-                LandingInfoCard("Clinic-based access", "Google Maps and contact details anchor the experience to the Quezon City clinic location.")
+                LandingInfoCard("Patient-centered flow", "Key services, branches, and contact options are surfaced early so clients can act quickly."),
+                LandingInfoCard("Branch-based access", "Kamias, Timog, and Palawan details are grouped clearly for inquiries, calls, and visit planning."),
+                LandingInfoCard("Credible public touchpoints", "Social, map, and profile links are preserved so patients can validate the brand through public channels.")
             ),
-            featureTitle = "Follow Skin Rejuve online, ask about treatments, and move into a secure booking flow.",
+            featureTitle = "A modern clinic homepage built around confidence, clarity, and faster branch access.",
             featureBullets = listOf(
-                "Browse Skin Rejuve Official on Facebook for current promotions and treatment posts",
-                "Check Instagram for visual updates, clinic moments, and aesthetic care highlights",
-                "Use the patient portal for authenticated booking and account access"
+                "Cleaner healthcare-inspired hierarchy for services, contact, and locations",
+                "Public social touchpoints preserved for discovery and clinic trust-building",
+                "Portal-ready actions for consultation booking and returning-patient access"
             ),
-            quickStatLabel = "Client journey",
-            quickStatValue = "Discover → Inquire → Book",
-            quickStatDescription = "The landing page now mirrors the clinic's actual public flow from social discovery to portal conversion.",
-            servicesHeading = "Social-led service focus",
-            servicesSubheading = "Service highlights are written conservatively around the treatments and concerns Skin Rejuve publicly emphasizes across its brand channels.",
+            quickStatLabel = "Clinic network",
+            quickStatValue = "3 Branches",
+            quickStatDescription = "Kamias, Timog, and Palawan contact points are visible from one coordinated landing page.",
+            servicesHeading = "Core care pathways at Skin Rejuve",
+            servicesSubheading = "The landing page now presents treatment categories with the structure and clarity patients usually expect from premium healthcare and aesthetic brands.",
             services = listOf(
-                LandingInfoCard("Facial rejuvenation", "Glow-restoring facial care and skin refresh treatments presented as core parts of the clinic brand."),
-                LandingInfoCard("Acne and texture support", "Content is framed around common concern-based visits such as breakouts, texture refinement, and overall skin clarity."),
-                LandingInfoCard("Lifting and contouring", "Non-surgical rejuvenation and contour-oriented care are positioned as premium clinic experiences."),
-                LandingInfoCard("Clinic consultation", "Social and map touchpoints funnel visitors toward direct inquiry, scheduling, and in-clinic consultation.")
+                LandingInfoCard("Facial rejuvenation", "Glow-focused facials and skin refresh treatments positioned as signature clinic experiences."),
+                LandingInfoCard("Acne and clarity support", "Concern-led skin care for breakouts, congestion, uneven tone, and texture refinement."),
+                LandingInfoCard("Contour and lifting care", "Non-surgical aesthetic support for sculpting, tightening, and profile definition."),
+                LandingInfoCard("Consultation and continuity", "A clearer path from discovery to inquiry, booking, and follow-up through the patient portal.")
             ),
-            experienceHeading = "A cleaner system across guest, patient, and admin experiences.",
+            galleryHeading = "Public gallery touchpoints",
+            galleryDescription = "Replace these placeholders from the admin side with official branch or treatment imagery while keeping each card linked to a verified public source.",
+            galleryImages = listOf(
+                LandingMediaItem(
+                    title = "Instagram highlights",
+                    description = "Placeholder card for an official clinic or treatment image linked to Instagram.",
+                    imageUrl = "",
+                    href = "https://www.instagram.com/skinrejuveofficial/?hl=en",
+                    ctaLabel = "Open Instagram"
+                ),
+                LandingMediaItem(
+                    title = "Facebook photo feed",
+                    description = "Placeholder card for public photo posts from Skin Rejuve Official on Facebook.",
+                    imageUrl = "",
+                    href = "https://www.facebook.com/SkinRejuveOfficial/photos/",
+                    ctaLabel = "Open Facebook"
+                ),
+                LandingMediaItem(
+                    title = "Branch profile",
+                    description = "Placeholder card that can highlight a branch facade, team image, or clinic interior.",
+                    imageUrl = "",
+                    href = "https://www.cybo.com/PH-biz/skin-rejuve_4e",
+                    ctaLabel = "Open listing"
+                )
+            ),
+            experienceHeading = "A more clinical, polished first impression for guests and returning patients.",
             experiencePoints = listOf(
-                LandingInfoCard("Editable content", "Admins can update the landing page without changing code."),
-                LandingInfoCard("Protected routes", "Dashboard and admin pages now redirect away when no authenticated account is present."),
-                LandingInfoCard("Stronger visual hierarchy", "The landing page uses clearer sections, stronger cards, and more polished spacing throughout.")
+                LandingInfoCard("Structured navigation", "Visitors can move through services, social proof, branch details, and contact options without friction."),
+                LandingInfoCard("Healthcare-inspired layout", "Content is grouped into clear panels and support sections similar to established medical websites."),
+                LandingInfoCard("Admin-editable content", "The public experience still works with the landing-page content manager used by administrators.")
             ),
-            contactHeading = "Reach Skin Rejuve where the clinic is already active.",
-            contactDescription = "Visitors can continue through official social profiles, call the clinic, open directions, or sign in before booking.",
-            contactPhone = "(02) 3494 2315",
-            contactPhoneLabel = "Clinic line",
+            contactHeading = "Call, message, or follow Skin Rejuve through its active public channels.",
+            contactDescription = "Use the branch numbers below, continue through official social pages, or open the patient portal to manage your next visit.",
+            contactPhone = "(02)7358-5950 / 0921-2318424",
+            contactPhoneLabel = "Kamias branch",
             socialLinks = listOf(
-                LandingSocialLink("Facebook", "https://www.facebook.com/SkinRejuveOfficial/"),
                 LandingSocialLink("Instagram", "https://www.instagram.com/skinrejuveofficial/?hl=en"),
-                LandingSocialLink("Google Maps", "https://share.google/IJ0WaJVbzuNemanDF")
+                LandingSocialLink("Facebook", "https://www.facebook.com/SkinRejuveOfficial/photos/"),
+                LandingSocialLink("Cybo profile", "https://www.cybo.com/PH-biz/skin-rejuve_4e")
             ),
-            locationHeading = "Visit Skin Rejuve at CRM Building, 116 Kamias Rd, Quezon City.",
-            address = "Skin Rejuve, CRM Building, 116 Kamias Rd, Quezon City, 1102 Metro Manila, Philippines.",
+            locationHeading = "Choose the Skin Rejuve branch that fits your day.",
+            address = "Kamias · CRM Building, 116 Kamias Rd, Quezon City, 1102 Metro Manila, Philippines.",
             mapUrl = "https://www.google.com/maps?q=Skin%20Rejuve%2C%20CRM%20Building%2C%20116%20Kamias%20Rd%2C%20Quezon%20City%2C%201102%20Metro%20Manila%2C%20Philippines&output=embed",
-            directionsUrl = "https://www.google.com/maps/dir//Skin+Rejuve,+CRM+Building,+116+Kamias+Rd,+Quezon+City,+1102+Kalakhang+Maynila,+Philippines/@52.3837918,4.6428787,12z/data=!4m8!4m7!1m0!1m5!1m1!1s0x3397b79884a39539:0x1627c44393f96886!2m2!1d121.0568409!2d14.6337991?entry=ttu&g_ep=EgoyMDI2MDMxNS4wIKXMDSoASAFQAw%3D%3D",
-            updatedAtLabel = "Based on Skin Rejuve's public social and map touchpoints."
+            directionsUrl = "https://www.google.com/maps/dir//Skin+Rejuve,+CRM+Building,+116+Kamias+Rd,+Quezon+City,+1102+Kalakhang+Maynila,+Philippines/@14.6337991,121.0568409,17z",
+            updatedAtLabel = "Inspired by The Medical City structure and Skin Rejuve's public branch touchpoints."
         )
     }
 }
@@ -94,4 +122,13 @@ data class LandingInfoCard(
 data class LandingSocialLink(
     val label: String,
     val url: String
+)
+
+@Serializable
+data class LandingMediaItem(
+    val title: String,
+    val description: String,
+    val imageUrl: String = "",
+    val href: String,
+    val ctaLabel: String = "View source"
 )

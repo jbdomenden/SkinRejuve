@@ -24,6 +24,13 @@ function serializeLinks(value) {
   }).filter((item) => item.label && item.url);
 }
 
+function serializeGalleryItems(value) {
+  return value.split('\n').map((line) => line.trim()).filter(Boolean).map((line) => {
+    const [title, description = '', imageUrl = '', href = '', ctaLabel = ''] = line.split('|').map((part) => part.trim());
+    return { title, description, imageUrl, href, ctaLabel };
+  }).filter((item) => item.title && item.description && item.href);
+}
+
 function fillTextArea(id, items, keyA, keyB) {
   document.getElementById(id).value = (items || []).map((item) => `${item[keyA]} | ${item[keyB]}`).join('\n');
 }
@@ -36,13 +43,14 @@ function populateForm(content) {
   [
     'eyebrow', 'heroTitle', 'heroDescription', 'primaryCtaLabel', 'secondaryCtaLabel', 'featureTitle',
     'quickStatLabel', 'quickStatValue', 'quickStatDescription', 'servicesHeading', 'servicesSubheading',
-    'experienceHeading', 'contactHeading', 'contactDescription', 'contactPhone', 'contactPhoneLabel',
+    'galleryHeading', 'galleryDescription', 'experienceHeading', 'contactHeading', 'contactDescription', 'contactPhone', 'contactPhoneLabel',
     'locationHeading', 'address', 'mapUrl', 'directionsUrl', 'updatedAtLabel'
   ].forEach((id) => setValue(id, content[id]));
 
   document.getElementById('featureBullets').value = (content.featureBullets || []).join('\n');
   fillTextArea('proofCards', content.proofCards, 'title', 'description');
   fillTextArea('services', content.services, 'title', 'description');
+  document.getElementById('galleryImages').value = (content.galleryImages || []).map((item) => `${item.title} | ${item.description} | ${item.imageUrl || ''} | ${item.href} | ${item.ctaLabel || ''}`).join('\n');
   fillTextArea('experiencePoints', content.experiencePoints, 'title', 'description');
   fillTextArea('socialLinks', content.socialLinks, 'label', 'url');
 }
@@ -63,6 +71,9 @@ function collectPayload() {
     servicesHeading: document.getElementById('servicesHeading').value.trim(),
     servicesSubheading: document.getElementById('servicesSubheading').value.trim(),
     services: serializeCards(document.getElementById('services').value),
+    galleryHeading: document.getElementById('galleryHeading').value.trim(),
+    galleryDescription: document.getElementById('galleryDescription').value.trim(),
+    galleryImages: serializeGalleryItems(document.getElementById('galleryImages').value),
     experienceHeading: document.getElementById('experienceHeading').value.trim(),
     experiencePoints: serializeCards(document.getElementById('experiencePoints').value),
     contactHeading: document.getElementById('contactHeading').value.trim(),

@@ -200,13 +200,16 @@ if (window.mountSkinRejuveLogos) window.mountSkinRejuveLogos();
     redirectForRole(getUserRole());
   }
 
-  if (getToken()) {
-    redirectForRole(getUserRole());
-    return;
-  }
-
   openButtons.forEach((button) => {
     button.addEventListener('click', () => {
+      if (getToken()) {
+        const intent = button.dataset.authIntent || '';
+        if (intent === 'booking') {
+          setPostLoginRedirect('dashboard.html?booking=1');
+        }
+        redirectForRole(getUserRole());
+        return;
+      }
       openModal(button.dataset.authOpen || 'login', button.dataset.authIntent || '');
     });
   });

@@ -81,6 +81,7 @@ const server = http.createServer(async (req, res) => {
       if (req.method === 'GET' && url.pathname === '/api/admin/appointments') return send(res, 200, { success: true, data: adminService.getAppointments() });
       if (req.method === 'GET' && url.pathname === '/api/admin/registrations') return send(res, 200, { success: true, data: adminService.getRegistrations() });
       if (req.method === 'GET' && url.pathname === '/api/admin/reports') return send(res, 200, { success: true, data: adminService.getReports() });
+      if (req.method === 'POST' && url.pathname === '/api/admin/users') return send(res, 201, { success: true, data: adminService.createUser(await parseBody(req)) });
     }
 
     return send(res, 404, { success: false, message: 'Not found' });

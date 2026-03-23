@@ -18,6 +18,7 @@
       <a href="#services">Services</a>
       <a href="#experience">Experience</a>
       <a href="#contact">Contact</a>
+      <a href="#gallery">Gallery</a>
       <a href="#location">Location</a>
     </nav>
     <div class="landing-actions">
@@ -61,11 +62,12 @@
           <strong id="landingQuickStatValue">2011</strong>
           <p id="landingQuickStatDescription">A trusted Quezon City clinic experience refined for modern online booking.</p>
         </article>
-        <article class="showcase-card showcase-links-card">
-          <span class="showcase-label">Social media</span>
-          <div class="social-links social-links-stack" id="landingSocialLinks">
-            <a href="https://www.facebook.com/SkinRejuveOfficial/" target="_blank" rel="noreferrer">Facebook</a>
-            <a href="https://www.instagram.com/skinrejuveofficial/?hl=en" target="_blank" rel="noreferrer">Instagram</a>
+        <article class="showcase-card showcase-links-card showcase-access-card">
+          <span class="showcase-label">Branch access</span>
+          <div class="showcase-branch-links">
+            <a href="tel:+63273585950">Kamias</a>
+            <a href="tel:+632735838831">Timog</a>
+            <a href="tel:+639171334180">Palawan</a>
           </div>
         </article>
       </div>
@@ -102,20 +104,24 @@
     </div>
   </section>
 
+  <section class="landing-section clinic-gallery-panel" id="gallery">
+    <div class="section-heading section-heading-inline">
+      <div>
+        <p class="landing-kicker" id="galleryHeadingKicker">Public gallery touchpoints</p>
+        <h2 id="galleryHeading">Explore Skin Rejuve across its public channels.</h2>
+      </div>
+      <p class="landing-section-lead" id="galleryDescription">These cards connect visitors to public-facing brand galleries and profiles used for treatment discovery, clinic updates, and local trust-building.</p>
+    </div>
+    <div class="clinic-gallery-grid" id="landingGalleryGrid"></div>
+  </section>
+
   <section class="landing-section contact-panel" id="contact">
     <div class="contact-copy">
       <p class="landing-kicker">Stay connected</p>
       <h2 id="contactHeading">Reach SkinRejuve through social, phone, or your next booking.</h2>
       <p class="landing-lead contact-lead" id="contactDescription">Keep the conversation going online, call the clinic directly, or continue into the portal to manage your next visit.</p>
     </div>
-    <div class="contact-grid">
-      <article class="contact-card contact-card-social">
-        <span class="showcase-label">Social media</span>
-        <div class="social-links social-links-stack" id="contactSocialLinks">
-          <a href="https://www.facebook.com/SkinRejuveOfficial/" target="_blank" rel="noreferrer">Facebook</a>
-          <a href="https://www.instagram.com/skinrejuveofficial/?hl=en" target="_blank" rel="noreferrer">Instagram</a>
-        </div>
-      </article>
+    <div class="contact-grid contact-grid-compact">
       <article class="contact-card">
         <span class="showcase-label" id="contactPhoneLabel">Clinic line</span>
         <a class="contact-phone" id="contactPhone" href="tel:+63234942315">(02) 3494 2315</a>
@@ -133,16 +139,37 @@
   </section>
 
   <section class="landing-section location-panel" id="location">
-    <div class="section-heading">
-      <p class="landing-kicker">Clinic location</p>
-      <h2 id="locationHeading">Visit Skin Rejuve at CRM Building, 116 Kamias Rd, Quezon City.</h2>
+    <div class="section-heading section-heading-inline">
+      <div>
+        <p class="landing-kicker">Clinic locations</p>
+        <h2 id="locationHeading">Choose the Skin Rejuve branch that fits your day.</h2>
+      </div>
+      <p class="landing-section-lead" id="locationAddress">Skin Rejuve keeps each branch visible so patients can call the right clinic faster and confirm operating hours before visiting.</p>
+    </div>
+    <div class="location-branch-grid">
+      <article class="location-card branch-location-card">
+        <span class="showcase-label">Kamias</span>
+        <h3>Skin Rejuve Kamias</h3>
+        <p>☎️ (02)7358-5950 / 0921-2318424</p>
+        <p>🕒 Clinic Hours: 11AM-8PM</p>
+        <a class="landing-btn landing-btn-secondary" id="mapDirectionsLink" href="https://www.google.com/maps/dir//Skin+Rejuve,+CRM+Building,+116+Kamias+Rd,+Quezon+City,+1102+Kalakhang+Maynila,+Philippines/@14.6337991,121.0568409,17z" target="_blank" rel="noreferrer">Get directions</a>
+      </article>
+      <article class="location-card branch-location-card">
+        <span class="showcase-label">Timog</span>
+        <h3>Skin Rejuve Timog</h3>
+        <p>☎️ (02)7358-38831 / 0921-4274212</p>
+        <p>🕒 Clinic Hours: 10AM-9PM</p>
+        <a class="landing-btn landing-btn-secondary" href="tel:+632735838831">Call branch</a>
+      </article>
+      <article class="location-card branch-location-card">
+        <span class="showcase-label">Palawan</span>
+        <h3>Skin Rejuve Palawan</h3>
+        <p>☎️ 0917-1334180</p>
+        <p>🕒 Clinic Hours: 10AM-8PM</p>
+        <a class="landing-btn landing-btn-secondary" href="tel:+639171334180">Call branch</a>
+      </article>
     </div>
     <div class="location-layout">
-      <article class="location-card">
-        <span class="showcase-label">Address</span>
-        <p id="locationAddress">Skin Rejuve, CRM Building, 116 Kamias Rd, Quezon City, 1102 Metro Manila, Philippines.</p>
-        <a class="landing-btn landing-btn-secondary" id="mapDirectionsLink" href="https://maps.google.com/?q=Skin%20Rejuve%20CRM%20Building%20Kamias%20Road%20Quezon%20City" target="_blank" rel="noreferrer">Get directions</a>
-      </article>
       <div class="map-card">
         <iframe id="mapFrame" title="Skin Rejuve map" src="https://www.google.com/maps?q=Skin%20Rejuve%2C%20CRM%20Building%2C%20116%20Kamias%20Rd%2C%20Quezon%20City%2C%201102%20Metro%20Manila%2C%20Philippines&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
