@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SkinRejuve Dashboard</title>
+  <link rel="stylesheet" href="/frontend/dashboard/css/dashboard.css" />
+</head>
+<body class="portal-bg">
+  <main class="auth-shell">
+    <section class="dashboard-page modern-dashboard">
+      <section class="auth-card dashboard-hero modern-hero-card">
+        <div class="brand" data-skin-rejuve-logo data-logo-size="large" data-logo-subtitle="SINCE 2011"></div>
+        <div class="page-panel">
+          <div class="page-kicker">PATIENT DASHBOARD</div>
+          <h1 class="page-title">Manage your SkinRejuve care</h1>
+          <p class="page-copy">Save your profile, browse next available treatment slots, and keep your appointment history in one modern hub.</p>
+          <div class="dashboard-actions">
+            <a class="text-link" href="/frontend/auth/html/login.html">Switch account</a>
+            <button class="secondary-btn" id="logoutBtn" type="button">LOG OUT</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="dashboardOverview" class="metric-grid"></section>
+
+      <section class="dashboard-columns">
+        <section class="dashboard-card dashboard-card-visible glass-panel">
+          <div class="section-header">
+            <div>
+              <h2>Patient profile</h2>
+              <p class="section-copy">Keep your details current so the clinic can prepare treatments and follow-ups.</p>
+            </div>
+          </div>
+          <div class="grid-2">
+            <div>
+              <label>First name</label>
+              <input id="firstName" placeholder="First name" />
+            </div>
+            <div>
+              <label>Last name</label>
+              <input id="lastName" placeholder="Last name" />
+            </div>
+          </div>
+          <button id="saveProfileBtn">SAVE PROFILE</button>
+          <p class="form-feedback" id="profileMsg"></p>
+          <div id="nextAppointment" class="inline-summary"></div>
+        </section>
+
+        <section class="dashboard-card dashboard-card-visible glass-panel" id="bookingPanel">
+          <div class="section-header">
+            <div>
+              <h2>Book appointment</h2>
+              <p class="section-copy">Choose a service and reserve from backend-generated available slots.</p>
+            </div>
+          </div>
+          <div class="grid-2">
+            <div>
+              <label>Service</label>
+              <select id="serviceId"></select>
+            </div>
+            <div>
+              <label>Available slot</label>
+              <select id="slotId"></select>
+            </div>
+          </div>
+          <div class="grid-2">
+            <button id="bookBtn">BOOK APPOINTMENT</button>
+            <button id="historyBtn" class="secondary-dark">REFRESH HISTORY</button>
+          </div>
+          <p class="form-feedback" id="bookingMsg"></p>
+        </section>
+      </section>
+
+      <section class="dashboard-card dashboard-card-visible glass-panel">
+        <div class="section-header">
+          <div>
+            <h2>Appointment history</h2>
+            <p class="section-copy">Your latest bookings and status updates, live from the backend.</p>
+          </div>
+        </div>
+        <div id="history"></div>
+      </section>
+    </section>
+  </main>
+
+  <script src="/frontend/shared/js/logo.js"></script>
+  <script src="/frontend/shared/js/api-client.js"></script>
+  <script>window.skinRejuveAuthGuard = { requireAuth: true, redirectTo: '/frontend/landing/html/index.html?auth=login' };</script>
+  <script src="/frontend/shared/js/auth-guard.js"></script>
+  <script src="/frontend/dashboard/js/dashboard.js"></script>
+</body>
+</html>

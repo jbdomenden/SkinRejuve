@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SkinRejuve Admin</title>
+  <link rel="stylesheet" href="/frontend/admin/css/admin.css" />
+</head>
+<body>
+  <p>Checking your session…</p>
+  <script src="/frontend/shared/js/api-client.js"></script>
+  <script>window.skinRejuveAuthGuard = { requireAuth: true, roles: ['ADMIN','STAFF'], redirectTo: '/frontend/landing/html/index.html?auth=login', unauthorizedRedirect: '/frontend/dashboard/html/dashboard.html' };</script>
+  <script src="/frontend/shared/js/auth-guard.js"></script>
+  <script>window.location.replace('/frontend/landing/html/index.html');</script>
+</body>
+</html>
