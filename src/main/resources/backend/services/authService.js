@@ -65,4 +65,4 @@ function resetPassword({ token, password }) {
   return true;
 }
 
-module.exports = { register, login, verifyEmail, forgotPassword, resetPassword };
+module.exports = { register, login, verifyEmail, forgotPassword, resetPassword, hashPassword };
