@@ -40,14 +40,16 @@ function mountSidebar() {
         <a href="admin-landing.html" data-admin-nav="landing"><span class="admin-nav-icon">${sidebarIcon('landing')}</span><span class="admin-nav-copy"><strong>Settings</strong><small>Profile, security, and landing page</small></span></a>
       </nav>
     </div>
-    <div class="sidebar-user-card">
-      <div class="sidebar-user-avatar">${displayName.trim().charAt(0).toUpperCase() || 'A'}</div>
-      <div>
-        <strong>${displayName}</strong>
-        <span>${roleLabel}</span>
+    <div class="admin-sidebar-bottom">
+      <div class="sidebar-user-card">
+        <div class="sidebar-user-avatar">${displayName.trim().charAt(0).toUpperCase() || 'A'}</div>
+        <div class="sidebar-user-meta">
+          <strong>${displayName}</strong>
+          <span>${roleLabel}</span>
+        </div>
       </div>
+      <button class="secondary-btn admin-logout" id="adminLogoutBtn" type="button">LOG OUT</button>
     </div>
-    <button class="secondary-btn admin-logout" id="adminLogoutBtn" type="button">LOG OUT</button>
   `;
 
   if (window.mountSkinRejuveLogos) window.mountSkinRejuveLogos();

@@ -8,57 +8,33 @@
 </head>
 <body class="admin-bg" data-admin-page="dashboard">
   <main class="admin-shell modern-shell">
-    <aside class="admin-sidebar glass-sidebar">
-      <div class="brand" data-skin-rejuve-logo data-logo-size="compact" data-logo-subtitle="SINCE 2011"></div>
-      <nav>
-        <a href="admin-dashboard.html" data-admin-nav="dashboard">Dashboard</a>
-        <a href="admin-appointments.html" data-admin-nav="appointments">Appointments</a>
-        <a href="admin-registration.html" data-admin-nav="registration">Registration</a>
-        <a href="admin-review.html" data-admin-nav="review">Review</a>
-        <a href="admin-reports.html" data-admin-nav="reports">Reports</a>
-        <a href="admin-landing.html" data-admin-nav="landing">Landing Page</a>
-      </nav>
-      <button class="secondary-btn admin-logout" id="adminLogoutBtn" type="button">LOG OUT</button>
-    </aside>
+    <aside class="admin-sidebar glass-sidebar"></aside>
 
-    <section class="admin-content admin-page-grid admin-dashboard-grid">
-      <section class="hero-strip dashboard-hero admin-dashboard-hero">
-        <div class="dashboard-hero-copy">
+    <section class="admin-content admin-page-grid dashboard-reference-layout">
+      <section class="hero-strip dashboard-reference-hero">
+        <div>
           <div class="page-kicker">ADMIN DASHBOARD</div>
-          <h1 class="page-title page-title-dark">Command center for clinic activity.</h1>
-          <p class="page-copy page-copy-dark">Track patient registrations, appointment flow, and status updates from one polished admin workspace.</p>
-        </div>
-        <div class="hero-badge-stack dashboard-hero-badges">
-          <span class="hero-badge">Live operations</span>
-          <span class="hero-badge hero-badge-soft">Users, bookings, and approvals</span>
+          <h1 class="page-title page-title-dark dashboard-reference-title">Admin Dashboard</h1>
         </div>
       </section>
 
-      <section id="metricsGrid" class="metric-grid dashboard-metric-grid"></section>
+      <section id="metricsGrid" class="metric-grid dashboard-reference-metrics"></section>
 
       <section class="admin-card wide-card admin-surface-card dashboard-management-card">
-        <div class="section-header dashboard-section-header">
+        <div class="dashboard-management-toolbar">
           <div>
-            <div class="page-kicker">USER MANAGEMENT</div>
-            <h2>Manage user activity</h2>
-            <p class="section-copy">Review new registrations, locate records quickly, and route staff to the next admin action.</p>
+            <h2>User Management</h2>
           </div>
-          <div class="dashboard-toolbar">
-            <label class="dashboard-search-field" for="dashboardUserSearch">
-              <span aria-hidden="true">⌕</span>
-              <input id="dashboardUserSearch" type="search" placeholder="Search users" />
+          <div class="dashboard-toolbar-actions">
+            <label class="dashboard-search-field" aria-label="Search users">
+              <span>⌕</span>
+              <input id="dashboardSearchInput" type="search" placeholder="Search users" />
             </label>
-            <select id="dashboardUserFilter" class="dashboard-filter-select" aria-label="Filter users by status">
-              <option value="ALL">All statuses</option>
-              <option value="PENDING">Pending</option>
-              <option value="COMPLETE">Complete</option>
-              <option value="VERIFIED">Verified</option>
-              <option value="ADMIN">Admin / Staff</option>
-            </select>
-            <button class="primary-btn dashboard-add-user" id="openAddUserModalBtn" type="button">+ Add User</button>
+            <button class="secondary-btn dashboard-filter-btn" id="dashboardFilterBtn" type="button">Filter</button>
+            <button class="dashboard-add-btn" id="dashboardAddUserBtn" type="button">+ Add User</button>
           </div>
         </div>
-        <div id="userManagementTable"></div>
+        <div id="dashboardUserTable"></div>
       </section>
 
       <div class="dashboard-secondary-grid">
