@@ -35,10 +35,24 @@ if (window.mountSkinRejuveLogos) window.mountSkinRejuveLogos();
     `).join('');
   }
 
-  function renderSocialLinks(items, stacked) {
-    return (items || []).map((item) => `
-      <a href="${escapeHtml(item.url)}" target="_blank" rel="noreferrer">${escapeHtml(item.label)}</a>
-    `).join('');
+  function renderGalleryCards(items) {
+    return (items || []).map((item, index) => {
+      const hasImage = Boolean(item.imageUrl);
+      const media = hasImage
+        ? `<img src="${escapeHtml(item.imageUrl)}" alt="${escapeHtml(item.title)}" loading="lazy" />`
+        : `<div class="clinic-gallery-placeholder" aria-hidden="true">0${index + 1}</div>`;
+      return `
+        <a class="clinic-gallery-card" href="${escapeHtml(item.href)}" target="_blank" rel="noreferrer">
+          <div class="clinic-gallery-media ${hasImage ? 'has-image' : 'is-placeholder'}">${media}</div>
+          <div class="clinic-gallery-copy">
+            <span class="showcase-label">Editable media</span>
+            <h3>${escapeHtml(item.title)}</h3>
+            <p>${escapeHtml(item.description)}</p>
+            <strong>${escapeHtml(item.ctaLabel || 'View source')}</strong>
+          </div>
+        </a>
+      `;
+    }).join('');
   }
 
   function renderFeatureBullets(items) {
@@ -60,6 +74,9 @@ if (window.mountSkinRejuveLogos) window.mountSkinRejuveLogos();
     document.getElementById('servicesHeading').textContent = content.servicesHeading || '';
     document.getElementById('servicesSubheading').textContent = content.servicesSubheading || '';
     document.getElementById('servicesGrid').innerHTML = renderServiceCards(content.services);
+    document.getElementById('galleryHeading').textContent = content.galleryHeading || 'Explore Skin Rejuve across its public channels.';
+    document.getElementById('galleryDescription').textContent = content.galleryDescription || '';
+    document.getElementById('landingGalleryGrid').innerHTML = renderGalleryCards(content.galleryImages);
     document.getElementById('experienceHeading').textContent = content.experienceHeading || '';
     document.getElementById('experiencePoints').innerHTML = renderExperiencePoints(content.experiencePoints);
     document.getElementById('contactHeading').textContent = content.contactHeading || '';
@@ -68,8 +85,6 @@ if (window.mountSkinRejuveLogos) window.mountSkinRejuveLogos();
     const phoneLink = document.getElementById('contactPhone');
     phoneLink.textContent = content.contactPhone || '';
     phoneLink.href = `tel:${(content.contactPhone || '').replace(/[^\d+]/g, '')}`;
-    document.getElementById('landingSocialLinks').innerHTML = renderSocialLinks(content.socialLinks);
-    document.getElementById('contactSocialLinks').innerHTML = renderSocialLinks(content.socialLinks);
     document.getElementById('locationHeading').textContent = content.locationHeading || '';
     document.getElementById('locationAddress').textContent = content.address || '';
     document.getElementById('mapFrame').src = content.mapUrl || '';

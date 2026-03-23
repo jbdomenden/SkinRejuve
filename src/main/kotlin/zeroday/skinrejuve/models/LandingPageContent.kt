@@ -18,6 +18,9 @@ data class LandingPageContent(
     val servicesHeading: String,
     val servicesSubheading: String,
     val services: List<LandingInfoCard>,
+    val galleryHeading: String = "",
+    val galleryDescription: String = "",
+    val galleryImages: List<LandingMediaItem> = emptyList(),
     val experienceHeading: String,
     val experiencePoints: List<LandingInfoCard>,
     val contactHeading: String,
@@ -60,6 +63,31 @@ data class LandingPageContent(
                 LandingInfoCard("Contour and lifting care", "Non-surgical aesthetic support for sculpting, tightening, and profile definition."),
                 LandingInfoCard("Consultation and continuity", "A clearer path from discovery to inquiry, booking, and follow-up through the patient portal.")
             ),
+            galleryHeading = "Public gallery touchpoints",
+            galleryDescription = "Replace these placeholders from the admin side with official branch or treatment imagery while keeping each card linked to a verified public source.",
+            galleryImages = listOf(
+                LandingMediaItem(
+                    title = "Instagram highlights",
+                    description = "Placeholder card for an official clinic or treatment image linked to Instagram.",
+                    imageUrl = "",
+                    href = "https://www.instagram.com/skinrejuveofficial/?hl=en",
+                    ctaLabel = "Open Instagram"
+                ),
+                LandingMediaItem(
+                    title = "Facebook photo feed",
+                    description = "Placeholder card for public photo posts from Skin Rejuve Official on Facebook.",
+                    imageUrl = "",
+                    href = "https://www.facebook.com/SkinRejuveOfficial/photos/",
+                    ctaLabel = "Open Facebook"
+                ),
+                LandingMediaItem(
+                    title = "Branch profile",
+                    description = "Placeholder card that can highlight a branch facade, team image, or clinic interior.",
+                    imageUrl = "",
+                    href = "https://www.cybo.com/PH-biz/skin-rejuve_4e",
+                    ctaLabel = "Open listing"
+                )
+            ),
             experienceHeading = "A more clinical, polished first impression for guests and returning patients.",
             experiencePoints = listOf(
                 LandingInfoCard("Structured navigation", "Visitors can move through services, social proof, branch details, and contact options without friction."),
@@ -94,4 +122,13 @@ data class LandingInfoCard(
 data class LandingSocialLink(
     val label: String,
     val url: String
+)
+
+@Serializable
+data class LandingMediaItem(
+    val title: String,
+    val description: String,
+    val imageUrl: String = "",
+    val href: String,
+    val ctaLabel: String = "View source"
 )
