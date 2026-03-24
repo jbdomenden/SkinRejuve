@@ -8,19 +8,8 @@
 </head>
 <body class="admin-bg" data-admin-page="registration">
   <main class="admin-shell modern-shell">
-    <aside class="admin-sidebar glass-sidebar">
-      <div class="brand" data-skin-rejuve-logo data-logo-size="compact" data-logo-subtitle="SINCE 2011"></div>
-      <nav>
-        <a href="/frontend/admin/html/admin-dashboard.html" data-admin-nav="dashboard">Dashboard</a>
-        <a href="/frontend/admin/html/admin-appointments.html" data-admin-nav="appointments">Appointments</a>
-        <a href="/frontend/admin/html/admin-registration.html" data-admin-nav="registration">Registration</a>
-        <a href="/frontend/admin/html/admin-review.html" data-admin-nav="review">Review</a>
-        <a href="/frontend/admin/html/admin-reports.html" data-admin-nav="reports">Reports</a>
-        <a href="/frontend/admin/html/admin-landing.html" data-admin-nav="landing">Landing Page</a>
-      </nav>
-      <button class="secondary-btn admin-logout" id="adminLogoutBtn" type="button">LOG OUT</button>
-    </aside>
-    <section class="admin-content admin-page-grid">
+    <aside class="admin-sidebar app-sidebar" data-sidebar-root></aside>
+    <section class="admin-content admin-page-grid" data-sidebar-content>
       <section class="hero-strip compact-hero dashboard-hero">
         <div>
           <div class="page-kicker">REGISTRATION</div>
@@ -44,6 +33,7 @@
   <script src="/frontend/shared/js/api-client.js"></script>
   <script>window.skinRejuveAuthGuard = { requireAuth: true, roles: ['ADMIN', 'STAFF'], redirectTo: '/frontend/landing/html/index.html?auth=login', unauthorizedRedirect: '/frontend/dashboard/html/dashboard.html' };</script>
   <script src="/frontend/shared/js/auth-guard.js"></script>
+  <script src="/frontend/shared/js/sidebar.js"></script>
   <script src="/frontend/shared/js/admin-shell.js"></script>
   <script src="/frontend/admin/js/admin-registration.js"></script>
 </body>

@@ -1,4 +1,5 @@
 @import url('/frontend/shared/css/styles.css');
+@import url('/frontend/shared/css/sidebar.css');
 
 :root {
   --portal-sidebar-bg: #4b2a07;
@@ -29,60 +30,9 @@ body.portal-bg {
 }
 
 .patient-sidebar {
-  background: linear-gradient(180deg, #502a06 0%, #3c2004 100%);
-  border-right: 1px solid #6d4620;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  padding: 22px 18px;
+  min-width: 0;
 }
 
-.patient-sidebar__brand {
-  display: flex;
-  justify-content: center;
-  padding-bottom: 18px;
-  border-bottom: 1px solid #896239;
-}
-
-.patient-nav {
-  display: grid;
-  gap: 8px;
-}
-
-.patient-nav__item {
-  width: 100%;
-  border: 1px solid transparent;
-  background: transparent;
-  color: var(--portal-sidebar-text);
-  text-decoration: none;
-  font: 600 1rem/1.2 "Cormorant Garamond", "Times New Roman", serif;
-  display: grid;
-  grid-template-columns: 26px 1fr;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 14px;
-  border-radius: 14px;
-  letter-spacing: 0.04em;
-  text-align: left;
-}
-
-.patient-nav__icon {
-  font-size: 1.25rem;
-  text-align: center;
-}
-
-.patient-nav__item:hover {
-  background: #ffffff14;
-}
-
-.patient-nav__item.is-active,
-.patient-nav__item[aria-current='page'] {
-  background: var(--portal-sidebar-active);
-  color: var(--portal-sidebar-active-text);
-  border-color: #d7c5a6;
-}
-
-.patient-nav__item:focus-visible,
 .button-primary:focus-visible,
 .button-secondary:focus-visible,
 .icon-button:focus-visible,
@@ -92,23 +42,6 @@ input:focus-visible,
 select:focus-visible {
   outline: 3px solid #c48b44;
   outline-offset: 2px;
-}
-
-.patient-identity {
-  margin-top: auto;
-  border-top: 1px solid #896239;
-  padding-top: 16px;
-  color: #f4e6d2;
-}
-
-.patient-identity__name {
-  margin: 0;
-  font: 700 1.5rem/1.1 "Cormorant Garamond", "Times New Roman", serif;
-}
-
-.patient-identity__role {
-  margin: 6px 0 0;
-  color: #dbc5a1;
 }
 
 .patient-main {
@@ -538,17 +471,6 @@ select:focus-visible {
     grid-template-columns: 1fr;
   }
 
-  .patient-sidebar {
-    gap: 14px;
-  }
-
-  .patient-nav {
-    grid-template-columns: repeat(5, minmax(120px, 1fr));
-  }
-
-  .patient-identity {
-    margin-top: 0;
-  }
 
   .history-toolbar {
     grid-template-columns: 1fr 1fr;
@@ -560,9 +482,6 @@ select:focus-visible {
 }
 
 @media (max-width: 760px) {
-  .patient-nav {
-    grid-template-columns: 1fr 1fr;
-  }
 
   .history-toolbar {
     grid-template-columns: 1fr;
