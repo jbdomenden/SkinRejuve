@@ -31,7 +31,7 @@ window.skinRejuveBranchData = [
     shortName: 'Palawan',
     address: 'Puerto Princesa, Palawan, Philippines',
     hours: 'Monday to Sunday · 10:00 AM to 8:00 PM',
-    landlineLabel: 'Call mobile for direct assistance',
+    landlineLabel: 'Please call the mobile number for branch assistance',
     landlineHref: '',
     mobileLabel: '0917 133 4180',
     mobileHref: 'tel:+639171334180',

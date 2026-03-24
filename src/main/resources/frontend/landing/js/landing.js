@@ -6,7 +6,6 @@ if (window.mountSkinRejuveLogos) window.mountSkinRejuveLogos();
 
   const serviceGrid = document.getElementById('servicesGrid');
   const branchGrid = document.getElementById('branchGrid');
-  const galleryGrid = document.getElementById('landingGalleryGrid');
   const bookingModal = document.getElementById('bookingModal');
   const serviceModal = document.getElementById('serviceModal');
   const bookingProgress = document.getElementById('bookingProgress');
@@ -26,26 +25,6 @@ if (window.mountSkinRejuveLogos) window.mountSkinRejuveLogos();
   const serviceModalList = document.getElementById('serviceModalList');
   const navToggle = document.querySelector('[data-nav-toggle]');
   const navPanel = document.querySelector('[data-nav-panel]');
-  const galleryCards = [
-    {
-      title: 'Facebook updates',
-      description: 'Follow clinic announcements, branch updates, and patient-ready service highlights on Facebook.',
-      href: 'https://www.facebook.com/skinrejuve',
-      ctaLabel: 'Open Facebook',
-    },
-    {
-      title: 'Instagram treatments',
-      description: 'Browse treatment highlights, clinic aesthetics, and polished brand moments on Instagram.',
-      href: 'https://www.instagram.com/skinrejuve',
-      ctaLabel: 'Open Instagram',
-    },
-    {
-      title: 'TikTok or reels',
-      description: 'Watch short-form skincare education, clinic stories, and quick treatment features.',
-      href: 'https://www.tiktok.com/@skinrejuve',
-      ctaLabel: 'Open channel',
-    },
-  ];
 
   let activeBookingStep = 1;
   let lastFocusedElement = null;
@@ -80,54 +59,45 @@ if (window.mountSkinRejuveLogos) window.mountSkinRejuveLogos();
   }
 
   function renderServices() {
+    if (!serviceGrid) return;
     serviceGrid.innerHTML = serviceData.map((service) => `
       <article class="service-card">
-        <span class="service-card-index">${escapeHtml(service.title)}</span>
+        <span class="service-card-index">${escapeHtml(service.shortLabel || service.title)}</span>
         <h3>${escapeHtml(service.title)}</h3>
         <p>${escapeHtml(service.description)}</p>
-        <p class="service-concerns"><strong>Common concerns:</strong> ${escapeHtml(service.concerns)}</p>
+        <p class="service-concerns"><strong>Best for:</strong> ${escapeHtml(service.concerns)}</p>
         <ul class="service-example-list">
           ${service.examples.map((example) => `<li>${escapeHtml(example)}</li>`).join('')}
         </ul>
         <div class="service-card-actions">
           <button class="landing-btn landing-btn-secondary" type="button" data-service-details="${escapeHtml(service.id)}">View Treatments</button>
-          <button class="landing-btn" type="button" data-book-category="${escapeHtml(service.id)}">Book Now</button>
+          <button class="landing-btn" type="button" data-book-category="${escapeHtml(service.id)}">Book Consultation</button>
         </div>
       </article>
     `).join('');
   }
 
   function renderBranches() {
+    if (!branchGrid) return;
     branchGrid.innerHTML = branchData.map((branch) => `
       <article class="branch-card" itemscope itemtype="https://schema.org/MedicalClinic">
         <div class="branch-meta">
           <span class="showcase-label">${escapeHtml(branch.shortName)}</span>
           <h3 itemprop="name">${escapeHtml(branch.name)}</h3>
           <p class="branch-address" itemprop="address">${escapeHtml(branch.address)}</p>
-          <p><strong>Clinic hours:</strong> ${escapeHtml(branch.hours)}</p>
+          <span class="branch-hours-badge">Clinic Hours</span>
+          <div class="branch-hours-detail" id="branch-hours-${escapeHtml(branch.id)}" hidden>
+            <p><strong>Open:</strong> ${escapeHtml(branch.hours)}</p>
+          </div>
           <p><strong>Landline:</strong> ${branch.landlineHref ? `<a href="${escapeHtml(branch.landlineHref)}">${escapeHtml(branch.landlineLabel)}</a>` : escapeHtml(branch.landlineLabel)}</p>
           <p><strong>Mobile:</strong> <a href="${escapeHtml(branch.mobileHref)}">${escapeHtml(branch.mobileLabel)}</a></p>
         </div>
         <div class="branch-actions">
+          <a class="landing-btn landing-btn-secondary" href="${escapeHtml(branch.mobileHref)}">Call Branch</a>
           <a class="landing-btn landing-btn-secondary" href="${escapeHtml(branch.directionsUrl)}" target="_blank" rel="noreferrer">Get Directions</a>
-          <a class="landing-btn landing-btn-secondary" href="${escapeHtml(branch.mobileHref)}">Call</a>
-          <a class="landing-btn" href="${escapeHtml(branch.messageUrl)}" target="_blank" rel="noreferrer">Message</a>
+          <button class="landing-btn" type="button" data-branch-hours="${escapeHtml(branch.id)}" aria-expanded="false" aria-controls="branch-hours-${escapeHtml(branch.id)}">View Hours</button>
         </div>
       </article>
-    `).join('');
-  }
-
-  function renderGallery() {
-    galleryGrid.innerHTML = galleryCards.map((item, index) => `
-      <a class="clinic-gallery-card" href="${escapeHtml(item.href)}" target="_blank" rel="noreferrer">
-        <div class="clinic-gallery-media is-gallery-cover" aria-hidden="true">0${index + 1}</div>
-        <div class="clinic-gallery-copy">
-          <span class="showcase-label">Public channel</span>
-          <h3>${escapeHtml(item.title)}</h3>
-          <p>${escapeHtml(item.description)}</p>
-          <strong>${escapeHtml(item.ctaLabel)}</strong>
-        </div>
-      </a>
     `).join('');
   }
 
@@ -141,7 +111,7 @@ if (window.mountSkinRejuveLogos) window.mountSkinRejuveLogos();
   }
 
   function populateCategorySelect() {
-    bookingCategory.innerHTML = ['<option value="">Select a category</option>'].concat(
+    bookingCategory.innerHTML = ['<option value="">Select a service category</option>'].concat(
       serviceData.map((item) => `<option value="${escapeHtml(item.id)}">${escapeHtml(item.title)}</option>`),
     ).join('');
   }
@@ -153,7 +123,7 @@ if (window.mountSkinRejuveLogos) window.mountSkinRejuveLogos();
       treatments.map((item) => `<option value="${escapeHtml(item.name)}">${escapeHtml(item.name)}</option>`),
     ).join('');
     bookingServiceSummary.innerHTML = match
-      ? `<p><strong>${escapeHtml(match.title)}:</strong> ${escapeHtml(match.description)}</p><p>${escapeHtml(match.concerns)}</p>`
+      ? `<p><strong>${escapeHtml(match.title)}:</strong> ${escapeHtml(match.description)}</p><p><strong>Best for:</strong> ${escapeHtml(match.concerns)}</p>`
       : '';
   }
 
@@ -184,19 +154,19 @@ if (window.mountSkinRejuveLogos) window.mountSkinRejuveLogos();
 
   function updateBookingReview() {
     bookingReview.innerHTML = `
-      <p><strong>Branch:</strong> ${escapeHtml(getBranchLabel(bookingState.branch))}</p>
-      <p><strong>Category:</strong> ${escapeHtml(getCategoryLabel(bookingState.category))}</p>
-      <p><strong>Treatment:</strong> ${escapeHtml(bookingState.service)}</p>
-      <p><strong>Date:</strong> ${escapeHtml(bookingState.date)}</p>
-      <p><strong>Time:</strong> ${escapeHtml(bookingState.time)}</p>
+      <p><strong>Preferred branch:</strong> ${escapeHtml(getBranchLabel(bookingState.branch))}</p>
+      <p><strong>Service category:</strong> ${escapeHtml(getCategoryLabel(bookingState.category))}</p>
+      <p><strong>Treatment interest:</strong> ${escapeHtml(bookingState.service)}</p>
+      <p><strong>Preferred date:</strong> ${escapeHtml(bookingState.date)}</p>
+      <p><strong>Preferred time:</strong> ${escapeHtml(bookingState.time)}</p>
     `;
   }
 
   function validateBookingStep(step) {
-    if (step === 1 && !bookingBranch.value) return 'Please choose a branch to continue.';
+    if (step === 1 && !bookingBranch.value) return 'Please choose your preferred branch.';
     if (step === 2 && !bookingCategory.value) return 'Please choose a service category.';
-    if (step === 3 && !bookingService.value) return 'Please choose a treatment.';
-    if (step === 4 && (!bookingDate.value || !bookingTime.value)) return 'Please choose a date and time.';
+    if (step === 3 && !bookingService.value) return 'Please choose a treatment interest.';
+    if (step === 4 && (!bookingDate.value || !bookingTime.value)) return 'Please choose your preferred date and time.';
     return '';
   }
 
@@ -224,9 +194,7 @@ if (window.mountSkinRejuveLogos) window.mountSkinRejuveLogos();
 
   function openBookingModal(prefilledCategory = '') {
     resetBookingFlow(prefilledCategory);
-    if (prefilledCategory) {
-      bookingCategory.value = prefilledCategory;
-    }
+    if (prefilledCategory) bookingCategory.value = prefilledCategory;
     openModal(bookingModal);
   }
 
@@ -234,7 +202,7 @@ if (window.mountSkinRejuveLogos) window.mountSkinRejuveLogos();
     const match = serviceData.find((service) => service.id === serviceId);
     if (!match) return;
     serviceModalTitle.textContent = match.title;
-    serviceModalDescription.textContent = `${match.description} ${match.concerns}`;
+    serviceModalDescription.textContent = `${match.description} Best for ${match.concerns.toLowerCase()}`;
     serviceModalList.innerHTML = match.treatments.map((item) => `
       <article class="service-detail-card">
         <h3>${escapeHtml(item.name)}</h3>
@@ -242,6 +210,15 @@ if (window.mountSkinRejuveLogos) window.mountSkinRejuveLogos();
       </article>
     `).join('');
     openModal(serviceModal);
+  }
+
+  function toggleBranchHours(branchId, trigger) {
+    const details = document.getElementById(`branch-hours-${branchId}`);
+    if (!details) return;
+    const isExpanded = trigger.getAttribute('aria-expanded') === 'true';
+    details.hidden = isExpanded;
+    trigger.setAttribute('aria-expanded', String(!isExpanded));
+    trigger.textContent = isExpanded ? 'View Hours' : 'Hide Hours';
   }
 
   function handleBookingNext() {
@@ -266,8 +243,10 @@ if (window.mountSkinRejuveLogos) window.mountSkinRejuveLogos();
       const serviceButton = event.target.closest('[data-service-details]');
       const bookCategoryButton = event.target.closest('[data-book-category]');
       const closeButton = event.target.closest('[data-modal-close]');
+      const branchHoursButton = event.target.closest('[data-branch-hours]');
       if (serviceButton) showServiceDetails(serviceButton.dataset.serviceDetails);
       if (bookCategoryButton) openBookingModal(bookCategoryButton.dataset.bookCategory);
+      if (branchHoursButton) toggleBranchHours(branchHoursButton.dataset.branchHours, branchHoursButton);
       if (closeButton) closeModal(document.getElementById(closeButton.dataset.modalClose));
     });
 
@@ -295,15 +274,14 @@ if (window.mountSkinRejuveLogos) window.mountSkinRejuveLogos();
 
     document.addEventListener('keydown', (event) => {
       if (event.key === 'Escape') {
-        if (!bookingModal.hidden) closeModal(bookingModal);
-        if (!serviceModal.hidden) closeModal(serviceModal);
+        if (bookingModal && !bookingModal.hidden) closeModal(bookingModal);
+        if (serviceModal && !serviceModal.hidden) closeModal(serviceModal);
       }
     });
   }
 
   renderServices();
   renderBranches();
-  renderGallery();
   populateBranchSelects();
   populateCategorySelect();
   populateServiceSelect('');
