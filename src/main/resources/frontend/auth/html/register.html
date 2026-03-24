@@ -3,14 +3,153 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Redirecting</title>
+  <title>Skin Rejuve | New Client Registration</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
   <link rel="stylesheet" href="/frontend/auth/css/register.css" />
 </head>
-<body>
-  <p>Redirecting…</p>
+<body class="auth-page">
+  <main class="auth-layout">
+    <section class="auth-card" aria-labelledby="registerTitle">
+      <header class="auth-header">
+        <span data-skin-rejuve-logo data-logo-size="compact" data-logo-subtitle="since 2011"></span>
+        <p class="auth-tagline">Create your secure account to complete consultation requests with confidence.</p>
+      </header>
+
+      <nav class="auth-tabs" aria-label="Authentication pages">
+        <a class="auth-tab" href="/frontend/auth/html/login.html">Sign In</a>
+        <a class="auth-tab is-active" href="/frontend/auth/html/register.html" aria-current="page">New Client</a>
+      </nav>
+
+      <h1 id="registerTitle" class="auth-section-title">New Client Registration</h1>
+      <p class="step-indicator" id="stepIndicator">Step 1 of 3 · Account details</p>
+
+      <form id="registerForm" novalidate>
+        <section class="form-grid" data-step="1">
+          <div class="form-grid-2">
+            <div>
+              <label class="field-label" for="fullName">Full Name</label>
+              <input class="auth-input" id="fullName" name="fullName" type="text" placeholder="Enter your full name" required autocomplete="name" />
+            </div>
+            <div>
+              <label class="field-label" for="registerUsername">Username</label>
+              <input class="auth-input" id="registerUsername" name="username" type="text" placeholder="Choose a username" required autocomplete="username" aria-describedby="usernameHelp" />
+              <p id="usernameHelp" class="field-help">Username must be at least 6 characters.</p>
+            </div>
+          </div>
+
+          <div>
+            <label class="field-label" for="registerEmail">Email Address</label>
+            <div class="input-wrap">
+              <i class="fa-regular fa-envelope" aria-hidden="true"></i>
+              <input id="registerEmail" name="email" type="email" placeholder="Enter your email" required autocomplete="email" />
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <div>
+              <label class="field-label" for="phoneNumber">Phone Number</label>
+              <input class="auth-input" id="phoneNumber" name="phoneNumber" type="tel" placeholder="Enter your mobile number" required autocomplete="tel" />
+            </div>
+            <div>
+              <label class="field-label" for="dateOfBirth">Date of Birth</label>
+              <input class="auth-input" id="dateOfBirth" name="dateOfBirth" type="date" placeholder="Select your birth date" required autocomplete="bday" />
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <div>
+              <label class="field-label" for="registerPassword">Password</label>
+              <div class="input-wrap">
+                <i class="fa-solid fa-lock" aria-hidden="true"></i>
+                <input id="registerPassword" name="password" type="password" placeholder="Create a password" required autocomplete="new-password" minlength="8" />
+              </div>
+            </div>
+            <div>
+              <label class="field-label" for="confirmPassword">Confirm Password</label>
+              <div class="input-wrap">
+                <i class="fa-solid fa-lock" aria-hidden="true"></i>
+                <input id="confirmPassword" name="confirmPassword" type="password" placeholder="Re-enter your password" required autocomplete="new-password" minlength="8" />
+              </div>
+            </div>
+          </div>
+
+          <div class="auth-btn-row">
+            <button type="button" class="auth-btn auth-btn-primary" data-action="next">Next</button>
+          </div>
+        </section>
+
+        <section class="form-grid" data-step="2" hidden>
+          <h2 class="auth-copy" style="margin-top:0; font-size:1.02rem; letter-spacing:0.08em; text-transform:uppercase;">You’re almost there! Complete this form to finish.</h2>
+
+          <fieldset>
+            <legend class="field-label">Skin Type</legend>
+            <div class="radio-grid">
+              <label class="radio-chip"><input type="radio" name="skinType" value="Oily" required> Oily</label>
+              <label class="radio-chip"><input type="radio" name="skinType" value="Dry"> Dry</label>
+              <label class="radio-chip"><input type="radio" name="skinType" value="Combination"> Combination</label>
+              <label class="radio-chip"><input type="radio" name="skinType" value="Sensitive"> Sensitive</label>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend class="field-label">Allergies</legend>
+            <div class="radio-grid">
+              <label class="radio-chip"><input type="radio" name="hasAllergies" value="no" required> No</label>
+              <label class="radio-chip"><input type="radio" name="hasAllergies" value="yes"> Yes</label>
+            </div>
+          </fieldset>
+
+          <div id="allergyDetailWrap" hidden>
+            <label class="field-label" for="allergies">Allergies – please specify</label>
+            <input class="auth-input" id="allergies" name="allergies" type="text" placeholder="List your allergies" />
+          </div>
+
+          <div>
+            <label class="field-label" for="medicalConditions">Medical Conditions</label>
+            <textarea class="auth-input" id="medicalConditions" name="medicalConditions" rows="3" placeholder="List any medical conditions"></textarea>
+          </div>
+
+          <div>
+            <label class="field-label" for="pastTreatments">Past Treatments</label>
+            <textarea class="auth-input" id="pastTreatments" name="pastTreatments" rows="3" placeholder="Describe previous skin or aesthetic treatments"></textarea>
+          </div>
+
+          <div class="auth-btn-row">
+            <button type="button" class="auth-btn auth-btn-secondary" data-action="back">Back</button>
+            <button type="button" class="auth-btn auth-btn-primary" data-action="next">Next</button>
+          </div>
+        </section>
+
+        <section class="form-grid privacy-copy" data-step="3" hidden>
+          <h2 class="auth-section-title" style="font-size:2.2rem;">Data Privacy Consent</h2>
+          <p>Skin Rejuve collects personal data such as your name, contact details, age, and medical history to support registration, consultation, and treatment planning.</p>
+          <p>Your data is used for appointment scheduling, clinic record keeping, communication about appointment status, and service feedback follow-up.</p>
+          <p>Information is shared only with authorized clinic personnel, is never sold, is stored securely, and is retained only for as long as required by care and compliance obligations.</p>
+          <p class="privacy-note">Read our complete policy before proceeding: <a class="auth-link" href="/frontend/landing/html/index.html#privacy" target="_blank" rel="noreferrer">View Full Data Privacy Policy</a>.</p>
+
+          <label class="auth-check" for="privacyConsent">
+            <input id="privacyConsent" name="privacyConsent" type="checkbox" required>
+            <span>I have read and agree to the Data Privacy Policy.</span>
+          </label>
+
+          <div class="auth-btn-row">
+            <a class="auth-btn auth-btn-secondary" style="display:inline-flex;align-items:center;justify-content:center;text-decoration:none;" href="/frontend/auth/html/login.html">Cancel</a>
+            <button id="submitRegistrationBtn" type="submit" class="auth-btn auth-btn-primary" disabled>Continue Registration</button>
+          </div>
+        </section>
+
+        <p class="auth-message" id="registerMsg" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+  </main>
+
+  <script src="/frontend/shared/js/logo.js"></script>
   <script src="/frontend/shared/js/api-client.js"></script>
   <script>window.skinRejuveAuthGuard = { guestOnly: true, authenticatedRedirect: '/frontend/dashboard/html/dashboard.html', authenticatedRedirectAdmin: '/frontend/admin/html/admin-dashboard.html' };</script>
   <script src="/frontend/shared/js/auth-guard.js"></script>
-  <script>window.location.replace('/frontend/landing/html/index.html?auth=register');</script>
+  <script src="/frontend/auth/js/register.js"></script>
 </body>
 </html>
