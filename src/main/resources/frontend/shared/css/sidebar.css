@@ -1,0 +1,203 @@
+:root {
+  --sidebar-bg: #f7f1e8;
+  --sidebar-border: #dbcdbb;
+  --sidebar-text: #5a452d;
+  --sidebar-muted: #7d654a;
+  --sidebar-accent: #b6864e;
+  --sidebar-accent-soft: #efe0cb;
+  --sidebar-shadow: 0 10px 24px rgba(72, 45, 20, 0.08);
+}
+
+.app-sidebar {
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--sidebar-border);
+  box-shadow: var(--sidebar-shadow);
+  min-width: 0;
+}
+
+.app-sidebar__inner {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 12px;
+  gap: 16px;
+}
+
+.app-sidebar__brand {
+  padding: 8px 6px 14px;
+  border-bottom: 1px solid var(--sidebar-border);
+}
+
+.app-sidebar .skin-rejuve-logo { color: #5a401f; font-size: clamp(21px, 1.8vw, 28px); }
+.app-sidebar .logo-subtitle { color: #8a724f; letter-spacing: .2em; font-size: 9px; }
+
+.app-sidebar__nav ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 6px;
+}
+
+.app-sidebar__link {
+  width: 100%;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--sidebar-text);
+  text-decoration: none;
+  min-height: 44px;
+  padding: 10px 12px;
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+  font: 600 0.95rem/1.2 Inter, "Segoe UI", sans-serif;
+  text-align: left;
+}
+
+.app-sidebar__link:hover {
+  background: #fffaf3;
+  border-color: #d8c8b2;
+}
+
+.app-sidebar__link:focus-visible,
+.app-mobile-topbar__toggle:focus-visible {
+  outline: 3px solid #c39154;
+  outline-offset: 2px;
+}
+
+.app-sidebar__link.is-active,
+.app-sidebar__link[aria-current='page'] {
+  background: var(--sidebar-accent-soft);
+  border-color: #d0b089;
+  color: #4c361d;
+  position: relative;
+}
+
+.app-sidebar__link.is-active::before,
+.app-sidebar__link[aria-current='page']::before {
+  content: '';
+  position: absolute;
+  left: -12px;
+  top: 10px;
+  bottom: 10px;
+  width: 3px;
+  border-radius: 999px;
+  background: var(--sidebar-accent);
+}
+
+.app-sidebar__icon {
+  width: 20px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.app-sidebar__icon svg { width: 18px; height: 18px; }
+
+.app-sidebar__footer {
+  margin-top: auto;
+  display: grid;
+  gap: 10px;
+  border-top: 1px solid var(--sidebar-border);
+  padding-top: 12px;
+}
+
+.app-sidebar__user {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+}
+
+.app-sidebar__avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: #ead8bf;
+  color: #5b4122;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+}
+
+.app-sidebar__name,
+.app-sidebar__role {
+  margin: 0;
+}
+
+.app-sidebar__name { color: #4d3520; font-weight: 700; font-size: 0.94rem; }
+.app-sidebar__role { color: var(--sidebar-muted); font-size: 0.78rem; }
+
+.app-sidebar__logout { color: #7e382f; border-color: #e8d2cd; }
+
+.app-mobile-topbar {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.app-mobile-topbar__toggle {
+  border: 1px solid #d5c2a9;
+  background: #fff8ef;
+  border-radius: 10px;
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+}
+
+.app-mobile-topbar__toggle span {
+  display: block;
+  width: 18px;
+  height: 2px;
+  background: #6a4d2b;
+}
+
+.app-sidebar-backdrop {
+  display: none;
+}
+
+@media (max-width: 1024px) {
+  .admin-shell,
+  .patient-layout { grid-template-columns: 1fr; }
+
+  .app-mobile-topbar { display: flex; }
+
+  .app-sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: min(84vw, 280px);
+    z-index: 1000;
+    transform: translateX(-100%);
+    transition: transform .24s ease;
+  }
+
+  .sidebar-open .app-sidebar { transform: translateX(0); }
+
+  .app-sidebar-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    border: 0;
+    background: rgba(29, 18, 9, .4);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .2s ease;
+    z-index: 990;
+  }
+
+  .sidebar-open .app-sidebar-backdrop {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}

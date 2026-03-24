@@ -6,41 +6,11 @@
   <title>Skin Rejuve | Patient Appointments</title>
   <link rel="stylesheet" href="/frontend/dashboard/css/dashboard.css" />
 </head>
-<body class="portal-bg">
+<body class="portal-bg" data-patient-page="history">
   <main class="patient-layout" aria-label="Patient portal">
-    <aside class="patient-sidebar" aria-label="Primary navigation">
-      <div class="patient-sidebar__brand" data-skin-rejuve-logo data-logo-size="compact" data-logo-subtitle="SINCE 2011"></div>
+    <aside class="patient-sidebar app-sidebar" data-sidebar-root></aside>
 
-      <nav class="patient-nav" aria-label="Patient sections">
-        <a class="patient-nav__item" href="/frontend/dashboard/html/dashboard.html" data-nav-item="home">
-          <span class="patient-nav__icon" aria-hidden="true">⌂</span>
-          <span>Home</span>
-        </a>
-        <button class="patient-nav__item" id="openBookingFromNav" type="button" data-nav-item="appointment">
-          <span class="patient-nav__icon" aria-hidden="true">🗓</span>
-          <span>Appointment</span>
-        </button>
-        <a class="patient-nav__item is-active" href="/frontend/dashboard/html/dashboard.html" data-nav-item="history" aria-current="page">
-          <span class="patient-nav__icon" aria-hidden="true">↺</span>
-          <span>History</span>
-        </a>
-        <a class="patient-nav__item" href="/frontend/dashboard/html/dashboard.html" data-nav-item="account">
-          <span class="patient-nav__icon" aria-hidden="true">⚙</span>
-          <span>Account</span>
-        </a>
-        <button class="patient-nav__item" id="logoutBtn" type="button" data-nav-item="logout">
-          <span class="patient-nav__icon" aria-hidden="true">⎋</span>
-          <span>Log Out</span>
-        </button>
-      </nav>
-
-      <section class="patient-identity" aria-label="Patient identity">
-        <p class="patient-identity__name" id="patientName">Patient</p>
-        <p class="patient-identity__role">Patient</p>
-      </section>
-    </aside>
-
-    <section class="patient-main" aria-label="Appointment and history content">
+    <section class="patient-main" data-sidebar-content aria-label="Appointment and history content">
       <header class="page-header">
         <p class="page-header__kicker">Patient Portal</p>
         <h1>Appointment History</h1>
@@ -206,6 +176,7 @@
   <script src="/frontend/shared/js/api-client.js"></script>
   <script>window.skinRejuveAuthGuard = { requireAuth: true, redirectTo: '/frontend/landing/html/index.html?auth=login' };</script>
   <script src="/frontend/shared/js/auth-guard.js"></script>
+  <script src="/frontend/shared/js/sidebar.js"></script>
   <script src="/frontend/dashboard/js/dashboard.js"></script>
 </body>
 </html>
