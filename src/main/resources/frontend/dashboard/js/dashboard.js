@@ -42,6 +42,7 @@ const slipModal = document.getElementById('slipModal');
 const slipDocument = document.getElementById('slipDocument');
 const slipReference = document.getElementById('slipReference');
 const slipError = document.getElementById('slipError');
+const slipSectionTemplate = document.getElementById('slipSectionTemplate');
 
 const serviceSelect = document.getElementById('serviceId');
 const submitBookingBtn = document.getElementById('submitBookingBtn');
@@ -93,6 +94,13 @@ function formatDateLabel(value) {
     day: 'numeric',
     year: 'numeric',
   });
+}
+
+function formatTimeLabel(value) {
+  if (!value) return '';
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return '';
+  return date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
 }
 
 function friendlyStatus(status) {
@@ -171,6 +179,14 @@ function buildSlipKV(entries) {
   return `<dl class="slip-kv">${rows}</dl>`;
 }
 
+function renderSlipSection(title, content) {
+  if (!slipSectionTemplate) return '';
+  const node = slipSectionTemplate.content.firstElementChild.cloneNode(true);
+  node.querySelector('[data-slip-section-title]').textContent = title;
+  node.querySelector('[data-slip-section-body]').innerHTML = content;
+  return node.outerHTML;
+}
+
 function renderSlip(item) {
   if (!item) {
     slipDocument.innerHTML = '';
@@ -195,10 +211,12 @@ function renderSlip(item) {
   ]);
 
   const appointmentSection = buildSlipKV([
-    { label: 'Date and time', value: formatDate(item.startAt) },
+    { label: 'Appointment date', value: formatDateLabel(item.startAt) },
+    { label: 'Appointment time', value: formatTimeLabel(item.startAt) },
     { label: 'Branch', value: resolvedBranch(item) },
     { label: 'Assigned specialist', value: item.staffName || 'Assigned by clinic' },
     { label: 'Service', value: item.serviceName },
+    { label: 'Number of shots', value: item.numberOfShots || item.shotCount || '' },
     { label: 'Service details', value: item.serviceDescription || '' },
     { label: 'Treatment specifics', value: item.treatmentSpecifics || '' },
     { label: 'Session details', value: item.sessionDetails || '' },
@@ -212,28 +230,16 @@ function renderSlip(item) {
   ]);
 
   const clinicActionsSection = buildSlipKV([
-    { label: 'Doctor notes', value: item.doctorNotes || item.notes },
-    { label: 'Post-treatment care', value: item.afterCareInstructions },
+    { label: 'Doctor notes', value: item.doctorNotes || item.notes || 'No doctor note was recorded for this appointment.' },
+    { label: 'After-care instructions', value: item.afterCareInstructions || 'No after-care instructions were added.' },
   ]);
 
   slipDocument.innerHTML = `
     <section class="slip-grid" aria-label="Appointment slip details">
-      <article class="slip-section">
-        <h3>Patient information</h3>
-        ${patientSection}
-      </article>
-      <article class="slip-section">
-        <h3>Appointment information</h3>
-        ${appointmentSection}
-      </article>
-      <article class="slip-section">
-        <h3>Health information</h3>
-        ${healthSection}
-      </article>
-      <article class="slip-section">
-        <h3>Clinic actions</h3>
-        ${clinicActionsSection}
-      </article>
+      ${renderSlipSection('Patient information', patientSection)}
+      ${renderSlipSection('Appointment details', appointmentSection)}
+      ${renderSlipSection('Health information', healthSection)}
+      ${renderSlipSection('Doctor notes and remarks', clinicActionsSection)}
     </section>
   `;
 }
@@ -266,7 +272,7 @@ function renderHistory() {
 
   if (!state.filteredHistory.length) {
     historyEmpty.hidden = false;
-    historyEmpty.innerHTML = '<p>No appointment history yet.</p><p>Your booked and completed treatments will appear here once available.</p>';
+    historyEmpty.innerHTML = '<p>No appointment history yet.</p>';
     return;
   }
 
@@ -282,7 +288,15 @@ function renderHistory() {
       <td data-label="Branch">${resolvedBranch(item)}</td>
       <td data-label="Status"><span class="status-pill status-pill--${statusClass(currentStatus)}">${friendlyStatus(currentStatus)}</span></td>
       <td data-label="Action">
-        <button type="button" class="table-action" data-action="view-slip" data-id="${item.id || ''}" aria-expanded="false" aria-controls="slipModal">
+        <button
+          type="button"
+          class="table-action"
+          data-action="view-slip"
+          data-id="${item.id || ''}"
+          aria-label="View appointment slip for ${item.serviceName || 'service'} on ${formatDateLabel(item.startAt)}"
+          aria-expanded="false"
+          aria-controls="slipModal"
+        >
           View Slip
         </button>
       </td>
@@ -638,7 +652,10 @@ function trapModalFocus(event, modal) {
 
 function setupEventListeners() {
   document.getElementById('openBookingBtn').addEventListener('click', () => openModal(bookingModal));
-  document.getElementById('openBookingFromNav').addEventListener('click', () => openModal(bookingModal));
+  const navBookingBtn = document.getElementById('openBookingFromNav');
+  if (navBookingBtn) {
+    navBookingBtn.addEventListener('click', () => openModal(bookingModal));
+  }
 
   document.getElementById('closeBookingModal').addEventListener('click', () => closeModal(bookingModal));
   document.getElementById('cancelBookingBtn').addEventListener('click', () => closeModal(bookingModal));

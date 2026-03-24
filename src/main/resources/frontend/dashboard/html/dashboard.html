@@ -85,7 +85,7 @@
           <div id="historyLoading" class="table-feedback" hidden>Loading appointment history…</div>
           <div id="historyEmpty" class="table-feedback" hidden>
             <p>No appointment history yet.</p>
-            <p>Your booked and completed treatments will appear here once available.</p>
+            <p>Your appointment slips will appear here once your records are available.</p>
           </div>
 
           <div class="table-scroll" id="historyTableContainer">
@@ -227,6 +227,13 @@
       <button class="button-primary" id="resultModalCta" type="button">View Appointment Status</button>
     </section>
   </div>
+
+  <template id="slipSectionTemplate">
+    <article class="slip-section">
+      <h3 data-slip-section-title></h3>
+      <div data-slip-section-body></div>
+    </article>
+  </template>
 
   <script src="/frontend/shared/js/logo.js"></script>
   <script src="/frontend/shared/js/api-client.js"></script>
