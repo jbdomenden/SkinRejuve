@@ -224,12 +224,24 @@ select:focus-visible {
 
 .table-action {
   width: auto;
-  padding: 6px 12px;
-  font-size: 0.8rem;
-  background: #e8dac4;
+  padding: 8px 14px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  background: #f3e6d3;
   color: #5a3a10;
   border: 1px solid #c7ab85;
   border-radius: 8px;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.table-action:hover {
+  background: #ead7bc;
+}
+
+.table-action[aria-expanded="true"] {
+  background: #dfc59f;
+  border-color: #b48a55;
+  color: #4a2e0b;
 }
 
 .modal[hidden] { display: none; }
