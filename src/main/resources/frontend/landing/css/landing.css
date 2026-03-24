@@ -1,16 +1,20 @@
 @import url("/frontend/shared/css/styles.css");
 
 :root {
-  --bg: #f6efe4;
-  --panel: rgba(255, 250, 243, 0.86);
-  --panel-strong: #fffaf4;
-  --text: #44280d;
-  --muted: #6d5337;
-  --accent: #8d6230;
-  --accent-dark: #5d3910;
-  --accent-soft: rgba(141, 98, 48, 0.12);
-  --border: rgba(151, 113, 63, 0.18);
-  --shadow: 0 22px 52px rgba(74, 43, 8, 0.1);
+  --bg: #f6eee4;
+  --bg-deep: #efe2d0;
+  --panel: #fffaf4;
+  --panel-muted: #f7efe4;
+  --panel-strong: #fffdf9;
+  --text: #412715;
+  --muted: #6c5645;
+  --accent: #9a6931;
+  --accent-dark: #6f461a;
+  --accent-soft: rgba(154, 105, 49, 0.1);
+  --border: rgba(135, 96, 54, 0.16);
+  --shadow: 0 22px 48px rgba(88, 55, 22, 0.12);
+  --shadow-soft: 0 12px 30px rgba(88, 55, 22, 0.08);
+  --focus: rgba(154, 105, 49, 0.28);
 }
 
 * { box-sizing: border-box; }
@@ -19,15 +23,27 @@ body.landing-body {
   margin: 0;
   min-height: 100vh;
   color: var(--text);
+  font-family: "Inter", sans-serif;
   background:
-    linear-gradient(180deg, rgba(250, 245, 238, 0.96), rgba(240, 228, 207, 0.94)),
-    radial-gradient(circle at top left, rgba(184, 140, 71, 0.18), transparent 32%),
-    radial-gradient(circle at bottom right, rgba(102, 68, 26, 0.16), transparent 28%);
+    radial-gradient(circle at top left, rgba(196, 157, 110, 0.18), transparent 28%),
+    radial-gradient(circle at 85% 10%, rgba(164, 117, 59, 0.1), transparent 24%),
+    linear-gradient(180deg, #fcf8f2 0%, var(--bg) 54%, var(--bg-deep) 100%);
 }
 
 a { color: inherit; }
 button, input, select, textarea { font: inherit; }
 button { cursor: pointer; }
+input, select, textarea {
+  transition: border-color .2s ease, box-shadow .2s ease, background-color .2s ease;
+}
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+button:focus-visible,
+a:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px var(--focus);
+}
 
 .sr-only,
 .skip-link:not(:focus) {
@@ -52,37 +68,38 @@ button { cursor: pointer; }
 }
 
 .landing-shell {
-  width: min(1280px, calc(100% - 32px));
+  width: min(1240px, calc(100% - 32px));
   margin: 0 auto;
-  padding: 22px 0 56px;
+  padding: 24px 0 64px;
 }
 
 .landing-header,
-.landing-section,
 .hero-copy-panel,
 .hero-aside,
-.showcase-card,
+.landing-section,
+.service-card,
 .branch-card,
-.clinic-gallery-card,
+.portal-card,
 .contact-card,
 .modal-dialog,
 .auth-modal-dialog {
   border: 1px solid var(--border);
-  background: var(--panel);
+  background: rgba(255, 250, 244, 0.94);
   border-radius: 28px;
   box-shadow: var(--shadow);
-  backdrop-filter: blur(16px);
 }
 
 .landing-header {
+  position: sticky;
+  top: 14px;
+  z-index: 40;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  padding: 18px 22px;
-  position: sticky;
-  top: 14px;
-  z-index: 30;
+  padding: 18px 24px;
+  background: rgba(255, 250, 244, 0.92);
+  backdrop-filter: blur(12px);
 }
 
 .landing-nav {
@@ -94,7 +111,9 @@ button { cursor: pointer; }
 .landing-nav a,
 .nav-sign-in,
 .utility-link,
-.text-link {
+.text-link,
+.link-button,
+.footer-top-link {
   color: var(--accent-dark);
   text-decoration: none;
   font-weight: 600;
@@ -103,19 +122,45 @@ button { cursor: pointer; }
 .nav-sign-in,
 .utility-link,
 .text-link,
-.link-button {
+.link-button,
+.footer-top-link {
   background: transparent;
   border: 0;
   padding: 0;
 }
 
+.nav-sign-in,
+.landing-nav a {
+  position: relative;
+}
+
+.landing-nav a::after,
+.footer-top-link::after,
+.text-link::after,
+.link-button::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .2s ease;
+}
+.landing-nav a:hover::after,
+.footer-top-link:hover::after,
+.text-link:hover::after,
+.link-button:hover::after { transform: scaleX(1); }
+
 .mobile-nav-toggle { display: none; }
 
 .landing-hero {
   display: grid;
-  grid-template-columns: minmax(0, 1.25fr) minmax(320px, 0.95fr);
-  gap: 22px;
-  margin-top: 20px;
+  grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+  gap: 24px;
+  margin-top: 24px;
 }
 
 .hero-copy-panel,
@@ -123,12 +168,12 @@ button { cursor: pointer; }
 .landing-section,
 .auth-modal-dialog,
 .modal-dialog {
-  padding: 30px;
+  padding: 32px;
 }
 
 .landing-kicker {
   margin: 0 0 12px;
-  color: #9a6f2d;
+  color: #a87433;
   font-size: 12px;
   font-weight: 800;
   letter-spacing: 0.16em;
@@ -143,16 +188,17 @@ button { cursor: pointer; }
 .contact-card h3,
 .service-card h3,
 .branch-card h3,
-.clinic-gallery-card h3 {
+.portal-card h3,
+.service-detail-card h3 {
   margin: 0;
-  font-family: "Cormorant Garamond", serif;
   color: var(--text);
+  font-family: "Cormorant Garamond", serif;
 }
 
 #heroTitle {
-  font-size: clamp(46px, 6vw, 78px);
-  line-height: 0.95;
-  max-width: 12ch;
+  max-width: 11ch;
+  font-size: clamp(48px, 6vw, 78px);
+  line-height: 0.94;
 }
 
 .landing-lead,
@@ -160,14 +206,18 @@ button { cursor: pointer; }
 .showcase-card p,
 .service-card p,
 .branch-card p,
+.portal-card p,
 .contact-card p,
 .modal-copy p,
 .auth-modal-copy p,
 .hero-trust-strip span,
 .booking-note,
-.review-panel p {
+.review-panel p,
+.field-help,
+.service-example-list,
+.portal-list {
   color: var(--muted);
-  line-height: 1.7;
+  line-height: 1.72;
 }
 
 .hero-actions,
@@ -176,142 +226,182 @@ button { cursor: pointer; }
 .branch-actions,
 .service-card-actions,
 .register-action-row,
-.portal-utility-row {
+.portal-utility-row,
+.portal-card-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
 }
 
 .hero-actions { margin: 28px 0 12px; }
+.utility-link-strong { font-weight: 700; }
 
 .hero-trust-strip {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
-  margin-top: 26px;
+  margin-top: 28px;
 }
 
 .hero-trust-strip span,
 .progress-pill,
 .showcase-label,
-.service-card-index {
+.service-card-index,
+.branch-hours-badge {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   min-height: 38px;
   padding: 0 14px;
   border-radius: 999px;
-  border: 1px solid rgba(166, 124, 67, 0.18);
-  background: rgba(255,255,255,0.78);
+  border: 1px solid rgba(166, 124, 67, 0.16);
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75);
   font-size: 12px;
   letter-spacing: .08em;
   text-transform: uppercase;
 }
 
 .hero-aside {
-  background: linear-gradient(180deg, rgba(82, 50, 14, 0.95), rgba(56, 32, 7, 0.95));
-  color: #fff8ef;
+  color: #fff9f2;
+  background:
+    radial-gradient(circle at top left, rgba(216, 175, 118, 0.18), transparent 34%),
+    linear-gradient(180deg, #744a20 0%, #5d3917 100%);
 }
 .hero-aside * { color: inherit; }
-.hero-flow-list { margin: 18px 0 0; padding-left: 18px; line-height: 1.8; }
 .hero-side-grid { display: grid; gap: 16px; margin-top: 18px; }
-.showcase-card { background: rgba(255,255,255,0.08); }
-.metric-card strong { display: block; margin: 12px 0 8px; font-size: 34px; font-family: "Cormorant Garamond", serif; }
+.hero-flow-list { margin: 18px 0 0; padding-left: 18px; line-height: 1.8; }
+.showcase-card {
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 24px;
+  background: rgba(255,255,255,0.08);
+  padding: 24px;
+}
+.showcase-card-featured h2 {
+  margin-top: 10px;
+  font-size: clamp(34px, 4vw, 56px);
+  line-height: 0.97;
+}
+.metric-card strong {
+  display: block;
+  margin: 12px 0 8px;
+  font-size: 34px;
+  font-family: "Cormorant Garamond", serif;
+}
 
 .section-heading-inline {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.85fr);
-  gap: 20px;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.82fr);
+  gap: 24px;
   align-items: end;
 }
+.landing-section { margin-top: 24px; }
 
-.landing-section { margin-top: 20px; }
 .trust-grid,
 .service-grid,
 .branch-grid,
-.clinic-gallery-grid,
+.portal-grid,
 .contact-grid,
-.booking-steps,
 .privacy-card-list,
 .service-modal-list {
   display: grid;
   gap: 18px;
 }
 
-.trust-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); margin-bottom: 18px; }
+.service-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 22px; }
+.trust-grid-balanced { grid-template-columns: repeat(5, minmax(0, 1fr)); margin-top: 22px; }
+.branch-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 22px; }
+.portal-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 22px; }
+.contact-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: 22px; }
+
 .trust-card,
-.booking-steps article,
 .service-card,
 .branch-card,
+.portal-card,
 .contact-card,
+.service-detail-card,
 .privacy-card,
-.service-detail-card {
-  padding: 20px;
+.booking-review,
+.selection-summary,
+.review-panel,
+.booking-steps article {
+  padding: 24px;
   border: 1px solid var(--border);
   border-radius: 24px;
-  background: rgba(255,255,255,0.74);
+  background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(250,244,236,0.84));
+  box-shadow: var(--shadow-soft);
 }
 
-.trust-media-placeholder {
-  min-height: 180px;
-  border: 1px dashed rgba(151, 113, 63, 0.35);
-  border-radius: 24px;
-  display: grid;
-  place-items: center;
-  text-align: center;
-  padding: 24px;
-  background: rgba(255,255,255,0.45);
+.service-card,
+.branch-card,
+.portal-card,
+.contact-card { height: 100%; }
+.service-card-index {
+  justify-content: flex-start;
+  width: fit-content;
+  margin-bottom: 16px;
+  color: #a87433;
 }
-
-.service-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-.service-example-list { padding-left: 18px; color: var(--muted); line-height: 1.7; }
-.service-concerns { margin-top: 10px; }
-
-.booking-steps { grid-template-columns: repeat(5, minmax(0, 1fr)); }
-.booking-steps article span {
-  display: inline-flex;
-  width: 42px; height: 42px;
-  border-radius: 50%;
-  align-items: center; justify-content: center;
-  background: var(--accent-dark); color: #fff;
-  font-weight: 700; margin-bottom: 14px;
+.service-example-list,
+.portal-list {
+  margin: 12px 0 0;
+  padding-left: 18px;
 }
+.service-concerns { margin: 12px 0 14px; }
+.service-card-actions,
+.portal-card-actions,
+.contact-actions,
+.branch-actions { margin-top: auto; }
 
-.branch-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-.branch-card { display: flex; flex-direction: column; justify-content: space-between; gap: 20px; }
-.branch-address { min-height: 72px; }
-.branch-actions .landing-btn { flex: 1 1 140px; }
-
-.clinic-gallery-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-.clinic-gallery-card {
-  overflow: hidden;
-  text-decoration: none;
+.portal-card-accent,
+.contact-card-accent {
+  background:
+    radial-gradient(circle at top left, rgba(214, 171, 112, 0.18), transparent 28%),
+    linear-gradient(180deg, rgba(90, 56, 20, 0.98), rgba(66, 39, 11, 0.98));
 }
-.clinic-gallery-media {
-  min-height: 160px;
-  display: grid;
-  place-items: center;
-  font-family: "Cormorant Garamond", serif;
-  font-size: 46px;
-  color: var(--accent-dark);
-  background: linear-gradient(135deg, rgba(255,255,255,.82), rgba(232, 211, 182, .7));
-}
-.clinic-gallery-copy { padding: 22px; }
-
-.contact-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-.contact-card-accent { background: linear-gradient(180deg, rgba(87, 54, 18, 0.97), rgba(66, 39, 11, 0.97)); }
+.portal-card-accent *,
 .contact-card-accent * { color: #fff8ef; }
-.contact-card-accent .landing-btn-secondary { border-color: rgba(255,255,255,0.22); color: #fff8ef; }
+.portal-card-accent .showcase-label,
+.contact-card-accent .showcase-label,
+.portal-card-accent .landing-btn-secondary,
+.contact-card-accent .landing-btn-secondary {
+  border-color: rgba(255,255,255,0.24);
+  color: #fff8ef;
+}
+.portal-card-accent .portal-list,
+.contact-card-accent p { color: rgba(255,248,239,0.9); }
+
+.branch-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 20px;
+}
+.branch-meta {
+  display: grid;
+  gap: 12px;
+}
+.branch-meta p { margin: 0; }
+.branch-address { min-height: 72px; }
+.branch-hours-badge { justify-content: flex-start; width: fit-content; }
+.branch-hours-detail {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+}
+.branch-actions .landing-btn { flex: 1 1 140px; }
 
 .landing-footer {
   display: flex;
   justify-content: space-between;
+  align-items: flex-end;
   gap: 20px;
-  padding: 28px 10px 0;
+  padding: 30px 10px 0;
   color: var(--muted);
 }
-.social-proof-strip { display: flex; flex-wrap: wrap; gap: 14px; align-items: flex-start; }
+.social-proof-strip { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
 .social-proof-strip a { text-decoration: none; font-weight: 600; }
+.footer-top-link { position: relative; }
 
 .landing-btn,
 .cta.portal-cta {
@@ -322,20 +412,27 @@ button { cursor: pointer; }
   padding: 0 20px;
   border-radius: 16px;
   border: 1px solid transparent;
-  background: linear-gradient(180deg, #8f6631, #6d4412);
+  background: linear-gradient(180deg, #9a6a2e, #74481a);
   color: #fff9f0;
+  box-shadow: 0 14px 28px rgba(117, 72, 26, 0.18);
   text-decoration: none;
   font-weight: 700;
+  transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease;
+}
+.landing-btn:hover,
+.cta.portal-cta:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 16px 30px rgba(117, 72, 26, 0.22);
 }
 
 .landing-btn-secondary,
 .auth-inline-btn,
 .nav-sign-in {
-  background: rgba(111, 70, 16, 0.08);
+  background: rgba(111, 70, 16, 0.05);
   color: var(--accent-dark);
-  border: 1px solid rgba(176, 136, 84, 0.22);
+  border: 1px solid rgba(176, 136, 84, 0.24);
+  box-shadow: none;
 }
-
 .nav-sign-in {
   min-height: auto;
   padding: 10px 14px;
@@ -369,7 +466,8 @@ button { cursor: pointer; }
   position: absolute;
   top: 16px;
   right: 16px;
-  width: 42px; height: 42px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
   border: 1px solid var(--border);
   background: rgba(255,255,255,0.9);
@@ -382,24 +480,32 @@ button { cursor: pointer; }
 .field-group legend {
   display: block;
   margin: 0 0 8px;
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: #8f6431;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: 0;
+  text-transform: none;
 }
 .portal-form input,
 .portal-form select,
 .flow-step input,
 .flow-step select {
   width: 100%;
-  min-height: 50px;
+  min-height: 52px;
   border-radius: 16px;
   border: 1px solid var(--border);
   padding: 0 16px;
-  margin-bottom: 18px;
+  margin-bottom: 10px;
   background: #fff;
+  color: var(--text);
 }
+.portal-form input::placeholder,
+.flow-step input::placeholder { color: #9a8775; }
+.field-help {
+  margin: 0 0 10px;
+  font-size: 13px;
+}
+.sr-help { display: none; }
 
 .register-grid { display: grid; gap: 16px; }
 .register-grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -418,8 +524,8 @@ button { cursor: pointer; }
 }
 .choice-chip input { position: absolute; opacity: 0; inset: 0; }
 .choice-chip:has(input:checked) {
-  background: rgba(141, 98, 48, 0.12);
-  border-color: rgba(141, 98, 48, 0.42);
+  background: rgba(154, 105, 49, 0.12);
+  border-color: rgba(154, 105, 49, 0.38);
 }
 
 .step-progress {
@@ -434,6 +540,7 @@ button { cursor: pointer; }
 }
 .progress-pill.is-complete {
   background: rgba(141, 98, 48, 0.16);
+  color: var(--accent-dark);
 }
 
 .booking-flow,
@@ -445,18 +552,11 @@ button { cursor: pointer; }
 }
 .booking-confirm-panel {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(240px, 0.85fr);
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 0.85fr);
   gap: 18px;
 }
-.booking-review,
-.selection-summary,
-.review-panel {
-  padding: 18px;
-  border-radius: 20px;
-  background: rgba(141, 98, 48, 0.07);
-}
 .modal-actions-between { justify-content: space-between; }
-.form-feedback { min-height: 24px; margin: 4px 0 0; }
+.form-feedback { min-height: 24px; margin: 8px 0 0; }
 .form-feedback[data-state="error"] { color: #a62e2e; }
 .form-feedback[data-state="success"] { color: #1f6b3f; }
 .form-feedback[data-state="info"] { color: var(--muted); }
@@ -467,22 +567,24 @@ button { cursor: pointer; }
   align-items: start;
   padding: 16px 18px;
   border-radius: 18px;
-  background: rgba(141, 98, 48, 0.08);
+  background: rgba(154, 105, 49, 0.08);
 }
 .consent-row-formal { border: 1px solid var(--border); }
 .privacy-card-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-.privacy-card { display: grid; grid-template-columns: auto 1fr; gap: 14px; }
-.privacy-icon { font-size: 20px; }
+.privacy-card-list-single { grid-template-columns: 1fr; }
+.privacy-card-stacked { display: block; }
+.review-panel p,
+.booking-review p { margin: 0 0 8px; }
+.review-panel p:last-child,
+.booking-review p:last-child { margin-bottom: 0; }
 
-@media (max-width: 1100px) {
-  .trust-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .booking-steps,
+@media (max-width: 1180px) {
+  .service-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .trust-grid-balanced { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .contact-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .branch-grid,
-  .clinic-gallery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 980px) {
   .landing-header { flex-wrap: wrap; }
   .mobile-nav-toggle {
     display: inline-flex;
@@ -507,13 +609,12 @@ button { cursor: pointer; }
   .landing-nav.is-open { display: flex; }
   .landing-hero,
   .section-heading-inline,
-  .booking-confirm-panel { grid-template-columns: 1fr; }
-  .service-grid,
-  .privacy-card-list,
-  .trust-grid { grid-template-columns: 1fr 1fr; }
+  .booking-confirm-panel,
+  .portal-grid { grid-template-columns: 1fr; }
+  .branch-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 720px) {
   .landing-shell { width: min(100% - 20px, 100%); }
   .landing-header,
   .landing-section,
@@ -525,27 +626,27 @@ button { cursor: pointer; }
   .hero-trust-strip,
   .service-grid,
   .branch-grid,
-  .clinic-gallery-grid,
   .contact-grid,
-  .booking-steps,
-  .trust-grid,
+  .trust-grid-balanced,
   .register-grid-2,
   .register-grid-3,
   .register-grid-4,
   .privacy-card-list { grid-template-columns: 1fr; }
   .register-span-2 { grid-column: auto; }
-  .landing-footer { flex-direction: column; }
+  .landing-footer { flex-direction: column; align-items: flex-start; }
   .modal-actions,
   .hero-actions,
   .service-card-actions,
   .branch-actions,
   .contact-actions,
-  .register-action-row { flex-direction: column; }
+  .register-action-row,
+  .portal-card-actions { flex-direction: column; }
   .modal-actions .landing-btn,
   .hero-actions .landing-btn,
   .service-card-actions .landing-btn,
   .branch-actions .landing-btn,
   .contact-actions .landing-btn,
   .register-action-row .landing-btn,
-  .register-action-row .portal-cta { width: 100%; }
+  .register-action-row .portal-cta,
+  .portal-card-actions .landing-btn { width: 100%; }
 }
