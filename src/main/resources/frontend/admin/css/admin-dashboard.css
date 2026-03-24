@@ -1,5 +1,6 @@
 @import url("/frontend/shared/css/styles.css");
 @import url("/frontend/shared/css/admin-base.css");
+@import url("/frontend/shared/css/sidebar.css");
 
 .admin-dashboard-grid {
   gap: 24px;

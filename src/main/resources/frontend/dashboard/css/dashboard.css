@@ -1,4 +1,5 @@
 @import url('/frontend/shared/css/styles.css');
+@import url('/frontend/shared/css/sidebar.css');
 
 :root {
   --portal-sidebar-bg: #4b2a07;
@@ -29,60 +30,9 @@ body.portal-bg {
 }
 
 .patient-sidebar {
-  background: linear-gradient(180deg, #502a06 0%, #3c2004 100%);
-  border-right: 1px solid #6d4620;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  padding: 22px 18px;
+  min-width: 0;
 }
 
-.patient-sidebar__brand {
-  display: flex;
-  justify-content: center;
-  padding-bottom: 18px;
-  border-bottom: 1px solid #896239;
-}
-
-.patient-nav {
-  display: grid;
-  gap: 8px;
-}
-
-.patient-nav__item {
-  width: 100%;
-  border: 1px solid transparent;
-  background: transparent;
-  color: var(--portal-sidebar-text);
-  text-decoration: none;
-  font: 600 1rem/1.2 "Cormorant Garamond", "Times New Roman", serif;
-  display: grid;
-  grid-template-columns: 26px 1fr;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 14px;
-  border-radius: 14px;
-  letter-spacing: 0.04em;
-  text-align: left;
-}
-
-.patient-nav__icon {
-  font-size: 1.25rem;
-  text-align: center;
-}
-
-.patient-nav__item:hover {
-  background: #ffffff14;
-}
-
-.patient-nav__item.is-active,
-.patient-nav__item[aria-current='page'] {
-  background: var(--portal-sidebar-active);
-  color: var(--portal-sidebar-active-text);
-  border-color: #d7c5a6;
-}
-
-.patient-nav__item:focus-visible,
 .button-primary:focus-visible,
 .button-secondary:focus-visible,
 .icon-button:focus-visible,
@@ -92,23 +42,6 @@ input:focus-visible,
 select:focus-visible {
   outline: 3px solid #c48b44;
   outline-offset: 2px;
-}
-
-.patient-identity {
-  margin-top: auto;
-  border-top: 1px solid #896239;
-  padding-top: 16px;
-  color: #f4e6d2;
-}
-
-.patient-identity__name {
-  margin: 0;
-  font: 700 1.5rem/1.1 "Cormorant Garamond", "Times New Roman", serif;
-}
-
-.patient-identity__role {
-  margin: 6px 0 0;
-  color: #dbc5a1;
 }
 
 .patient-main {
@@ -152,11 +85,19 @@ select:focus-visible {
 
 .history-toolbar {
   display: grid;
-  grid-template-columns: minmax(220px, 1.35fr) repeat(2, minmax(150px, 0.7fr)) auto;
+  grid-template-columns: minmax(220px, 1.5fr) repeat(5, minmax(140px, 1fr));
   gap: 12px;
   align-items: end;
-  margin-bottom: 14px;
+  margin-bottom: 16px;
 }
+
+.history-toolbar__actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  align-items: center;
+}
+
 
 .field-group {
   display: grid;
@@ -222,10 +163,15 @@ select:focus-visible {
 }
 
 .section-heading h2 {
-  margin: 2px 0 14px;
+  margin: 2px 0 6px;
   font-family: "Cormorant Garamond", "Times New Roman", serif;
   font-size: 1.8rem;
   color: #4a2b03;
+}
+
+.section-heading p {
+  margin: 0 0 14px;
+  color: #6d502c;
 }
 
 .table-scroll { overflow-x: auto; }
@@ -299,8 +245,7 @@ select:focus-visible {
 .modal__backdrop {
   position: absolute;
   inset: 0;
-  background: rgba(36, 22, 8, 0.52);
-  backdrop-filter: blur(2px);
+  background: rgba(36, 22, 8, 0.42);
 }
 
 .modal__panel {
@@ -314,6 +259,102 @@ select:focus-visible {
   background: #fffcf6;
   box-shadow: 0 28px 60px rgba(49, 29, 8, 0.33);
 }
+
+
+.modal__panel--slip {
+  padding: 18px;
+  background: #fffdfa;
+}
+
+.slip-header {
+  border-bottom: 1px solid #eadac1;
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.slip-branding {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.slip-branding h2 {
+  margin: 0;
+  color: #4a2b03;
+}
+
+#slipReference {
+  margin: 4px 0 0;
+  color: #6f5331;
+}
+
+.slip-toolbar {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.slip-document {
+  border: 1px solid #e4d2b8;
+  border-radius: 14px;
+  padding: 16px;
+  background: #fff;
+}
+
+.slip-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.slip-section {
+  border: 1px solid #f0e2cc;
+  border-radius: 12px;
+  padding: 12px;
+  background: #fffdfa;
+}
+
+.slip-section h3 {
+  margin: 0 0 10px;
+  font-size: 1rem;
+  color: #4f3110;
+}
+
+.slip-kv {
+  margin: 0;
+  display: grid;
+  grid-template-columns: minmax(120px, 160px) minmax(0, 1fr);
+  gap: 6px 10px;
+}
+
+.slip-kv dt {
+  color: #7a5d38;
+  font-weight: 600;
+}
+
+.slip-kv dd {
+  margin: 0;
+  color: #4a2e0e;
+  overflow-wrap: anywhere;
+}
+
+.slip-empty {
+  padding: 14px;
+  border-radius: 10px;
+  border: 1px dashed #dcbf9b;
+  color: #6f5330;
+  background: #fffaf2;
+}
+
+.history-row-selected {
+  background: #f8efdf;
+}
+
 
 .modal__panel--booking { padding: 18px; }
 
@@ -503,13 +544,22 @@ select:focus-visible {
   inline-size: 56px;
   block-size: 56px;
   border-radius: 50%;
-  background: #dff2e7;
-  border: 1px solid #9fceb2;
-  color: var(--portal-success);
   font-size: 1.8rem;
   display: grid;
   place-items: center;
   margin: 0 auto 10px;
+}
+
+.result-icon--success {
+  background: #dff2e7;
+  border: 1px solid #9fceb2;
+  color: var(--portal-success);
+}
+
+.result-icon--error {
+  background: #fde9e8;
+  border: 1px solid #efbfbc;
+  color: #9f3934;
 }
 
 .modal__panel--result h2 {
@@ -538,20 +588,18 @@ select:focus-visible {
     grid-template-columns: 1fr;
   }
 
-  .patient-sidebar {
-    gap: 14px;
-  }
-
-  .patient-nav {
-    grid-template-columns: repeat(5, minmax(120px, 1fr));
-  }
-
-  .patient-identity {
-    margin-top: 0;
-  }
 
   .history-toolbar {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .history-toolbar__actions {
+    grid-column: 1 / -1;
+    justify-content: flex-start;
+  }
+
+  .slip-grid {
+    grid-template-columns: 1fr;
   }
 
   .booking-grid {
@@ -560,11 +608,22 @@ select:focus-visible {
 }
 
 @media (max-width: 760px) {
-  .patient-nav {
-    grid-template-columns: 1fr 1fr;
-  }
 
   .history-toolbar {
+    grid-template-columns: 1fr;
+  }
+
+  .history-toolbar__actions {
+    justify-content: stretch;
+    flex-direction: column;
+  }
+
+  .history-toolbar__actions .button-primary,
+  .history-toolbar__actions .button-secondary {
+    width: 100%;
+  }
+
+  .slip-kv {
     grid-template-columns: 1fr;
   }
 
