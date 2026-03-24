@@ -1,12 +1,18 @@
 if (window.mountSkinRejuveLogos) window.mountSkinRejuveLogos();
 
-const { request, getToken, setToken, getUserEmail } = window.skinRejuveApi;
+const { request, getToken } = window.skinRejuveApi;
 
 if (!getToken()) {
   window.location.replace('/frontend/landing/html/index.html?auth=login');
 }
 
+const isHistoryPage = Boolean(document.getElementById('historyBody'));
+if (!isHistoryPage) {
+  // This script is shared by legacy dashboard routes. Exit safely for non-history pages.
+} else {
+
 const state = {
+  profile: null,
   history: [],
   filteredHistory: [],
   services: [],
@@ -15,6 +21,8 @@ const state = {
   selectedDateKey: '',
   selectedSlotId: '',
   calendarDate: new Date(),
+  selectedSlipId: '',
+  lastSlipTrigger: null,
 };
 
 const historyLoading = document.getElementById('historyLoading');
@@ -23,10 +31,18 @@ const historyBody = document.getElementById('historyBody');
 const historySearch = document.getElementById('historySearch');
 const statusFilter = document.getElementById('statusFilter');
 const dateFilter = document.getElementById('dateFilter');
+const branchFilter = document.getElementById('branchFilter');
+const serviceFilter = document.getElementById('serviceFilter');
+const sortFilter = document.getElementById('sortFilter');
 const patientName = document.getElementById('patientName');
 
 const bookingModal = document.getElementById('bookingModal');
 const resultModal = document.getElementById('resultModal');
+const slipModal = document.getElementById('slipModal');
+const slipDocument = document.getElementById('slipDocument');
+const slipReference = document.getElementById('slipReference');
+const slipError = document.getElementById('slipError');
+
 const serviceSelect = document.getElementById('serviceId');
 const submitBookingBtn = document.getElementById('submitBookingBtn');
 const bookingFormError = document.getElementById('bookingFormError');
@@ -54,7 +70,7 @@ const serviceDescriptions = {
 };
 
 function formatDate(value) {
-  if (!value) return '—';
+  if (!value) return '';
   return new Date(value).toLocaleString('en-US', {
     month: 'short',
     day: 'numeric',
@@ -70,12 +86,25 @@ function formatDateOnly(value) {
   return date.toISOString().slice(0, 10);
 }
 
+function formatDateLabel(value) {
+  if (!value) return '';
+  return new Date(value).toLocaleDateString('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+  });
+}
+
 function friendlyStatus(status) {
-  return status.replaceAll('_', ' ').toLowerCase().replace(/(^|\s)\S/g, (m) => m.toUpperCase());
+  return (status || 'PENDING').replaceAll('_', ' ').toLowerCase().replace(/(^|\s)\S/g, (m) => m.toUpperCase());
 }
 
 function statusClass(status) {
   return statusClassMap[status] || 'pending';
+}
+
+function resolvedBranch(item) {
+  return item.branchName || item.branch || 'Olongapo Branch';
 }
 
 function openModal(modal) {
@@ -85,7 +114,14 @@ function openModal(modal) {
 
 function closeModal(modal) {
   modal.hidden = true;
-  if (bookingModal.hidden && resultModal.hidden) {
+
+  if (modal === slipModal && state.lastSlipTrigger) {
+    state.lastSlipTrigger.setAttribute('aria-expanded', 'false');
+    state.lastSlipTrigger.focus();
+    state.lastSlipTrigger = null;
+  }
+
+  if (bookingModal.hidden && resultModal.hidden && slipModal.hidden) {
     document.body.classList.remove('auth-modal-open');
   }
 }
@@ -96,12 +132,133 @@ function setResultModal(success, message, details) {
   const copy = document.getElementById('resultModalCopy');
 
   icon.textContent = success ? '✓' : '!';
-  icon.style.background = success ? '#dff2e7' : '#fde9e8';
-  icon.style.color = success ? '#1f7a45' : '#9f3934';
-  icon.style.borderColor = success ? '#9fceb2' : '#efbfbc';
+  icon.classList.toggle('result-icon--success', success);
+  icon.classList.toggle('result-icon--error', !success);
 
   title.textContent = message;
   copy.textContent = details;
+}
+
+function populateHistoryFilters() {
+  const branchOptions = [...new Set(state.history.map((item) => resolvedBranch(item)).filter(Boolean))].sort();
+  const serviceOptions = [...new Set(state.history.map((item) => item.serviceName).filter(Boolean))].sort();
+
+  branchFilter.innerHTML = '<option value="all">All branches</option>';
+  serviceFilter.innerHTML = '<option value="all">All services</option>';
+
+  branchOptions.forEach((branch) => {
+    const option = document.createElement('option');
+    option.value = branch;
+    option.textContent = branch;
+    branchFilter.appendChild(option);
+  });
+
+  serviceOptions.forEach((service) => {
+    const option = document.createElement('option');
+    option.value = service;
+    option.textContent = service;
+    serviceFilter.appendChild(option);
+  });
+}
+
+function buildSlipKV(entries) {
+  const rows = entries
+    .filter((entry) => entry?.value !== undefined && entry?.value !== null && String(entry.value).trim() !== '')
+    .map((entry) => `<dt>${entry.label}</dt><dd>${entry.value}</dd>`)
+    .join('');
+
+  if (!rows) return '<p class="slip-empty">No information available for this section.</p>';
+  return `<dl class="slip-kv">${rows}</dl>`;
+}
+
+function renderSlip(item) {
+  if (!item) {
+    slipDocument.innerHTML = '';
+    slipError.hidden = false;
+    slipError.textContent = 'Appointment slip could not be found for this record.';
+    return;
+  }
+
+  slipError.hidden = true;
+  slipReference.textContent = `Reference: ${item.id || 'N/A'}`;
+
+  const profile = state.profile || {};
+  const fullName = [profile.firstName, profile.lastName].filter(Boolean).join(' ') || 'Patient';
+
+  const patientSection = buildSlipKV([
+    { label: 'Full name', value: fullName },
+    { label: 'Sex', value: profile.sex || profile.gender },
+    { label: 'Phone number', value: profile.phone || profile.mobile },
+    { label: 'Email address', value: profile.email || '' },
+    { label: 'Date of birth', value: profile.dateOfBirth ? formatDateLabel(profile.dateOfBirth) : '' },
+    { label: 'Address', value: profile.address },
+  ]);
+
+  const appointmentSection = buildSlipKV([
+    { label: 'Date and time', value: formatDate(item.startAt) },
+    { label: 'Branch', value: resolvedBranch(item) },
+    { label: 'Assigned specialist', value: item.staffName || 'Assigned by clinic' },
+    { label: 'Service', value: item.serviceName },
+    { label: 'Service details', value: item.serviceDescription || '' },
+    { label: 'Treatment specifics', value: item.treatmentSpecifics || '' },
+    { label: 'Session details', value: item.sessionDetails || '' },
+    { label: 'Status', value: friendlyStatus(item.status) },
+  ]);
+
+  const healthSection = buildSlipKV([
+    { label: 'Known allergies', value: profile.allergies || profile.allergyNotes },
+    { label: 'Medical conditions', value: profile.medicalConditions },
+    { label: 'Previous treatments', value: profile.pastTreatment },
+  ]);
+
+  const clinicActionsSection = buildSlipKV([
+    { label: 'Doctor notes', value: item.doctorNotes || item.notes },
+    { label: 'Post-treatment care', value: item.afterCareInstructions },
+  ]);
+
+  slipDocument.innerHTML = `
+    <section class="slip-grid" aria-label="Appointment slip details">
+      <article class="slip-section">
+        <h3>Patient information</h3>
+        ${patientSection}
+      </article>
+      <article class="slip-section">
+        <h3>Appointment information</h3>
+        ${appointmentSection}
+      </article>
+      <article class="slip-section">
+        <h3>Health information</h3>
+        ${healthSection}
+      </article>
+      <article class="slip-section">
+        <h3>Clinic actions</h3>
+        ${clinicActionsSection}
+      </article>
+    </section>
+  `;
+}
+
+function openSlip(id, trigger) {
+  state.selectedSlipId = id;
+  state.lastSlipTrigger = trigger || null;
+
+  historyBody.querySelectorAll('tr').forEach((row) => {
+    row.classList.toggle('history-row-selected', row.dataset.id === id);
+  });
+
+  historyBody.querySelectorAll('[data-action="view-slip"]').forEach((button) => {
+    button.setAttribute('aria-expanded', 'false');
+  });
+  if (trigger) {
+    trigger.setAttribute('aria-expanded', 'true');
+  }
+
+  const selected = state.history.find((item) => String(item.id) === String(id));
+  renderSlip(selected);
+  openModal(slipModal);
+
+  const firstFocusable = slipModal.querySelector('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+  if (firstFocusable) firstFocusable.focus();
 }
 
 function renderHistory() {
@@ -109,6 +266,7 @@ function renderHistory() {
 
   if (!state.filteredHistory.length) {
     historyEmpty.hidden = false;
+    historyEmpty.innerHTML = '<p>No appointment history yet.</p><p>Your booked and completed treatments will appear here once available.</p>';
     return;
   }
 
@@ -117,13 +275,19 @@ function renderHistory() {
   state.filteredHistory.forEach((item) => {
     const row = document.createElement('tr');
     const currentStatus = item.status || 'PENDING';
+    row.dataset.id = item.id || '';
     row.innerHTML = `
-      <td data-label="Service">${item.serviceName || 'Service not specified'}</td>
       <td data-label="Date">${formatDate(item.startAt)}</td>
+      <td data-label="Service">${item.serviceName || 'Clinic service'}</td>
+      <td data-label="Branch">${resolvedBranch(item)}</td>
       <td data-label="Status"><span class="status-pill status-pill--${statusClass(currentStatus)}">${friendlyStatus(currentStatus)}</span></td>
-      <td data-label="Email">${item.email || 'On file'}</td>
-      <td data-label="Action"><button type="button" class="table-action" data-id="${item.id || ''}">View</button></td>
+      <td data-label="Action">
+        <button type="button" class="table-action" data-action="view-slip" data-id="${item.id || ''}" aria-expanded="false" aria-controls="slipModal">
+          View Slip
+        </button>
+      </td>
     `;
+
     historyBody.appendChild(row);
   });
 }
@@ -132,23 +296,39 @@ function applyHistoryFilters() {
   const searchValue = historySearch.value.trim().toLowerCase();
   const statusValue = statusFilter.value;
   const dateWindow = Number(dateFilter.value);
+  const branchValue = branchFilter.value;
+  const serviceValue = serviceFilter.value;
+  const sortValue = sortFilter.value;
   const now = Date.now();
 
-  state.filteredHistory = state.history.filter((item) => {
+  let rows = state.history.filter((item) => {
     const statusMatch = statusValue === 'all' || (item.status || '').toUpperCase() === statusValue;
+    const branchMatch = branchValue === 'all' || resolvedBranch(item) === branchValue;
+    const serviceMatch = serviceValue === 'all' || item.serviceName === serviceValue;
 
     const searchMatch = !searchValue
       || (item.serviceName || '').toLowerCase().includes(searchValue)
       || (item.status || '').toLowerCase().includes(searchValue)
-      || (item.email || '').toLowerCase().includes(searchValue);
+      || resolvedBranch(item).toLowerCase().includes(searchValue)
+      || String(item.id || '').toLowerCase().includes(searchValue);
 
     const dateMatch = Number.isNaN(dateWindow) || dateFilter.value === 'all'
       ? true
       : (now - new Date(item.startAt).getTime()) <= (dateWindow * 24 * 60 * 60 * 1000);
 
-    return statusMatch && searchMatch && dateMatch;
+    return statusMatch && searchMatch && dateMatch && branchMatch && serviceMatch;
   });
 
+  rows = rows.sort((a, b) => {
+    const dateA = new Date(a.startAt).getTime();
+    const dateB = new Date(b.startAt).getTime();
+    if (sortValue === 'date_asc') return dateA - dateB;
+    if (sortValue === 'service_asc') return (a.serviceName || '').localeCompare(b.serviceName || '');
+    if (sortValue === 'status_asc') return (a.status || '').localeCompare(b.status || '');
+    return dateB - dateA;
+  });
+
+  state.filteredHistory = rows;
   renderHistory();
 }
 
@@ -271,10 +451,13 @@ function updateBookingActionState() {
 }
 
 async function loadProfile() {
-  const profileMsg = document.getElementById('profileMsg');
   const response = await request('/api/patient/profile');
   if (response?.success && response.data) {
-    patientName.textContent = `${response.data.firstName || ''} ${response.data.lastName || ''}`.trim() || 'Patient';
+    state.profile = response.data;
+    const fullName = `${response.data.firstName || ''} ${response.data.lastName || ''}`.trim();
+    patientName.textContent = fullName || 'Patient';
+  } else {
+    state.profile = null;
   }
 }
 
@@ -290,6 +473,7 @@ async function loadHistory() {
   }
 
   state.history = response.data || [];
+  populateHistoryFilters();
   applyHistoryFilters();
 }
 
@@ -384,20 +568,92 @@ async function submitBooking(event) {
   openModal(resultModal);
 }
 
-function setupEventListeners() {
-  document.getElementById('logoutBtn').addEventListener('click', () => {
-    setToken('');
-    window.location.replace('/frontend/landing/html/index.html?auth=login');
-  });
+function handleHistoryTableClick(event) {
+  const trigger = event.target.closest('[data-action="view-slip"]');
+  if (!trigger) return;
 
+  const id = trigger.dataset.id;
+  if (!id) return;
+
+  openSlip(id, trigger);
+}
+
+function printHistoryTable() {
+  window.print();
+}
+
+function printSlip() {
+  const bodyMarkup = slipDocument.innerHTML;
+  const referenceText = slipReference.textContent;
+  if (!bodyMarkup.trim()) return;
+
+  const popup = window.open('', '_blank', 'width=900,height=700');
+  if (!popup) return;
+
+  popup.document.write(`
+    <html>
+      <head>
+        <title>Skin Rejuve Appointment Slip</title>
+        <style>
+          body { font-family: Inter, Arial, sans-serif; padding: 24px; color: #3f2a12; }
+          h1 { margin: 0 0 8px; }
+          .meta { margin-bottom: 18px; color: #715335; }
+          .slip-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+          .slip-section { border: 1px solid #dfcab0; border-radius: 12px; padding: 12px; }
+          .slip-kv { display: grid; grid-template-columns: 150px 1fr; gap: 6px 10px; margin: 0; }
+          .slip-kv dt { font-weight: 700; color: #6f5232; }
+          .slip-kv dd { margin: 0; }
+        </style>
+      </head>
+      <body>
+        <h1>Appointment Slip</h1>
+        <p class="meta">${referenceText}</p>
+        ${bodyMarkup}
+      </body>
+    </html>
+  `);
+  popup.document.close();
+  popup.focus();
+  popup.print();
+}
+
+
+function trapModalFocus(event, modal) {
+  if (event.key !== 'Tab' || modal.hidden) return;
+
+  const focusable = modal.querySelectorAll('button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])');
+  if (!focusable.length) return;
+
+  const first = focusable[0];
+  const last = focusable[focusable.length - 1];
+
+  if (event.shiftKey && document.activeElement === first) {
+    event.preventDefault();
+    last.focus();
+  } else if (!event.shiftKey && document.activeElement === last) {
+    event.preventDefault();
+    first.focus();
+  }
+}
+
+function setupEventListeners() {
   document.getElementById('openBookingBtn').addEventListener('click', () => openModal(bookingModal));
   document.getElementById('openBookingFromNav').addEventListener('click', () => openModal(bookingModal));
+
   document.getElementById('closeBookingModal').addEventListener('click', () => closeModal(bookingModal));
   document.getElementById('cancelBookingBtn').addEventListener('click', () => closeModal(bookingModal));
   document.querySelector('[data-close-booking="true"]').addEventListener('click', () => closeModal(bookingModal));
 
   document.querySelector('[data-close-result="true"]').addEventListener('click', () => closeModal(resultModal));
   document.getElementById('resultModalCta').addEventListener('click', () => closeModal(resultModal));
+
+  document.getElementById('closeSlipModal').addEventListener('click', () => closeModal(slipModal));
+  document.getElementById('closeSlipFooterBtn').addEventListener('click', () => closeModal(slipModal));
+  document.querySelector('[data-close-slip="true"]').addEventListener('click', () => closeModal(slipModal));
+
+  document.getElementById('printHistoryBtn').addEventListener('click', printHistoryTable);
+  document.getElementById('printSlipBtn').addEventListener('click', printSlip);
+  document.getElementById('downloadSlipBtn').addEventListener('click', printSlip);
 
   document.getElementById('prevMonth').addEventListener('click', () => {
     state.calendarDate = new Date(state.calendarDate.getFullYear(), state.calendarDate.getMonth() - 1, 1);
@@ -418,6 +674,11 @@ function setupEventListeners() {
   historySearch.addEventListener('input', applyHistoryFilters);
   statusFilter.addEventListener('change', applyHistoryFilters);
   dateFilter.addEventListener('change', applyHistoryFilters);
+  branchFilter.addEventListener('change', applyHistoryFilters);
+  serviceFilter.addEventListener('change', applyHistoryFilters);
+  sortFilter.addEventListener('change', applyHistoryFilters);
+
+  historyBody.addEventListener('click', handleHistoryTableClick);
 
   document.getElementById('bookingForm').addEventListener('submit', submitBooking);
 
@@ -425,6 +686,11 @@ function setupEventListeners() {
     if (event.key === 'Escape') {
       if (!bookingModal.hidden) closeModal(bookingModal);
       if (!resultModal.hidden) closeModal(resultModal);
+      if (!slipModal.hidden) closeModal(slipModal);
+    }
+
+    if (!slipModal.hidden) {
+      trapModalFocus(event, slipModal);
     }
   });
 }
@@ -440,3 +706,5 @@ async function init() {
 }
 
 init();
+
+}
