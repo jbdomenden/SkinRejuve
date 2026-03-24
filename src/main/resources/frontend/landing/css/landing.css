@@ -1,16 +1,17 @@
 @import url("/frontend/shared/css/styles.css");
 
 :root {
-  --bg: #f6efe4;
-  --panel: rgba(255, 250, 243, 0.86);
-  --panel-strong: #fffaf4;
-  --text: #44280d;
-  --muted: #6d5337;
-  --accent: #8d6230;
-  --accent-dark: #5d3910;
-  --accent-soft: rgba(141, 98, 48, 0.12);
-  --border: rgba(151, 113, 63, 0.18);
-  --shadow: 0 22px 52px rgba(74, 43, 8, 0.1);
+  --bg: #f5ede2;
+  --panel: rgba(255, 251, 246, 0.94);
+  --panel-strong: #fffdf9;
+  --text: #402614;
+  --muted: #6f5846;
+  --accent: #9c6a2e;
+  --accent-dark: #6d461b;
+  --accent-soft: rgba(156, 106, 46, 0.1);
+  --border: rgba(138, 101, 58, 0.16);
+  --shadow: 0 24px 60px rgba(87, 57, 23, 0.12);
+  --shadow-soft: 0 14px 30px rgba(87, 57, 23, 0.08);
 }
 
 * { box-sizing: border-box; }
@@ -20,9 +21,9 @@ body.landing-body {
   min-height: 100vh;
   color: var(--text);
   background:
-    linear-gradient(180deg, rgba(250, 245, 238, 0.96), rgba(240, 228, 207, 0.94)),
-    radial-gradient(circle at top left, rgba(184, 140, 71, 0.18), transparent 32%),
-    radial-gradient(circle at bottom right, rgba(102, 68, 26, 0.16), transparent 28%);
+    radial-gradient(circle at top left, rgba(194, 156, 110, 0.16), transparent 30%),
+    radial-gradient(circle at 85% 15%, rgba(153, 111, 61, 0.12), transparent 26%),
+    linear-gradient(180deg, #fbf7f1 0%, #f5ede2 52%, #efe2d2 100%);
 }
 
 a { color: inherit; }
@@ -54,7 +55,7 @@ button { cursor: pointer; }
 .landing-shell {
   width: min(1280px, calc(100% - 32px));
   margin: 0 auto;
-  padding: 22px 0 56px;
+  padding: 28px 0 64px;
 }
 
 .landing-header,
@@ -71,7 +72,7 @@ button { cursor: pointer; }
   background: var(--panel);
   border-radius: 28px;
   box-shadow: var(--shadow);
-  backdrop-filter: blur(16px);
+  backdrop-filter: blur(14px);
 }
 
 .landing-header {
@@ -79,10 +80,11 @@ button { cursor: pointer; }
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  padding: 18px 22px;
+  padding: 20px 24px;
   position: sticky;
   top: 14px;
   z-index: 30;
+  background: rgba(255, 250, 244, 0.9);
 }
 
 .landing-nav {
@@ -114,8 +116,9 @@ button { cursor: pointer; }
 .landing-hero {
   display: grid;
   grid-template-columns: minmax(0, 1.25fr) minmax(320px, 0.95fr);
-  gap: 22px;
-  margin-top: 20px;
+  gap: 24px;
+  margin-top: 24px;
+  align-items: stretch;
 }
 
 .hero-copy-panel,
@@ -123,12 +126,12 @@ button { cursor: pointer; }
 .landing-section,
 .auth-modal-dialog,
 .modal-dialog {
-  padding: 30px;
+  padding: 32px;
 }
 
 .landing-kicker {
   margin: 0 0 12px;
-  color: #9a6f2d;
+  color: #a87433;
   font-size: 12px;
   font-weight: 800;
   letter-spacing: 0.16em;
@@ -167,7 +170,7 @@ button { cursor: pointer; }
 .booking-note,
 .review-panel p {
   color: var(--muted);
-  line-height: 1.7;
+  line-height: 1.72;
 }
 
 .hero-actions,
@@ -188,7 +191,7 @@ button { cursor: pointer; }
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
-  margin-top: 26px;
+  margin-top: 28px;
 }
 
 .hero-trust-strip span,
@@ -201,21 +204,40 @@ button { cursor: pointer; }
   min-height: 38px;
   padding: 0 14px;
   border-radius: 999px;
-  border: 1px solid rgba(166, 124, 67, 0.18);
-  background: rgba(255,255,255,0.78);
+  border: 1px solid rgba(166, 124, 67, 0.16);
+  background: rgba(255,255,255,0.84);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.75);
   font-size: 12px;
   letter-spacing: .08em;
   text-transform: uppercase;
 }
 
 .hero-aside {
-  background: linear-gradient(180deg, rgba(82, 50, 14, 0.95), rgba(56, 32, 7, 0.95));
+  background:
+    radial-gradient(circle at top left, rgba(208, 165, 104, 0.22), transparent 34%),
+    linear-gradient(180deg, #71481f 0%, #5b3716 100%);
   color: #fff8ef;
 }
 .hero-aside * { color: inherit; }
 .hero-flow-list { margin: 18px 0 0; padding-left: 18px; line-height: 1.8; }
 .hero-side-grid { display: grid; gap: 16px; margin-top: 18px; }
-.showcase-card { background: rgba(255,255,255,0.08); }
+.showcase-card {
+  background: rgba(255,255,255,0.08);
+  box-shadow: none;
+}
+.showcase-card-featured {
+  min-height: 100%;
+  background: linear-gradient(180deg, rgba(255,255,255,0.09), rgba(255,255,255,0.04));
+}
+.showcase-card-featured h2 {
+  max-width: 12ch;
+  line-height: 0.95;
+  font-size: clamp(36px, 4.6vw, 64px);
+}
+.metric-card {
+  min-height: 180px;
+  background: rgba(255,255,255,0.1);
+}
 .metric-card strong { display: block; margin: 12px 0 8px; font-size: 34px; font-family: "Cormorant Garamond", serif; }
 
 .section-heading-inline {
@@ -225,7 +247,8 @@ button { cursor: pointer; }
   align-items: end;
 }
 
-.landing-section { margin-top: 20px; }
+.landing-section { margin-top: 24px; }
+.trust-grid-balanced { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 .trust-grid,
 .service-grid,
 .branch-grid,
@@ -238,7 +261,7 @@ button { cursor: pointer; }
   gap: 18px;
 }
 
-.trust-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); margin-bottom: 18px; }
+.trust-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); margin-bottom: 0; }
 .trust-card,
 .booking-steps article,
 .service-card,
@@ -246,26 +269,29 @@ button { cursor: pointer; }
 .contact-card,
 .privacy-card,
 .service-detail-card {
-  padding: 20px;
+  padding: 24px;
   border: 1px solid var(--border);
   border-radius: 24px;
-  background: rgba(255,255,255,0.74);
-}
-
-.trust-media-placeholder {
-  min-height: 180px;
-  border: 1px dashed rgba(151, 113, 63, 0.35);
-  border-radius: 24px;
-  display: grid;
-  place-items: center;
-  text-align: center;
-  padding: 24px;
-  background: rgba(255,255,255,0.45);
+  background: linear-gradient(180deg, rgba(255,255,255,0.84), rgba(255,251,246,0.78));
+  box-shadow: var(--shadow-soft);
 }
 
 .service-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-.service-example-list { padding-left: 18px; color: var(--muted); line-height: 1.7; }
-.service-concerns { margin-top: 10px; }
+.service-card,
+.branch-card,
+.contact-card { height: 100%; }
+.service-example-list { padding-left: 18px; color: var(--muted); line-height: 1.7; margin: 0; }
+.service-concerns { margin: 12px 0 14px; }
+.service-card-actions { margin-top: auto; }
+.service-card h3,
+.branch-card h3,
+.contact-card h3 { margin-bottom: 12px; }
+.service-card-index {
+  justify-content: flex-start;
+  min-width: fit-content;
+  margin-bottom: 16px;
+  color: #a87433;
+}
 
 .booking-steps { grid-template-columns: repeat(5, minmax(0, 1fr)); }
 .booking-steps article span {
@@ -273,19 +299,31 @@ button { cursor: pointer; }
   width: 42px; height: 42px;
   border-radius: 50%;
   align-items: center; justify-content: center;
-  background: var(--accent-dark); color: #fff;
+  background: linear-gradient(180deg, #8f6631, #6d4412); color: #fff;
   font-weight: 700; margin-bottom: 14px;
+  box-shadow: 0 12px 22px rgba(111, 68, 18, 0.2);
 }
 
 .branch-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .branch-card { display: flex; flex-direction: column; justify-content: space-between; gap: 20px; }
-.branch-address { min-height: 72px; }
+.branch-address { min-height: 92px; }
+.branch-meta {
+  display: grid;
+  gap: 14px;
+}
+.branch-meta p {
+  margin: 0;
+}
+.branch-actions {
+  margin-top: auto;
+}
 .branch-actions .landing-btn { flex: 1 1 140px; }
 
 .clinic-gallery-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .clinic-gallery-card {
   overflow: hidden;
   text-decoration: none;
+  background: linear-gradient(180deg, rgba(255,255,255,0.88), rgba(251,244,235,0.78));
 }
 .clinic-gallery-media {
   min-height: 160px;
@@ -294,12 +332,16 @@ button { cursor: pointer; }
   font-family: "Cormorant Garamond", serif;
   font-size: 46px;
   color: var(--accent-dark);
-  background: linear-gradient(135deg, rgba(255,255,255,.82), rgba(232, 211, 182, .7));
+  background: linear-gradient(135deg, rgba(255,255,255,.9), rgba(236, 219, 195, .78));
 }
 .clinic-gallery-copy { padding: 22px; }
 
 .contact-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-.contact-card-accent { background: linear-gradient(180deg, rgba(87, 54, 18, 0.97), rgba(66, 39, 11, 0.97)); }
+.contact-card-accent {
+  background:
+    radial-gradient(circle at top left, rgba(214, 171, 112, 0.18), transparent 28%),
+    linear-gradient(180deg, rgba(90, 56, 20, 0.98), rgba(66, 39, 11, 0.98));
+}
 .contact-card-accent * { color: #fff8ef; }
 .contact-card-accent .landing-btn-secondary { border-color: rgba(255,255,255,0.22); color: #fff8ef; }
 
@@ -307,7 +349,7 @@ button { cursor: pointer; }
   display: flex;
   justify-content: space-between;
   gap: 20px;
-  padding: 28px 10px 0;
+  padding: 32px 10px 0;
   color: var(--muted);
 }
 .social-proof-strip { display: flex; flex-wrap: wrap; gap: 14px; align-items: flex-start; }
@@ -322,8 +364,9 @@ button { cursor: pointer; }
   padding: 0 20px;
   border-radius: 16px;
   border: 1px solid transparent;
-  background: linear-gradient(180deg, #8f6631, #6d4412);
+  background: linear-gradient(180deg, #9a6a2e, #74481a);
   color: #fff9f0;
+  box-shadow: 0 14px 28px rgba(117, 72, 26, 0.2);
   text-decoration: none;
   font-weight: 700;
 }
@@ -331,9 +374,9 @@ button { cursor: pointer; }
 .landing-btn-secondary,
 .auth-inline-btn,
 .nav-sign-in {
-  background: rgba(111, 70, 16, 0.08);
+  background: rgba(111, 70, 16, 0.05);
   color: var(--accent-dark);
-  border: 1px solid rgba(176, 136, 84, 0.22);
+  border: 1px solid rgba(176, 136, 84, 0.24);
 }
 
 .nav-sign-in {
@@ -434,6 +477,7 @@ button { cursor: pointer; }
 }
 .progress-pill.is-complete {
   background: rgba(141, 98, 48, 0.16);
+  color: var(--accent-dark);
 }
 
 .booking-flow,
@@ -475,7 +519,8 @@ button { cursor: pointer; }
 .privacy-icon { font-size: 20px; }
 
 @media (max-width: 1100px) {
-  .trust-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .trust-grid,
+  .trust-grid-balanced { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .booking-steps,
   .contact-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .branch-grid,
@@ -510,7 +555,8 @@ button { cursor: pointer; }
   .booking-confirm-panel { grid-template-columns: 1fr; }
   .service-grid,
   .privacy-card-list,
-  .trust-grid { grid-template-columns: 1fr 1fr; }
+  .trust-grid,
+  .trust-grid-balanced { grid-template-columns: 1fr 1fr; }
 }
 
 @media (max-width: 640px) {
@@ -529,6 +575,7 @@ button { cursor: pointer; }
   .contact-grid,
   .booking-steps,
   .trust-grid,
+  .trust-grid-balanced,
   .register-grid-2,
   .register-grid-3,
   .register-grid-4,

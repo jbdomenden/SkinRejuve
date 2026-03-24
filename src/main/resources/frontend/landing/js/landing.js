@@ -29,19 +29,19 @@ if (window.mountSkinRejuveLogos) window.mountSkinRejuveLogos();
   const galleryCards = [
     {
       title: 'Facebook updates',
-      description: 'Replace with the clinic’s live Facebook page for branch updates and public announcements.',
+      description: 'Follow clinic announcements, branch updates, and patient-ready service highlights on Facebook.',
       href: 'https://www.facebook.com/skinrejuve',
       ctaLabel: 'Open Facebook',
     },
     {
       title: 'Instagram treatments',
-      description: 'Replace with current before-and-after safe content, treatment highlights, or branch posts.',
+      description: 'Browse treatment highlights, clinic aesthetics, and polished brand moments on Instagram.',
       href: 'https://www.instagram.com/skinrejuve',
       ctaLabel: 'Open Instagram',
     },
     {
       title: 'TikTok or reels',
-      description: 'Use short educational or clinic trust content without distracting from the booking path.',
+      description: 'Watch short-form skincare education, clinic stories, and quick treatment features.',
       href: 'https://www.tiktok.com/@skinrejuve',
       ctaLabel: 'Open channel',
     },
@@ -100,7 +100,7 @@ if (window.mountSkinRejuveLogos) window.mountSkinRejuveLogos();
   function renderBranches() {
     branchGrid.innerHTML = branchData.map((branch) => `
       <article class="branch-card" itemscope itemtype="https://schema.org/MedicalClinic">
-        <div>
+        <div class="branch-meta">
           <span class="showcase-label">${escapeHtml(branch.shortName)}</span>
           <h3 itemprop="name">${escapeHtml(branch.name)}</h3>
           <p class="branch-address" itemprop="address">${escapeHtml(branch.address)}</p>
@@ -120,7 +120,7 @@ if (window.mountSkinRejuveLogos) window.mountSkinRejuveLogos();
   function renderGallery() {
     galleryGrid.innerHTML = galleryCards.map((item, index) => `
       <a class="clinic-gallery-card" href="${escapeHtml(item.href)}" target="_blank" rel="noreferrer">
-        <div class="clinic-gallery-media is-placeholder" aria-hidden="true">0${index + 1}</div>
+        <div class="clinic-gallery-media is-gallery-cover" aria-hidden="true">0${index + 1}</div>
         <div class="clinic-gallery-copy">
           <span class="showcase-label">Public channel</span>
           <h3>${escapeHtml(item.title)}</h3>
