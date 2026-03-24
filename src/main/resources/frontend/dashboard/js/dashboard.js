@@ -1,6 +1,6 @@
 if (window.mountSkinRejuveLogos) window.mountSkinRejuveLogos();
 
-const { request, getToken, setToken } = window.skinRejuveApi;
+const { request, getToken, setToken, getUserEmail } = window.skinRejuveApi;
 
 if (!getToken()) {
   window.location.replace('/frontend/landing/html/index.html?auth=login');
@@ -271,6 +271,7 @@ function updateBookingActionState() {
 }
 
 async function loadProfile() {
+  const profileMsg = document.getElementById('profileMsg');
   const response = await request('/api/patient/profile');
   if (response?.success && response.data) {
     patientName.textContent = `${response.data.firstName || ''} ${response.data.lastName || ''}`.trim() || 'Patient';

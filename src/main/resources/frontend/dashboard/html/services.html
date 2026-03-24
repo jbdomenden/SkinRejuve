@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Skin Rejuve | Patient Services</title>
+  <link rel="stylesheet" href="/frontend/dashboard/css/dashboard.css" />
+</head>
+<body class="portal-bg" data-page="services">
+  <div class="patient-layout">
+    <header class="mobile-topbar">
+      <button id="mobileMenuToggle" class="icon-btn" type="button" aria-label="Open navigation" aria-controls="patientSidebar" aria-expanded="false">☰</button>
+      <div class="brand" data-skin-rejuve-logo data-logo-size="compact" data-logo-subtitle="SINCE 2011"></div>
+      <button id="mobileLogoutBtn" class="ghost-btn" type="button">Log Out</button>
+    </header>
+
+    <aside class="patient-sidebar" id="patientSidebar" aria-label="Patient navigation">
+      <div class="sidebar-header">
+        <div class="brand" data-skin-rejuve-logo data-logo-size="compact" data-logo-subtitle="SINCE 2011"></div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a class="nav-link" href="/frontend/dashboard/html/dashboard.html">Home</a>
+        <a class="nav-link nav-link-active" href="/frontend/dashboard/html/services.html" aria-current="page">Appointment</a>
+        <a class="nav-link" href="/frontend/dashboard/html/dashboard.html#appointmentRecords">History</a>
+        <a class="nav-link" href="/frontend/dashboard/html/dashboard.html#accountPanel">Account</a>
+        <button class="nav-link nav-link-button" id="logoutBtn" type="button">Log Out</button>
+      </nav>
+
+      <section class="sidebar-user" aria-label="Signed in patient">
+        <p class="user-name" id="sidebarUserName">Patient Name</p>
+        <p class="user-role">Patient</p>
+      </section>
+    </aside>
+
+    <div class="sidebar-backdrop" id="sidebarBackdrop" hidden></div>
+
+    <main class="patient-main">
+      <header class="page-header surface-panel">
+        <p class="page-eyebrow">Patient Portal</p>
+        <h1>Explore our treatment services</h1>
+        <p class="page-subtitle">Select a treatment category to view details and continue your booking.</p>
+      </header>
+
+      <section class="surface-panel services-panel" aria-labelledby="servicesTitle">
+        <div class="panel-heading">
+          <div>
+            <h2 id="servicesTitle">Treatment Categories</h2>
+            <p>Choose a service that fits your skin care needs.</p>
+          </div>
+          <a class="btn btn-secondary" href="/frontend/dashboard/html/dashboard.html">Back to Dashboard</a>
+        </div>
+
+        <div id="servicesState" class="state-banner" aria-live="polite">Loading services…</div>
+        <div class="services-grid" id="servicesGrid" hidden></div>
+      </section>
+
+      <p class="services-help">Select a treatment to continue with your appointment request.</p>
+    </main>
+  </div>
+
+  <script src="/frontend/shared/js/logo.js"></script>
+  <script src="/frontend/shared/js/api-client.js"></script>
+  <script>window.skinRejuveAuthGuard = { requireAuth: true, redirectTo: '/frontend/landing/html/index.html?auth=login' };</script>
+  <script src="/frontend/shared/js/auth-guard.js"></script>
+  <script src="/frontend/dashboard/js/dashboard.js"></script>
+</body>
+</html>
