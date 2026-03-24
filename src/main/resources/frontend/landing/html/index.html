@@ -342,6 +342,13 @@
           <label for="registerEmail">Email Address</label>
           <input id="registerEmail" name="email" type="email" autocomplete="email" placeholder="Enter your email address" required>
 
+          <label for="registerPhone">Phone Number</label>
+          <input id="registerPhone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="Enter your mobile number" required>
+
+          <label for="registerDob">Date of Birth</label>
+          <input id="registerDob" name="dateOfBirth" type="date" autocomplete="bday" required>
+          <p class="field-help">Select your birth date.</p>
+
           <label for="registerPassword">Password</label>
           <input id="registerPassword" name="password" type="password" autocomplete="new-password" placeholder="Create a password" required>
           <p class="field-help">Use at least 8 characters.</p>
@@ -353,16 +360,9 @@
         <section class="register-step" data-register-step="2" hidden>
           <div class="auth-modal-copy auth-modal-copy-centered">
             <p class="landing-kicker">Step 2 of 4</p>
-            <h2>Add your contact details</h2>
-            <p>These details help the clinic coordinate your appointment and reach you when needed.</p>
+            <h2>Add your clinic preference</h2>
+            <p>Select your preferred branch so your account is routed to the nearest Skin Rejuve team.</p>
           </div>
-
-          <label for="registerPhone">Phone Number</label>
-          <input id="registerPhone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="Enter your mobile number" required>
-
-          <label for="registerDob">Date of Birth</label>
-          <input id="registerDob" name="dateOfBirth" type="date" autocomplete="bday" required>
-          <p class="field-help">Select your birth date.</p>
 
           <label for="registerPreferredBranch">Preferred Branch</label>
           <select id="registerPreferredBranch" name="preferredBranch" required></select>
@@ -377,24 +377,23 @@
 
           <fieldset class="field-group">
             <legend>Skin Type</legend>
-            <div class="register-grid register-grid-4 skin-type-grid">
-              <label class="choice-chip"><input type="radio" name="skinType" value="Oily" required><span>Oily</span></label>
-              <label class="choice-chip"><input type="radio" name="skinType" value="Dry"><span>Dry</span></label>
-              <label class="choice-chip"><input type="radio" name="skinType" value="Combination"><span>Combination</span></label>
-              <label class="choice-chip"><input type="radio" name="skinType" value="Sensitive"><span>Sensitive</span></label>
+            <div class="register-grid register-grid-4 skin-type-grid skin-type-check-row">
+              <label class="choice-check"><input type="radio" name="skinType" value="Oily" required><span>Oily</span></label>
+              <label class="choice-check"><input type="radio" name="skinType" value="Dry"><span>Dry</span></label>
+              <label class="choice-check"><input type="radio" name="skinType" value="Combination"><span>Combination</span></label>
+              <label class="choice-check"><input type="radio" name="skinType" value="Sensitive"><span>Sensitive</span></label>
             </div>
           </fieldset>
 
-          <div class="register-grid register-grid-3">
-            <div>
-              <label for="registerAllergies">Allergies</label>
-              <select id="registerAllergies" name="allergiesChoice" required>
-                <option value="">Select an option</option>
-                <option value="NO">No known allergies</option>
-                <option value="YES">I have allergies</option>
-              </select>
-            </div>
-            <div class="register-span-2">
+          <div class="register-grid register-grid-3 register-allergies-row">
+            <fieldset class="field-group allergy-choice-group">
+              <legend>Allergies?</legend>
+              <div class="register-grid register-grid-2 allergy-choice-row">
+                <label class="choice-check"><input type="radio" name="allergiesChoice" value="NO" required><span>No</span></label>
+                <label class="choice-check"><input type="radio" name="allergiesChoice" value="YES"><span>Yes</span></label>
+              </div>
+            </fieldset>
+            <div class="register-span-2 register-allergy-notes">
               <label for="registerAllergyNotes">Allergy Details</label>
               <input id="registerAllergyNotes" name="allergyNotes" type="text" placeholder="List any known allergies">
             </div>

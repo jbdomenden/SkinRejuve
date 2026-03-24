@@ -71,13 +71,14 @@ if (window.mountSkinRejuveLogos) window.mountSkinRejuveLogos();
   function buildReviewPanel() {
     const preferredBranch = document.getElementById('registerPreferredBranch');
     const skinType = registerForm.querySelector('input[name="skinType"]:checked')?.value || 'Not selected';
+    const allergyChoice = registerForm.querySelector('input[name="allergiesChoice"]:checked')?.value || '';
     registerReview.innerHTML = `
       <p><strong>Name:</strong> ${document.getElementById('registerFullName').value.trim()}</p>
       <p><strong>Email:</strong> ${document.getElementById('registerEmail').value.trim()}</p>
       <p><strong>Phone:</strong> ${document.getElementById('registerPhone').value.trim()}</p>
       <p><strong>Preferred branch:</strong> ${preferredBranch.options[preferredBranch.selectedIndex]?.text || ''}</p>
       <p><strong>Skin type:</strong> ${skinType}</p>
-      <p><strong>Allergies:</strong> ${document.getElementById('registerAllergies').value || 'Not specified'}</p>
+      <p><strong>Allergies:</strong> ${allergyChoice || 'Not specified'}</p>
     `;
   }
 
@@ -137,7 +138,7 @@ if (window.mountSkinRejuveLogos) window.mountSkinRejuveLogos();
     const phone = document.getElementById('registerPhone').value.trim();
     const dob = document.getElementById('registerDob').value;
     const preferredBranch = document.getElementById('registerPreferredBranch').value;
-    const allergies = document.getElementById('registerAllergies').value;
+    const allergies = registerForm.querySelector('input[name="allergiesChoice"]:checked')?.value || '';
     const allergyNotes = document.getElementById('registerAllergyNotes').value.trim();
     const privacyConsent = document.getElementById('privacyConsent').checked;
     const skinType = registerForm.querySelector('input[name="skinType"]:checked')?.value || '';
@@ -145,13 +146,13 @@ if (window.mountSkinRejuveLogos) window.mountSkinRejuveLogos();
     if (step === 1) {
       if (!fullName) return 'Please enter your full name to continue.';
       if (!email) return 'Please enter your email address.';
+      if (!phone) return 'Please enter your contact number.';
+      if (!dob) return 'Please enter your date of birth.';
       if (!password || password.length < 8) return 'Please create a password with at least 8 characters.';
       if (password !== confirmPassword) return 'Password and confirm password must match.';
     }
 
     if (step === 2) {
-      if (!phone) return 'Please enter your contact number.';
-      if (!dob) return 'Please enter your date of birth.';
       if (!preferredBranch) return 'Please choose your preferred branch.';
     }
 
@@ -175,7 +176,7 @@ if (window.mountSkinRejuveLogos) window.mountSkinRejuveLogos();
     const dateOfBirth = document.getElementById('registerDob').value;
     const password = document.getElementById('registerPassword').value;
     const username = document.getElementById('registerUsername').value.trim();
-    const allergiesChoice = document.getElementById('registerAllergies').value;
+    const allergiesChoice = registerForm.querySelector('input[name="allergiesChoice"]:checked')?.value || '';
     const allergyNotes = document.getElementById('registerAllergyNotes').value.trim();
     const conditions = document.getElementById('registerConditions').value.trim();
     const pastTreatments = document.getElementById('registerTreatments').value.trim();
