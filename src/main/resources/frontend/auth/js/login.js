@@ -1,9 +1,9 @@
 if (window.mountSkinRejuveLogos) window.mountSkinRejuveLogos();
 
-const { request, setToken, getToken, getUserRole } = window.skinRejuveApi;
-const authMsg = document.getElementById('authMsg');
-const loginForm = document.getElementById('loginForm');
-const forgotPasswordBtn = document.getElementById('forgotPasswordBtn');
+const api = window.skinRejuveApi;
+if (!api) throw new Error('skinRejuveApi is required');
+
+const { request, setToken, getToken, getUserRole } = api;
 
 function redirectForRole(role) {
   if (role === 'ADMIN') {
@@ -13,45 +13,93 @@ function redirectForRole(role) {
   window.location.replace('/frontend/dashboard/html/dashboard.html');
 }
 
-if (getToken()) {
+if (document.getElementById('loginForm') && getToken()) {
   redirectForRole(getUserRole());
 }
 
-forgotPasswordBtn.addEventListener('click', async () => {
-  const email = document.getElementById('email').value.trim();
-  if (!email) {
-    authMsg.textContent = 'Enter your email first so we can send a password reset link.';
+const loginForm = document.getElementById('loginForm');
+if (loginForm) {
+  const authMsg = document.getElementById('authMsg');
+
+  loginForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const identifierEl = document.getElementById('loginIdentifier');
+    const passwordEl = document.getElementById('loginPassword');
+    const rememberMe = document.getElementById('rememberMe')?.checked;
+
+    const identifierError = document.getElementById('loginIdentifierError');
+    const passwordError = document.getElementById('loginPasswordError');
+    identifierError.textContent = '';
+    passwordError.textContent = '';
+
+    const identifier = identifierEl.value.trim();
+    const password = passwordEl.value;
+
+    let valid = true;
+    if (!identifier) {
+      identifierError.textContent = 'Please enter your username or email.';
+      valid = false;
+    }
+    if (!password) {
+      passwordError.textContent = 'Please enter your password.';
+      valid = false;
+    }
+    if (!valid) return;
+
+    authMsg.textContent = 'Signing you in...';
+    authMsg.dataset.state = 'info';
+
+    const response = await request('/api/auth/login', 'POST', {
+      email: identifier,
+      password,
+    });
+
+    const token = response?.data?.token;
+    if (response?.success && token) {
+      setToken(token, rememberMe);
+      authMsg.textContent = 'Sign in successful. Redirecting to your dashboard...';
+      authMsg.dataset.state = 'success';
+      redirectForRole(getUserRole());
+      return;
+    }
+
+    authMsg.textContent = response?.message || 'Incorrect username/email or password. Please try again.';
     authMsg.dataset.state = 'error';
-    return;
-  }
+  });
+}
 
-  authMsg.textContent = 'Sending password reset email...';
-  authMsg.dataset.state = 'info';
-  const response = await request('/api/auth/forgot-password', 'POST', { email });
-  authMsg.textContent = response?.message || 'If the account exists, a reset email was sent.';
-  authMsg.dataset.state = response?.success ? 'success' : 'error';
-});
+const forgotForm = document.getElementById('forgotPasswordForm');
+if (forgotForm) {
+  const forgotMsg = document.getElementById('forgotMsg');
 
-loginForm.addEventListener('submit', async (event) => {
-  event.preventDefault();
-  const email = document.getElementById('email').value.trim();
-  const password = document.getElementById('password').value;
-  const rememberMe = document.getElementById('rememberMe').checked;
+  forgotForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
 
-  authMsg.textContent = 'Signing you in...';
-  authMsg.dataset.state = 'info';
+    const emailEl = document.getElementById('forgotEmail');
+    const email = emailEl.value.trim();
 
-  const response = await request('/api/auth/login', 'POST', { email, password });
-  const token = response?.data?.token;
+    if (!email) {
+      forgotMsg.textContent = 'Please enter the email associated with your account.';
+      forgotMsg.dataset.state = 'error';
+      return;
+    }
 
-  if (response?.success && token) {
-    setToken(token, rememberMe);
-    authMsg.textContent = 'Login successful. Redirecting...';
-    authMsg.dataset.state = 'success';
-    redirectForRole(getUserRole());
-    return;
-  }
+    forgotMsg.textContent = 'Sending reset link...';
+    forgotMsg.dataset.state = 'info';
 
-  authMsg.textContent = response?.message || 'Unable to sign in.';
-  authMsg.dataset.state = 'error';
-});
+    const response = await request('/api/auth/forgot-password', 'POST', { email });
+
+    if (!response?.success) {
+      forgotMsg.textContent = response?.message || 'We could not find an account with that email.';
+      forgotMsg.dataset.state = 'error';
+      return;
+    }
+
+    forgotMsg.textContent = 'Reset instructions sent. Redirecting...';
+    forgotMsg.dataset.state = 'success';
+    window.setTimeout(() => {
+      window.location.href = '/frontend/auth/html/reset-success.html';
+    }, 700);
+  });
+}
