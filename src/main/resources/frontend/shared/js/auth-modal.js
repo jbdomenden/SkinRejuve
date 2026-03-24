@@ -287,6 +287,13 @@ if (window.mountSkinRejuveLogos) window.mountSkinRejuveLogos();
   const requestedModal = params.get('auth');
   const requestedIntent = params.get('intent');
   if (requestedModal === 'login' || requestedModal === 'register') {
+    if (getToken()) {
+      if ((requestedIntent || '') === 'booking') {
+        setPostLoginRedirect('/frontend/dashboard/html/dashboard.html?booking=1');
+      }
+      redirectForRole(getUserRole());
+      return;
+    }
     openModal(requestedModal, requestedIntent || '');
   }
 
