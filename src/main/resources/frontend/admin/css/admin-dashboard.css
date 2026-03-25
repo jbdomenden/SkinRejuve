@@ -247,13 +247,17 @@
   backdrop-filter: blur(12px);
 }
 
+.dashboard-modal-backdrop[hidden] {
+  display: none !important;
+}
+
 .dashboard-modal-shell {
   position: relative;
-  width: min(100%, 760px);
-  max-height: min(90vh, 920px);
-  overflow: auto;
-  padding: 34px 42px 28px;
-  border-radius: 36px;
+  width: min(100%, 680px);
+  max-height: none;
+  overflow: visible;
+  padding: 20px 28px 20px;
+  border-radius: 28px;
   background: linear-gradient(180deg, rgba(87, 50, 4, 0.98), rgba(72, 42, 8, 0.98));
   border: 1px solid rgba(255, 237, 204, 0.18);
   box-shadow: 0 34px 80px rgba(24, 11, 1, 0.35);
@@ -261,26 +265,27 @@
 
 .dashboard-modal-close {
   position: absolute;
-  top: 20px;
-  right: 22px;
-  width: 42px;
-  height: 42px;
-  border: 0;
+  top: 14px;
+  right: 14px;
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(255, 240, 219, 0.22);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.12);
   color: #fff4e2;
-  font-size: 28px;
+  font-size: 24px;
+  line-height: 1;
   cursor: pointer;
 }
 
 .dashboard-modal-brand {
   display: flex;
   justify-content: center;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
 }
 
 .dashboard-modal-brand .skin-rejuve-logo {
-  font-size: clamp(44px, 5vw, 76px);
+  font-size: clamp(32px, 4vw, 56px);
 }
 
 .dashboard-modal-brand .logo-subtitle {
@@ -290,28 +295,28 @@
 }
 
 .dashboard-modal-head {
-  margin: 0 auto 22px;
-  max-width: 520px;
+  margin: 0 auto 14px;
+  max-width: 500px;
   text-align: center;
   color: #fff4e2;
 }
 
 .dashboard-modal-head h2 {
-  margin: 0 0 10px;
+  margin: 0 0 6px;
   font-family: "Cormorant Garamond", serif;
-  font-size: clamp(34px, 4vw, 50px);
+  font-size: clamp(30px, 3.2vw, 44px);
   color: #fff4e2;
 }
 
 .dashboard-modal-head p {
   margin: 0;
   color: rgba(255, 240, 219, 0.78);
-  line-height: 1.7;
+  line-height: 1.55;
 }
 
 .dashboard-add-user-form {
   display: grid;
-  gap: 18px;
+  gap: 12px;
 }
 
 .dashboard-form-step {
@@ -320,12 +325,12 @@
 
 .dashboard-form-step.is-active {
   display: grid;
-  gap: 18px;
+  gap: 12px;
 }
 
 .dashboard-form-grid {
   display: grid;
-  gap: 16px;
+  gap: 12px;
 }
 
 .dashboard-form-grid.two-col {
@@ -354,9 +359,9 @@
 .dashboard-form-grid input,
 .dashboard-form-grid textarea {
   width: 100%;
-  min-height: 54px;
-  padding: 14px 16px;
-  border-radius: 16px;
+  min-height: 48px;
+  padding: 12px 14px;
+  border-radius: 14px;
   border: 1px solid rgba(255, 235, 203, 0.14);
   background: rgba(255, 252, 246, 0.98);
   color: #4e2d07;
@@ -364,7 +369,7 @@
 }
 
 .dashboard-form-grid textarea {
-  min-height: 110px;
+  min-height: 88px;
   resize: vertical;
 }
 
@@ -395,8 +400,8 @@
 .dashboard-modal-secondary,
 .dashboard-modal-submit {
   width: 100%;
-  min-height: 54px;
-  border-radius: 18px;
+  min-height: 48px;
+  border-radius: 14px;
   font-size: 13px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -427,8 +432,8 @@
 
 @media (max-width: 720px) {
   .dashboard-modal-shell {
-    padding: 26px 18px 22px;
-    border-radius: 26px;
+    padding: 18px 14px 16px;
+    border-radius: 18px;
   }
 
   .dashboard-form-grid.two-col,

@@ -334,6 +334,8 @@ function attachAddUserModal() {
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape' && !document.getElementById('addUserModal')?.hidden) toggleAddUserModal(false);
   });
+
+  toggleAddUserModal(false);
 }
 
 function attachDashboardControls() {
