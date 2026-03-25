@@ -5,6 +5,7 @@ import zeroday.skinrejuve.db.UserRole
 import zeroday.skinrejuve.models.User
 import zeroday.skinrejuve.security.PasswordHasher
 import zeroday.skinrejuve.utils.Validators
+import java.util.UUID
 
 class AuthService(
     private val authRepository: AuthRepository,
@@ -45,6 +46,14 @@ class AuthService(
     }
 
     fun resetPassword(token: String, password: String): Boolean = passwordResetService.resetPassword(token.trim(), password)
+
+    fun changePassword(userId: UUID, currentPassword: String, newPassword: String) {
+        Validators.requirePasswordStrength(newPassword)
+        val record = authRepository.getUserRecordById(userId) ?: throw IllegalArgumentException("User account not found")
+        require(PasswordHasher.verify(currentPassword, record.passwordHash)) { "Current password is incorrect" }
+        require(!PasswordHasher.verify(newPassword, record.passwordHash)) { "New password must be different from current password" }
+        authRepository.updatePassword(userId, PasswordHasher.hash(newPassword))
+    }
 }
 
 @Serializable

@@ -253,14 +253,6 @@ if (window.mountSkinRejuveLogos) window.mountSkinRejuveLogos();
 
   openButtons.forEach((button) => {
     button.addEventListener('click', () => {
-      if (getToken()) {
-        const intent = button.dataset.authIntent || '';
-        if (intent === 'booking') {
-          setPostLoginRedirect('/frontend/dashboard/html/dashboard.html?booking=1');
-        }
-        redirectForRole(getUserRole());
-        return;
-      }
       openModal(button.dataset.authOpen || 'login', button.dataset.authIntent || '');
     });
   });
@@ -282,20 +274,6 @@ if (window.mountSkinRejuveLogos) window.mountSkinRejuveLogos();
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape' && authModal && !authModal.hidden) closeModal();
   });
-
-  const params = new URLSearchParams(window.location.search);
-  const requestedModal = params.get('auth');
-  const requestedIntent = params.get('intent');
-  if (requestedModal === 'login' || requestedModal === 'register') {
-    if (getToken()) {
-      if ((requestedIntent || '') === 'booking') {
-        setPostLoginRedirect('/frontend/dashboard/html/dashboard.html?booking=1');
-      }
-      redirectForRole(getUserRole());
-      return;
-    }
-    openModal(requestedModal, requestedIntent || '');
-  }
 
   forgotPasswordBtn?.addEventListener('click', async () => {
     const email = document.getElementById('email').value.trim();

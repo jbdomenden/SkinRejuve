@@ -15,6 +15,9 @@
   --portal-accent-strong: #8f5e1f;
   --portal-danger: #ab433f;
   --portal-success: #1f7a45;
+  --portal-space-sm: clamp(0.75rem, 1.2vw, 1rem);
+  --portal-space-md: clamp(1rem, 2vw, 1.5rem);
+  --portal-space-lg: clamp(1.5rem, 3vw, 2.25rem);
 }
 
 body.portal-bg {
@@ -45,7 +48,7 @@ select:focus-visible {
 }
 
 .patient-main {
-  padding: clamp(18px, 3vw, 36px);
+  padding: var(--portal-space-lg);
 }
 
 .page-header {
@@ -79,14 +82,14 @@ select:focus-visible {
   background: var(--portal-surface);
   border: 1px solid var(--portal-border);
   border-radius: 24px;
-  padding: clamp(16px, 2.2vw, 24px);
+  padding: var(--portal-space-md);
   box-shadow: 0 14px 36px rgba(62, 34, 6, 0.12);
 }
 
 .history-toolbar {
   display: grid;
   grid-template-columns: minmax(220px, 1.5fr) repeat(5, minmax(140px, 1fr));
-  gap: 12px;
+  gap: var(--portal-space-sm);
   align-items: end;
   margin-bottom: 16px;
 }
@@ -263,8 +266,8 @@ select:focus-visible {
 .modal__panel {
   position: relative;
   z-index: 1;
-  width: min(980px, calc(100vw - 24px));
-  max-height: calc(100vh - 24px);
+  width: min(92vw, 62rem);
+  max-height: 90vh;
   overflow: auto;
   border-radius: 20px;
   border: 1px solid #d8c2a0;
@@ -547,7 +550,7 @@ select:focus-visible {
 }
 
 .modal__panel--result {
-  width: min(460px, calc(100vw - 24px));
+  width: min(92vw, 28rem);
   padding: 24px;
   text-align: center;
 }
@@ -595,7 +598,13 @@ select:focus-visible {
   border: 0;
 }
 
-@media (max-width: 1080px) {
+@media (min-width: 1440px) {
+  .patient-main {
+    padding: clamp(2rem, 2.4vw, 2.7rem);
+  }
+}
+
+@media (max-width: 1024px) {
   .patient-layout {
     grid-template-columns: 1fr;
   }
@@ -619,7 +628,7 @@ select:focus-visible {
   }
 }
 
-@media (max-width: 760px) {
+@media (max-width: 768px) {
 
   .history-toolbar {
     grid-template-columns: 1fr;
@@ -680,5 +689,23 @@ select:focus-visible {
   .modal__actions .button-primary,
   .modal__actions .button-secondary {
     width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .patient-main {
+    padding: 0.9rem;
+  }
+
+  .history-surface,
+  .table-shell,
+  .modal__panel--booking,
+  .modal__panel--slip {
+    padding: 0.8rem;
+    border-radius: 14px;
+  }
+
+  .modal__panel {
+    width: 94vw;
   }
 }

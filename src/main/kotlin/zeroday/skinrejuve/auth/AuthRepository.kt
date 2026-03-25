@@ -45,6 +45,10 @@ class AuthRepository {
         Users.selectAll().where { Users.id eq userId }.singleOrNull()?.toUser()
     }
 
+    fun getUserRecordById(userId: UUID): UserRecord? = transaction {
+        Users.selectAll().where { Users.id eq userId }.singleOrNull()?.toUserRecord()
+    }
+
     fun storeEmailVerificationToken(userId: UUID, tokenHash: String, expiresAt: LocalDateTime) = transaction {
         val now = DateTimeUtils.now()
         EmailVerificationTokens.deleteWhere { EmailVerificationTokens.userId eq userId }
