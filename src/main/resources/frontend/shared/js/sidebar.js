@@ -31,7 +31,7 @@
     { key: 'home', label: 'Home', href: '/frontend/dashboard/html/dashboard.html' },
     { key: 'appointment', label: 'Appointment', button: true, id: 'openBookingFromNav' },
     { key: 'history', label: 'History', href: '/frontend/dashboard/html/dashboard.html#historyTableContainer' },
-    { key: 'account', label: 'Account', href: '/frontend/dashboard/html/dashboard.html#accountPanel' },
+    { key: 'account', label: 'Account', href: '/frontend/dashboard/html/account.html' },
   ];
 
   const adminLinks = [
