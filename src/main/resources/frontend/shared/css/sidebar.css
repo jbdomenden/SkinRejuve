@@ -8,6 +8,10 @@
   --sidebar-shadow: 0 10px 24px rgba(72, 45, 20, 0.08);
 }
 
+body.portal-confirm-open {
+  overflow: hidden;
+}
+
 .app-sidebar {
   background: var(--sidebar-bg);
   border-right: 1px solid var(--sidebar-border);
@@ -165,6 +169,112 @@
   display: none;
 }
 
+.portal-confirm-modal[hidden] { display: none; }
+
+.portal-confirm-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: grid;
+  place-items: center;
+  padding: clamp(0.9rem, 2.5vw, 1.5rem);
+}
+
+.portal-confirm-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: rgba(43, 28, 15, 0.34);
+  backdrop-filter: blur(4px);
+}
+
+.portal-confirm-modal__dialog {
+  position: relative;
+  width: min(100%, 28rem);
+  border-radius: 1.15rem;
+  border: 1px solid rgba(187, 145, 88, 0.34);
+  background: #fff8ef;
+  box-shadow: 0 24px 56px rgba(48, 30, 14, 0.24);
+  overflow: hidden;
+}
+
+.portal-confirm-modal__header-cap {
+  min-height: 1rem;
+  background: linear-gradient(180deg, #eee1d0, #f4e9da);
+  border-bottom: 1px solid rgba(187, 145, 88, 0.24);
+}
+
+.portal-confirm-modal__content {
+  padding: 1.1rem 1.2rem 1.3rem;
+  text-align: center;
+}
+
+.portal-confirm-modal__icon {
+  width: 3rem;
+  height: 3rem;
+  margin: 0 auto 0.7rem;
+  border-radius: 999px;
+  border: 1px solid rgba(176, 128, 65, 0.32);
+  background: rgba(182, 134, 78, 0.12);
+  color: #8a5a26;
+  display: grid;
+  place-items: center;
+}
+
+.portal-confirm-modal__icon svg {
+  width: 1.35rem;
+  height: 1.35rem;
+}
+
+.portal-confirm-modal__content h2 {
+  margin: 0;
+  color: #4a321c;
+  font-family: "Cormorant Garamond", "Times New Roman", serif;
+  font-size: 2rem;
+}
+
+.portal-confirm-modal__content p {
+  margin: 0.55rem 0 1rem;
+  color: #6f5437;
+  line-height: 1.45;
+}
+
+.portal-confirm-modal__actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+}
+
+.portal-confirm-modal__btn {
+  min-height: 2.75rem;
+  border-radius: 0.72rem;
+  font: 600 0.93rem/1.2 Inter, "Segoe UI", sans-serif;
+  letter-spacing: 0.03em;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+
+.portal-confirm-modal__btn-primary {
+  color: #fffdf8;
+  background: linear-gradient(180deg, #bb8547, #9d6b2f);
+}
+
+.portal-confirm-modal__btn-secondary {
+  color: #664523;
+  background: #f8efe3;
+  border-color: #dac6ab;
+}
+
+.portal-confirm-modal__btn:focus-visible {
+  outline: 3px solid #c39154;
+  outline-offset: 2px;
+}
+
+.portal-confirm-modal__btn:disabled {
+  opacity: 0.64;
+  cursor: not-allowed;
+}
+
 @media (max-width: 1024px) {
   .admin-shell,
   .patient-layout { grid-template-columns: 1fr; }
@@ -199,5 +309,11 @@
   .sidebar-open .app-sidebar-backdrop {
     opacity: 1;
     pointer-events: auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .portal-confirm-modal__actions {
+    grid-template-columns: 1fr;
   }
 }

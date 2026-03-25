@@ -96,8 +96,43 @@
   backdrop.setAttribute('aria-label', 'Close navigation menu');
   document.body.appendChild(backdrop);
 
+  const confirmModal = document.createElement('div');
+  confirmModal.className = 'portal-confirm-modal';
+  confirmModal.hidden = true;
+  confirmModal.innerHTML = `
+    <button type="button" class="portal-confirm-modal__backdrop" aria-label="Close logout confirmation"></button>
+    <section
+      class="portal-confirm-modal__dialog"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="logoutConfirmTitle"
+      aria-describedby="logoutConfirmDescription"
+      tabindex="-1"
+    >
+      <header class="portal-confirm-modal__header-cap" aria-hidden="true"></header>
+      <div class="portal-confirm-modal__content">
+        <div class="portal-confirm-modal__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M10 3h8a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-8v-2h8V5h-8zm1.4 4.4L10 8.8l2.2 2.2H3v2h9.2L10 15.2l1.4 1.4L16 12z" fill="currentColor"/></svg>
+        </div>
+        <h2 id="logoutConfirmTitle">Logout</h2>
+        <p id="logoutConfirmDescription">Are you sure you want to log out?</p>
+        <div class="portal-confirm-modal__actions">
+          <button type="button" class="portal-confirm-modal__btn portal-confirm-modal__btn-primary" data-confirm-logout>Yes, log out</button>
+          <button type="button" class="portal-confirm-modal__btn portal-confirm-modal__btn-secondary" data-cancel-logout>Cancel</button>
+        </div>
+      </div>
+    </section>
+  `;
+  document.body.appendChild(confirmModal);
+
   const toggle = document.querySelector('.app-mobile-topbar__toggle');
+  const confirmDialog = confirmModal.querySelector('.portal-confirm-modal__dialog');
+  const confirmBackdrop = confirmModal.querySelector('.portal-confirm-modal__backdrop');
+  const confirmButton = confirmModal.querySelector('[data-confirm-logout]');
+  const cancelButton = confirmModal.querySelector('[data-cancel-logout]');
   let previousFocus = null;
+  let previousModalFocus = null;
+  let logoutPending = false;
 
   function closeSidebar() {
     document.body.classList.remove('sidebar-open');
@@ -136,9 +171,48 @@
   }
 
   backdrop.addEventListener('click', closeSidebar);
+
+  function closeConfirmModal() {
+    if (logoutPending) return;
+    confirmModal.hidden = true;
+    document.body.classList.remove('portal-confirm-open');
+    if (previousModalFocus) previousModalFocus.focus();
+  }
+
+  function openConfirmModal() {
+    previousModalFocus = document.activeElement;
+    confirmModal.hidden = false;
+    document.body.classList.add('portal-confirm-open');
+    confirmButton.disabled = false;
+    cancelButton.disabled = false;
+    confirmButton.textContent = 'Yes, log out';
+    confirmDialog.focus();
+  }
+
+  function trapModalFocus(event) {
+    if (confirmModal.hidden || event.key !== 'Tab') return;
+    const nodes = confirmModal.querySelectorAll('button:not([disabled]), [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+    if (!nodes.length) return;
+    const first = nodes[0];
+    const last = nodes[nodes.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  }
+
+  confirmBackdrop.addEventListener('click', closeConfirmModal);
+  cancelButton.addEventListener('click', closeConfirmModal);
   document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape') closeSidebar();
+    if (event.key === 'Escape') {
+      if (!confirmModal.hidden) closeConfirmModal();
+      else closeSidebar();
+    }
     trapFocus(event);
+    trapModalFocus(event);
   });
 
   root.querySelectorAll('.app-sidebar__link').forEach((link) => {
@@ -150,6 +224,15 @@
   const logoutBtn = document.getElementById('logoutBtn');
   if (logoutBtn) {
     logoutBtn.addEventListener('click', () => {
+      openConfirmModal();
+    });
+
+    confirmButton.addEventListener('click', () => {
+      if (logoutPending) return;
+      logoutPending = true;
+      confirmButton.disabled = true;
+      cancelButton.disabled = true;
+      confirmButton.textContent = 'Logging out...';
       setToken('');
       window.location.replace('/frontend/landing/html/index.html?auth=login');
     });
