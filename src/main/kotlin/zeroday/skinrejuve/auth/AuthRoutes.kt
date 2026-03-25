@@ -1,8 +1,10 @@
 package zeroday.skinrejuve.auth
 
 import zeroday.skinrejuve.utils.ApiResponse
+import zeroday.skinrejuve.utils.requireUserId
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.call
+import io.ktor.server.auth.authenticate
 import io.ktor.server.request.receive
 import io.ktor.server.response.respond
 import io.ktor.server.routing.Route
@@ -55,6 +57,15 @@ fun Route.authRoutes(authService: AuthService) {
             }
             call.respond(ApiResponse<Unit>(success = true, message = "Password reset successful"))
         }
+
+        authenticate("auth-jwt") {
+            post("/change-password") {
+                val userId = call.requireUserId()
+                val request = call.receive<ChangePasswordRequest>()
+                authService.changePassword(userId, request.currentPassword, request.newPassword)
+                call.respond(ApiResponse<Unit>(success = true, message = "Password updated successfully"))
+            }
+        }
     }
 }
 
@@ -69,3 +80,9 @@ data class ForgotPasswordRequest(val email: String)
 
 @Serializable
 data class ResetPasswordRequest(val token: String, val password: String)
+
+@Serializable
+data class ChangePasswordRequest(
+    val currentPassword: String,
+    val newPassword: String
+)
