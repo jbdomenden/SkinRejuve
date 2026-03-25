@@ -489,6 +489,121 @@ a:focus-visible {
 }
 .auth-modal-open { overflow: hidden; }
 
+#authModal {
+  display: grid;
+  place-items: center;
+  padding: clamp(0.8rem, 2vw, 1.25rem);
+}
+
+#authModal .auth-modal-backdrop {
+  background: rgba(29, 17, 7, 0.52);
+  backdrop-filter: blur(8px);
+}
+
+#authModal .auth-modal-dialog {
+  width: min(92vw, 42rem);
+  max-height: none;
+  overflow: hidden;
+  margin: 0;
+  padding: clamp(1rem, 2vw, 1.5rem);
+  border-radius: 2rem;
+  border-color: rgba(232, 194, 134, 0.24);
+  box-shadow: 0 30px 72px rgba(25, 13, 2, 0.42);
+  background: linear-gradient(180deg, #5a3207 0%, #482805 100%);
+  color: #f6e8d0;
+}
+
+#authModal .skin-rejuve-logo { color: #f3e4cc; }
+#authModal .logo-subtitle {
+  color: rgba(245, 226, 194, 0.85);
+  border-top-color: rgba(245, 226, 194, 0.3);
+}
+
+#authModal .auth-modal-close {
+  width: 36px;
+  height: 36px;
+  top: 14px;
+  right: 14px;
+  border-color: rgba(243, 220, 182, 0.32);
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff5e6;
+  font-size: 28px;
+}
+
+#authModal .auth-tabs {
+  margin-top: 0.8rem;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid rgba(242, 216, 174, 0.32);
+  border-radius: 0;
+}
+
+#authModal .auth-tabs .tab {
+  min-height: 2.35rem;
+  border-radius: 0;
+  background: transparent;
+  color: rgba(245, 225, 192, 0.86);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  border-bottom: 3px solid transparent;
+}
+
+#authModal .auth-tabs .tab-active {
+  color: #fff7e8;
+  border-bottom-color: #e0b76f;
+}
+
+#authModal .portal-panel { margin-top: 0.8rem; }
+
+#authModal .landing-kicker,
+#authModal .portal-form label,
+#authModal .field-group legend {
+  color: #f0d7ab;
+}
+
+#authModal .auth-modal-copy p,
+#authModal .field-help,
+#authModal .portal-remember,
+#authModal .consent-row span,
+#authModal .review-panel p {
+  color: rgba(245, 227, 197, 0.84);
+}
+
+#authModal .auth-modal-copy h2,
+#authModal .portal-panel h2 {
+  color: #fff5e6;
+}
+
+#authModal .portal-form input,
+#authModal .portal-form select,
+#authModal .portal-form textarea {
+  border-color: rgba(241, 215, 166, 0.42);
+  background: #fffdfa;
+  color: #56310a;
+  min-height: 46px;
+}
+
+#authModal .portal-form textarea { min-height: 96px; }
+
+#authModal .landing-btn,
+#authModal .portal-cta {
+  min-height: 46px;
+  border-radius: 12px;
+}
+
+#authModal .landing-btn-secondary,
+#authModal .portal-cta.landing-btn-secondary {
+  color: #f6dfb9;
+  border-color: rgba(241, 215, 166, 0.36);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+#authModal .register-step {
+  gap: 0.7rem;
+}
+
 .portal-form label,
 .flow-step label,
 .field-group legend {
