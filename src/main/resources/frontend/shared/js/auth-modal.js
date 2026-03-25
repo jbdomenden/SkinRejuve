@@ -275,13 +275,6 @@ if (window.mountSkinRejuveLogos) window.mountSkinRejuveLogos();
     if (event.key === 'Escape' && authModal && !authModal.hidden) closeModal();
   });
 
-  const params = new URLSearchParams(window.location.search);
-  const requestedModal = params.get('auth');
-  const requestedIntent = params.get('intent');
-  if (requestedModal === 'login' || requestedModal === 'register') {
-    openModal(requestedModal, requestedIntent || '');
-  }
-
   forgotPasswordBtn?.addEventListener('click', async () => {
     const email = document.getElementById('email').value.trim();
     if (!email) {
