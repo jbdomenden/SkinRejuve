@@ -29,7 +29,7 @@
 
   const patientLinks = [
     { key: 'home', label: 'Home', href: '/frontend/dashboard/html/dashboard.html' },
-    { key: 'appointment', label: 'Appointment', button: true, id: 'openBookingFromNav' },
+    { key: 'appointment', label: 'Appointment', href: '/frontend/dashboard/html/services.html' },
     { key: 'history', label: 'History', href: '/frontend/dashboard/html/dashboard.html#historyTableContainer' },
     { key: 'account', label: 'Account', href: '/frontend/dashboard/html/account.html' },
   ];

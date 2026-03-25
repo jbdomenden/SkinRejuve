@@ -3,134 +3,122 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Skin Rejuve | Patient Appointments</title>
+  <title>Skin Rejuve | Patient Dashboard</title>
   <link rel="stylesheet" href="/frontend/dashboard/css/dashboard.css" />
 </head>
-<body class="portal-bg" data-patient-page="history">
+<body class="portal-bg" data-patient-page="home">
   <main class="patient-layout" aria-label="Patient portal">
     <aside class="patient-sidebar app-sidebar" data-sidebar-root></aside>
 
-    <section class="patient-main responsive-container" data-sidebar-content aria-label="Appointment and history content">
+    <section class="patient-main responsive-container" data-sidebar-content aria-label="Patient dashboard content">
       <header class="page-header">
-        <p class="page-header__kicker">Patient Portal</p>
-        <h1>Appointment History</h1>
-        <p class="page-header__subtitle">Review your completed appointments and treatment records.</p>
+        <p class="page-header__kicker">Skin Rejuve Patient Portal</p>
+        <h1>Dashboard</h1>
+        <p class="page-header__subtitle">Track your appointment journey, review updates, and open your appointment slip instantly.</p>
       </header>
 
-      <section class="history-surface" aria-label="Past appointments">
-        <div class="history-toolbar" role="region" aria-label="Search, filter, and sort appointment history">
-          <label class="field-group field-group--search" for="historySearch">
-            <span class="sr-only">Search past appointments</span>
-            <input id="historySearch" type="search" placeholder="Search past appointments" />
-          </label>
+      <section class="summary-grid" aria-label="Appointment summary">
+        <article class="summary-card">
+          <p>Total Record</p>
+          <h2 id="summaryTotal">0</h2>
+        </article>
+        <article class="summary-card">
+          <p>Completed Appointment</p>
+          <h2 id="summaryCompleted">0</h2>
+        </article>
+        <article class="summary-card">
+          <p>Denied Appointment</p>
+          <h2 id="summaryDenied">0</h2>
+        </article>
+        <article class="summary-card">
+          <p>Pending Appointment</p>
+          <h2 id="summaryPending">0</h2>
+        </article>
+      </section>
 
-          <label class="field-group" for="dateFilter">
-            <span>Date range</span>
-            <select id="dateFilter">
-              <option value="all">All dates</option>
-              <option value="30">Last 30 days</option>
-              <option value="90">Last 90 days</option>
-              <option value="365">Last 12 months</option>
-            </select>
-          </label>
-
-          <label class="field-group" for="branchFilter">
-            <span>Branch</span>
-            <select id="branchFilter">
-              <option value="all">All branches</option>
-            </select>
-          </label>
-
-          <label class="field-group" for="serviceFilter">
-            <span>Service</span>
-            <select id="serviceFilter">
-              <option value="all">All services</option>
-            </select>
-          </label>
-
-          <label class="field-group" for="statusFilter">
-            <span>Status</span>
-            <select id="statusFilter">
-              <option value="all">All statuses</option>
-              <option value="PENDING">Pending</option>
-              <option value="CONFIRMED">Confirmed</option>
-              <option value="COMPLETED">Completed</option>
-              <option value="DENIED">Denied</option>
-              <option value="CANCELLED">Cancelled</option>
-              <option value="IN_PROGRESS">In progress</option>
-            </select>
-          </label>
-
-          <label class="field-group" for="sortFilter">
-            <span>Sort by</span>
-            <select id="sortFilter">
-              <option value="date_desc">Date (newest first)</option>
-              <option value="date_asc">Date (oldest first)</option>
-              <option value="service_asc">Service name (A–Z)</option>
-              <option value="status_asc">Status (A–Z)</option>
-            </select>
-          </label>
-
-          <div class="history-toolbar__actions">
-            <button id="printHistoryBtn" class="button-secondary" type="button">Print History</button>
+      <section class="records-surface" aria-label="Appointment records">
+        <div class="records-toolbar">
+          <div class="section-heading">
+            <h2>Appointment Records</h2>
+            <p>Use View to open your Appointment Slip and manage the selected record.</p>
+          </div>
+          <div class="records-controls" role="region" aria-label="Appointment record controls">
+            <label class="field-group field-group--search" for="historySearch">
+              <span class="sr-only">Search appointments</span>
+              <input id="historySearch" type="search" placeholder="Search appointments" />
+            </label>
+            <label class="field-group field-group--filter" for="statusFilter">
+              <span class="sr-only">Filter by status</span>
+              <select id="statusFilter" aria-label="Filter appointments by status">
+                <option value="all">All statuses</option>
+                <option value="PENDING">Pending</option>
+                <option value="IN_PROGRESS">In Progress</option>
+                <option value="CONFIRMED">Confirmed</option>
+                <option value="COMPLETED">Completed</option>
+                <option value="DENIED">Denied</option>
+                <option value="CANCELLED">Cancelled</option>
+              </select>
+            </label>
             <button id="openBookingBtn" class="button-primary" type="button">Book Appointment</button>
           </div>
         </div>
 
-        <section class="table-shell" aria-label="Appointment history records">
-          <div class="section-heading">
-            <h2>Treatment History</h2>
-            <p>Review completed and upcoming appointments, then open a slip for completed sessions.</p>
-          </div>
-          <div id="historyLoading" class="table-feedback" hidden>Loading appointment history…</div>
-          <div id="historyEmpty" class="table-feedback" hidden>
-            <p>No appointment history yet.</p>
-            <p>Your appointment slips will appear here once your records are available.</p>
-          </div>
+        <div id="historyLoading" class="table-feedback" hidden>Loading appointment records…</div>
+        <div id="historyEmpty" class="table-feedback" hidden>
+          <p>No appointment records found.</p>
+          <p>Book your first appointment to start your record history.</p>
+        </div>
 
-          <div class="table-scroll" id="historyTableContainer">
-            <table class="history-table" id="historyTable">
-              <thead>
-                <tr>
-                  <th scope="col">Date</th>
-                  <th scope="col">Service</th>
-                  <th scope="col">Branch</th>
-                  <th scope="col">Status</th>
-                  <th scope="col">Action</th>
-                </tr>
-              </thead>
-              <tbody id="historyBody"></tbody>
-            </table>
-          </div>
-        </section>
+        <div class="table-scroll" id="historyTableContainer">
+          <table class="history-table" id="historyTable">
+            <thead>
+              <tr>
+                <th scope="col">Services</th>
+                <th scope="col">Date</th>
+                <th scope="col">Status</th>
+                <th scope="col">Email</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody id="historyBody"></tbody>
+          </table>
+        </div>
       </section>
     </section>
   </main>
 
-  <div class="modal" id="slipModal" role="dialog" aria-modal="true" aria-labelledby="slipModalTitle" aria-describedby="slipReference" hidden>
+  <div class="modal" id="slipModal" role="dialog" aria-modal="true" aria-labelledby="slipModalTitle" aria-describedby="slipModalStatus" hidden>
     <div class="modal__backdrop" data-close-slip="true"></div>
     <section class="modal__panel modal__panel--slip" tabindex="-1">
+      <header class="slip-header-band" aria-hidden="true"></header>
       <header class="modal__header slip-header">
-        <div class="slip-branding">
-          <div class="brand" data-skin-rejuve-logo data-logo-size="compact" data-logo-subtitle="SINCE 2011"></div>
-          <div>
-            <h2 id="slipModalTitle">Appointment Slip</h2>
-            <p id="slipReference"></p>
-          </div>
+        <div>
+          <p class="slip-status-title">Appointment Status</p>
+          <p class="slip-status-line" id="slipModalStatus"></p>
+          <h2 id="slipModalTitle">Appointment Slip</h2>
+          <p id="slipReference"></p>
         </div>
-        <div class="slip-toolbar">
-          <button id="downloadSlipBtn" class="button-secondary" type="button">Download PDF</button>
-          <button id="printSlipBtn" class="button-primary" type="button">Print Slip</button>
-          <button class="icon-button" id="closeSlipModal" type="button" aria-label="Close appointment slip">✕</button>
-        </div>
+        <button class="icon-button" id="closeSlipModal" type="button" aria-label="Close appointment slip">✕</button>
       </header>
 
-      <div id="slipError" class="table-feedback" hidden></div>
-
+      <div id="slipFeedback" class="table-feedback" hidden></div>
       <article id="slipDocument" class="slip-document" aria-live="polite"></article>
 
+      <footer class="modal__actions modal__actions--split">
+        <button id="editAppointmentBtn" class="button-secondary" type="button">Edit Appointment</button>
+        <button id="cancelAppointmentBtn" class="button-danger" type="button">Cancel Appointment</button>
+      </footer>
+    </section>
+  </div>
+
+  <div class="modal" id="cancelConfirmModal" role="dialog" aria-modal="true" aria-labelledby="cancelConfirmTitle" aria-describedby="cancelConfirmCopy" hidden>
+    <div class="modal__backdrop" data-close-cancel-confirm="true"></div>
+    <section class="modal__panel modal__panel--confirm" tabindex="-1">
+      <h2 id="cancelConfirmTitle">Cancel Appointment</h2>
+      <p id="cancelConfirmCopy">Are you sure you want to cancel this appointment?</p>
       <footer class="modal__actions">
-        <button id="closeSlipFooterBtn" class="button-secondary" type="button">Close</button>
+        <button id="confirmCancelBtn" class="button-danger" type="button">Yes, cancel appointment</button>
+        <button id="keepAppointmentBtn" class="button-secondary" type="button">Keep appointment</button>
       </footer>
     </section>
   </div>
@@ -141,7 +129,7 @@
       <header class="modal__header">
         <div>
           <h2 id="bookingModalTitle">Book an Appointment</h2>
-          <p>Choose your service, date, and preferred time slot to submit your request.</p>
+          <p id="bookingModalSubtitle">Choose your service, date, and preferred time slot to submit your request.</p>
         </div>
         <button class="icon-button" id="closeBookingModal" type="button" aria-label="Close booking dialog">✕</button>
       </header>
@@ -193,11 +181,6 @@
             <article class="service-note" id="serviceDescription">
               Select a service to review a short summary before you submit your request.
             </article>
-
-            <div class="promo-note" role="note">
-              <h4>Birthday Discount</h4>
-              <p>Eligible patients may receive 10% off during their birthday month upon presentation of a valid ID.</p>
-            </div>
           </section>
         </div>
 
@@ -227,13 +210,6 @@
       <button class="button-primary" id="resultModalCta" type="button">View Appointment Status</button>
     </section>
   </div>
-
-  <template id="slipSectionTemplate">
-    <article class="slip-section">
-      <h3 data-slip-section-title></h3>
-      <div data-slip-section-body></div>
-    </article>
-  </template>
 
   <script src="/frontend/shared/js/logo.js"></script>
   <script src="/frontend/shared/js/api-client.js"></script>
