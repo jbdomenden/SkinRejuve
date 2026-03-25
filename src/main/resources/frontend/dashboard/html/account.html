@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Skin Rejuve | Account Settings</title>
+  <link rel="stylesheet" href="/frontend/dashboard/css/account.css" />
+</head>
+<body class="portal-bg" data-patient-page="account">
+  <main class="patient-layout" aria-label="Patient account settings">
+    <aside class="patient-sidebar app-sidebar" data-sidebar-root></aside>
+
+    <section class="patient-main responsive-container" data-sidebar-content>
+      <header class="settings-header">
+        <p class="settings-kicker">Patient Portal</p>
+        <h1>Account Settings</h1>
+        <p>Manage your personal information, security, and preferences.</p>
+      </header>
+
+      <section class="settings-grid" aria-label="Profile and security settings">
+        <article class="settings-card profile-card" aria-labelledby="profileHeading">
+          <header class="settings-card__header">
+            <div>
+              <h2 id="profileHeading">Personal Information</h2>
+              <p>Keep your profile details accurate so appointments and reminders stay up to date.</p>
+            </div>
+            <button id="editProfileBtn" class="settings-btn settings-btn-outline" type="button">Edit</button>
+          </header>
+
+          <div class="identity-chip" aria-label="Patient identity">
+            <div class="identity-avatar" id="identityAvatar" aria-hidden="true">P</div>
+            <div>
+              <p class="identity-name" id="identityName">Patient</p>
+              <p class="identity-role">Patient</p>
+            </div>
+          </div>
+
+          <div id="profileView" class="profile-view" aria-live="polite"></div>
+
+          <form id="profileForm" class="profile-form" hidden novalidate>
+            <div class="settings-form-grid settings-form-grid-2">
+              <div>
+                <label for="fullNameInput">Full Name</label>
+                <input id="fullNameInput" name="fullName" type="text" required autocomplete="name" />
+              </div>
+              <div>
+                <label for="usernameInput">Username</label>
+                <input id="usernameInput" name="username" type="text" readonly aria-readonly="true" />
+              </div>
+            </div>
+
+            <div class="settings-form-grid settings-form-grid-2">
+              <div>
+                <label for="emailInput">Email Address</label>
+                <input id="emailInput" name="email" type="email" readonly aria-readonly="true" />
+              </div>
+              <div>
+                <label for="phoneInput">Phone Number</label>
+                <input id="phoneInput" name="phone" type="tel" required autocomplete="tel" />
+              </div>
+            </div>
+
+            <div class="settings-form-grid settings-form-grid-2">
+              <div>
+                <label for="dobInput">Date of Birth</label>
+                <input id="dobInput" name="dateOfBirth" type="date" required autocomplete="bday" />
+              </div>
+              <div>
+                <label for="memberSinceInput">Member Since</label>
+                <input id="memberSinceInput" name="memberSince" type="text" readonly aria-readonly="true" />
+              </div>
+            </div>
+
+            <p class="settings-hint">Username and email are managed by account security policies and cannot be edited here.</p>
+
+            <div class="settings-actions">
+              <button type="submit" class="settings-btn settings-btn-primary">Save Changes</button>
+              <button id="cancelProfileBtn" type="button" class="settings-btn settings-btn-outline">Cancel</button>
+            </div>
+          </form>
+
+          <p class="settings-status" id="profileStatus" role="status" aria-live="polite"></p>
+        </article>
+
+        <article class="settings-card" aria-labelledby="securityHeading">
+          <header class="settings-card__header">
+            <div>
+              <h2 id="securityHeading">Change Password</h2>
+              <p>Use a strong password with at least 8 characters, one uppercase letter, and one number.</p>
+            </div>
+          </header>
+
+          <form id="passwordForm" class="settings-form-grid" novalidate>
+            <div>
+              <label for="currentPassword">Current Password</label>
+              <div class="password-wrap">
+                <input id="currentPassword" type="password" required autocomplete="current-password" />
+                <button type="button" class="toggle-password" data-target="currentPassword">Show</button>
+              </div>
+            </div>
+
+            <div>
+              <label for="newPassword">New Password</label>
+              <div class="password-wrap">
+                <input id="newPassword" type="password" required autocomplete="new-password" />
+                <button type="button" class="toggle-password" data-target="newPassword">Show</button>
+              </div>
+              <p class="settings-hint" id="passwordStrength">Password strength: waiting for input.</p>
+            </div>
+
+            <div>
+              <label for="confirmPassword">Confirm New Password</label>
+              <div class="password-wrap">
+                <input id="confirmPassword" type="password" required autocomplete="new-password" />
+                <button type="button" class="toggle-password" data-target="confirmPassword">Show</button>
+              </div>
+            </div>
+
+            <div class="settings-actions">
+              <button id="updatePasswordBtn" type="submit" class="settings-btn settings-btn-primary" disabled>Update Password</button>
+              <button id="cancelPasswordBtn" type="button" class="settings-btn settings-btn-outline">Cancel</button>
+            </div>
+          </form>
+
+          <p class="settings-status" id="passwordStatus" role="status" aria-live="polite"></p>
+        </article>
+
+        <article class="settings-card" aria-labelledby="preferencesHeading">
+          <header class="settings-card__header">
+            <div>
+              <h2 id="preferencesHeading">Preferences</h2>
+              <p>Choose how Skin Rejuve can contact you about appointments and follow-up care.</p>
+            </div>
+          </header>
+
+          <form id="preferencesForm" class="settings-form-grid" novalidate>
+            <label class="pref-toggle" for="prefEmail">
+              <input id="prefEmail" type="checkbox" />
+              <span>Email reminders for appointments</span>
+            </label>
+
+            <label class="pref-toggle" for="prefSms">
+              <input id="prefSms" type="checkbox" />
+              <span>SMS reminders for upcoming visits</span>
+            </label>
+
+            <label class="pref-toggle" for="prefNews">
+              <input id="prefNews" type="checkbox" />
+              <span>Occasional clinic updates and treatment offers</span>
+            </label>
+
+            <div class="settings-actions">
+              <button type="submit" class="settings-btn settings-btn-primary">Save Preferences</button>
+            </div>
+          </form>
+
+          <p class="settings-status" id="preferencesStatus" role="status" aria-live="polite"></p>
+          <p class="settings-hint">Review our <a href="/frontend/landing/html/index.html#privacy" class="settings-link">Data Privacy Policy</a> for details on how your preferences are used.</p>
+        </article>
+      </section>
+    </section>
+  </main>
+
+  <script src="/frontend/shared/js/logo.js"></script>
+  <script src="/frontend/shared/js/api-client.js"></script>
+  <script>window.skinRejuveAuthGuard = { requireAuth: true, redirectTo: '/frontend/landing/html/index.html?auth=login' };</script>
+  <script src="/frontend/shared/js/auth-guard.js"></script>
+  <script src="/frontend/shared/js/sidebar.js"></script>
+  <script src="/frontend/dashboard/js/account.js"></script>
+</body>
+</html>
