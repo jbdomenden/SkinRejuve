@@ -3,14 +3,67 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Redirecting</title>
+  <title>Skin Rejuve | Enter Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
   <link rel="stylesheet" href="/frontend/auth/css/login.css" />
 </head>
-<body>
-  <p>Redirecting…</p>
+<body class="auth-page">
+  <main class="auth-layout">
+    <section class="auth-card" aria-labelledby="signinTitle">
+      <header class="auth-header">
+        <span data-skin-rejuve-logo data-logo-size="compact" data-logo-subtitle="since 2011"></span>
+        <p class="auth-tagline">Secure patient portal access for consultations and clinic follow-up.</p>
+      </header>
+
+      <nav class="auth-tabs" aria-label="Authentication pages">
+        <a class="auth-tab is-active" href="/frontend/auth/html/login.html" aria-current="page">Sign In</a>
+        <a class="auth-tab" href="/frontend/auth/html/register.html">New Client</a>
+      </nav>
+
+      <h1 id="signinTitle" class="auth-section-title">Enter Portal</h1>
+      <p class="auth-copy">Sign in to review appointments, treatment history, and upcoming clinic updates.</p>
+
+      <form id="loginForm" class="form-grid" novalidate>
+        <div>
+          <label class="field-label" for="loginIdentifier">Username</label>
+          <div class="input-wrap">
+            <i class="fa-regular fa-user" aria-hidden="true"></i>
+            <input id="loginIdentifier" name="loginIdentifier" type="text" placeholder="Enter your username" required autocomplete="username" aria-describedby="loginIdentifierHelp loginIdentifierError" />
+          </div>
+          <p id="loginIdentifierHelp" class="field-help">Use your registered username or email address.</p>
+          <p id="loginIdentifierError" class="field-error" aria-live="polite"></p>
+        </div>
+
+        <div>
+          <label class="field-label" for="loginPassword">Password</label>
+          <div class="input-wrap">
+            <i class="fa-solid fa-lock" aria-hidden="true"></i>
+            <input id="loginPassword" name="password" type="password" placeholder="Enter your password" required autocomplete="current-password" aria-describedby="loginPasswordError" />
+          </div>
+          <p id="loginPasswordError" class="field-error" aria-live="polite"></p>
+        </div>
+
+        <div class="auth-inline">
+          <label class="auth-check" for="rememberMe">
+            <input id="rememberMe" name="rememberMe" type="checkbox" />
+            <span><i class="fa-solid fa-check" aria-hidden="true"></i> Remember me on this device</span>
+          </label>
+          <a class="auth-link" href="/frontend/auth/html/forgot-password.html">Forgot Password?</a>
+        </div>
+
+        <button class="auth-btn auth-btn-primary" type="submit">Enter Portal</button>
+        <p class="auth-message" id="authMsg" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+  </main>
+
+  <script src="/frontend/shared/js/logo.js"></script>
   <script src="/frontend/shared/js/api-client.js"></script>
   <script>window.skinRejuveAuthGuard = { guestOnly: true, authenticatedRedirect: '/frontend/dashboard/html/dashboard.html', authenticatedRedirectAdmin: '/frontend/admin/html/admin-dashboard.html' };</script>
   <script src="/frontend/shared/js/auth-guard.js"></script>
-  <script>window.location.replace('/frontend/landing/html/index.html?auth=login');</script>
+  <script src="/frontend/auth/js/login.js"></script>
 </body>
 </html>
