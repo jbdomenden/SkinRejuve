@@ -93,9 +93,6 @@ a:focus-visible {
 }
 
 .landing-header {
-  position: sticky;
-  top: 14px;
-  z-index: 40;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -193,10 +190,8 @@ a:focus-visible {
 .auth-modal-copy h2,
 .modal-copy h2,
 .booking-confirm-panel h3,
-.contact-card h3,
 .service-card h3,
 .branch-card h3,
-.portal-card h3,
 .service-detail-card h3 {
   margin: 0;
   color: var(--text);
@@ -218,7 +213,6 @@ a:focus-visible {
 .showcase-card p,
 .service-card p,
 .branch-card p,
-.portal-card p,
 .contact-card p,
 .modal-copy p,
 .auth-modal-copy p,
@@ -377,13 +371,17 @@ a:focus-visible {
 }
 .portal-card-accent *,
 .contact-card-accent * { color: #fff8ef; }
-.portal-card-accent .showcase-label,
-.contact-card-accent .showcase-label,
 .portal-card-accent .landing-btn-secondary,
 .contact-card-accent .landing-btn-secondary {
   border-color: rgba(255,255,255,0.24);
   color: #fff8ef;
 }
+.portal-card-accent .showcase-label,
+.contact-card-accent .showcase-label{
+  border-color: rgba(255,255,255,0.24);
+  color: #915e1d;
+}
+
 .portal-card-accent .portal-list,
 .contact-card-accent p { color: rgba(255,248,239,0.9); }
 

@@ -825,9 +825,6 @@ hr { border: 0; border-top: 1px solid #d8bd98; margin: 16px 0; }
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
   margin-bottom: 18px;
   background: rgba(186, 125, 39, 0.12);
   color: #9c6821;
