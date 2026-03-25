@@ -495,6 +495,10 @@ a:focus-visible {
   padding: clamp(0.8rem, 2vw, 1.25rem);
 }
 
+#authModal[hidden] {
+  display: none;
+}
+
 #authModal .auth-modal-backdrop {
   background: rgba(29, 17, 7, 0.52);
   backdrop-filter: blur(8px);
@@ -520,14 +524,20 @@ a:focus-visible {
 }
 
 #authModal .auth-modal-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: 36px;
   height: 36px;
   top: 14px;
   right: 14px;
+  padding: 0;
+  z-index: 2;
   border-color: rgba(243, 220, 182, 0.32);
   background: rgba(255, 255, 255, 0.08);
   color: #fff5e6;
-  font-size: 28px;
+  font-size: 30px;
+  line-height: 1;
 }
 
 #authModal .auth-tabs {
